@@ -3,10 +3,10 @@ package com.bookservice.request;
 import javax.validation.constraints.NotBlank;
 
 public class LoginRequest {
-	@NotBlank
+	@NotBlank(message="AuthorName Cannot Be Blank")
 	private String authorname;
 
-	@NotBlank
+	@NotBlank(message="Password Cannot Be Empty")
 	private String password;
 
 	

@@ -29,12 +29,11 @@ import com.bookservice.entity.Author;
 import com.bookservice.entity.Book;
 import com.bookservice.repository.AuthorRepository;
 import com.bookservice.repository.BookRepository;
-import com.bookservice.service.BookService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@CrossOrigin
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController // spring bean
 @RequestMapping("/api/v1/digitalbooks")
 public class BookController extends ErrorController {// accept requests
@@ -44,25 +43,28 @@ public class BookController extends ErrorController {// accept requests
 	@Autowired // DI
 	AuthorRepository authorRepository; // dependency
 
-	@GetMapping
-	Iterable<Book> getUser() {
+	@GetMapping("/allbooks")
+	List<Book> getAllBooks() {
 		return bookRepository.findAll();
 	}
 
 	@GetMapping("/books/search")
-	ResponseEntity<?> getBook( @RequestParam(required=false) Optional<String> author,
-			@RequestParam(required=false) Optional<String> category,
-			@RequestParam(required=false) Optional<Integer> price,
-			@RequestParam(required=false) Optional<String> publisher) {
+	ResponseEntity<?> searchBook( @RequestParam Optional<String> author,
+			@RequestParam Optional<String> category,
+			@RequestParam Optional<Integer> price,
+			@RequestParam Optional<String> publisher) {
 		Stream<Book> stream= bookRepository.findAll().stream();
 		if(author.isPresent() ) {
 			stream = stream.filter(book -> book.getAuthor().equals(author.get()));
 		}
 		if(category.isPresent()) {
+			
 			stream= stream.filter(book -> book.getCategory().equals(category.get()));
+			//return ResponseEntity.ok(category.get()+stream.collect(Collectors.toList()));
 		}
+		
 		if(price.isPresent()) {
-			stream=stream.filter(book ->book.getPrice()==price.get());
+			stream=stream.filter(book ->String.valueOf(book.getPrice()).equals(String.valueOf(price.get())));
 		}
 		if(publisher.isPresent()) {
 			stream=stream.filter(book -> book.getPublisher().equals(publisher.get()));
@@ -77,7 +79,7 @@ public class BookController extends ErrorController {// accept requests
 		
 	}
 
-	@PostMapping("/author/{authorid}/books")
+	@PostMapping("/author/{authorid}/books")//Creating book
 	ResponseEntity<?> createBook(@Valid @RequestBody Book book,@PathVariable("authorid") Long authorid) {
 
 		
@@ -97,7 +99,7 @@ public class BookController extends ErrorController {// accept requests
 		return new ResponseEntity<String>("Invalid Author to create book",HttpStatus.UNAUTHORIZED);
 	}
 	
-	@PutMapping("/author/{authorid}/books/{bookid}")
+	@PutMapping("/author/{authorid}/books/{bookid}")//updating book
 	ResponseEntity<?> updateBook(@Valid @RequestBody Book book,
 			@PathVariable("authorid") Long authorid, 
 			@PathVariable("bookid") Long bookid){
@@ -116,7 +118,12 @@ public class BookController extends ErrorController {// accept requests
 					return ResponseEntity.badRequest().body("Please Login to Update Book");
 				}
 		}
-		return new ResponseEntity("No book found to Update",HttpStatus.UNAUTHORIZED);
+		return new ResponseEntity<String>("No book found to Update"+authorRepository.existsById(bookid),HttpStatus.UNAUTHORIZED);
 		
+	}
+	
+	@GetMapping("/books/{authorid}")
+	List<Book> getBooksByAuthorId(@PathVariable("authorid") Long authorid){
+		return bookRepository.findAllByAuthorid( authorid);
 	}
 }

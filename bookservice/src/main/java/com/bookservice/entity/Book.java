@@ -10,6 +10,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 
 @Entity
@@ -22,6 +23,28 @@ public class Book {//not a spring bean
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Long authorid;
+	public Book(Long id, Long authorid, @NotBlank(message = "Title cannot be blank#######") String title,
+			@NotBlank(message = "Category cannot be blank#######") String category,
+			@Min(value = 1, message = "price cannot be less than 1") int price, String author,
+			@NotBlank(message = "Publisher cannot be blank#######") String publisher,
+			@NotBlank(message = "Publisher cannot be blank#######") String publisheddate,
+			@Min(value = 1, message = "chapters cannot be less than 1") int chapters, boolean active) {
+		super();
+		this.id = id;
+		this.authorid = authorid;
+		this.title = title;
+		this.category = category;
+		this.price = price;
+		this.author = author;
+		this.publisher = publisher;
+		this.publisheddate = publisheddate;
+		this.chapters = chapters;
+		this.active = active;
+		
+	}
+	public Book() {
+		super();
+	}
 	public Long getAuthorid() {
 		return authorid;
 	}
@@ -46,8 +69,9 @@ public class Book {//not a spring bean
 	private String publisher;
 	@NotBlank(message = "Publisher cannot be blank#######")
 	private String publisheddate;
-	@Min(value = 1, message = "age cannot be less than 1")
+	@Min(value = 1, message = "chapters cannot be less than 1")
 	private int chapters;
+	
 	private boolean active;
 	
 	public String getTitle() {
