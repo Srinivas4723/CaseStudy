@@ -1,0 +1,29 @@
+<p>createbook works!</p>
+<div id="createbookContainer">
+    Book title : <input type="text" [(ngModel)]="book.title" placeholder="Enter Book title">
+
+    {{createbookblankResponse.title}}<br/>
+Book category : <input type="text" [(ngModel)]="book.category" placeholder="Enter Book category">
+
+    {{createbookblankResponse.category}}<br/>
+Book Price : <input type="text" [(ngModel)]="book.price"  >
+
+    {{createbookblankResponse.price}}<br/>
+Book publisher : <input type="text" [(ngModel)]="book.publisher" placeholder="Enter Book publisher">
+
+    {{createbookblankResponse.publisher}}<br/>
+Book published Date : <input type="text" [(ngModel)]="book.publisheddate" placeholder="Enter Book published Date">
+
+    {{createbookblankResponse.publisheddate}}<br/>
+Book chapeters : <input type="text" [(ngModel)]="book.chapters" placeholder="Enter Book chapeters">
+
+    {{createbookblankResponse.chapters}}<br/>
+
+
+    <button (click)="createBook()">Create Book</button>
+</div>
+
+<div id="createbooksuccessMessageContainer">
+    Book Created SuccessFull.....!!!!<br/>
+    <a (click)='ngOnInit()' routerLink="/createbook">Click here</a> to create new books
+</div>

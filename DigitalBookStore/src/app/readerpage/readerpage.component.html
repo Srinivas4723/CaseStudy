@@ -1,0 +1,52 @@
+<p>readerpage works!</p>
+{{bookPurchaseSuccessMessage}}{{bookPurchaseFailureMessage}}
+<nav>
+    <ul>
+        <a routerLink="/readerpage">reader</a>
+        <a routerLink="/getmybooks">reader</a>
+    </ul>
+</nav>
+<div id="buybookContainer">
+    <h3>Details of the Book which you want to Buy</h3>
+    Book Author : {{book.author}}<br/>
+    Book Category : {{book.category}}<br/>
+    Book Publisher : {{book.publisher}}<br/>
+    Book Price : {{book.price}}<br/>
+    
+   <br/>
+        Reader Name : <input type="text" [(ngModel)]="reader.readername">
+        {{readerblankResponse.readername}}<br/>
+        Reader Email: <input type="email" [(ngModel)]="reader.readeremail">
+        {{readerblankResponse.readeremail}}<br/>
+        
+<button (click)="makepayment()">Make Payment</button>
+</div>
+<div id="cardDetails" >
+    Card :  <input type='tel' inputmode="numeric" minlength="12" pattern="[0-9\s]{13,19}" maxlength="12" placeholder="xxxx xxxx xxxx">
+    <br/>Validity : <select id="mm">
+        
+            <option>01</option>
+            <option>02</option>
+            <option>03</option>
+            <option>04</option>
+            <option>05</option>
+            <option>06</option>
+            <option>07</option>
+            <option>08</option>
+
+        
+    </select>
+    <select id="YYYY">
+        
+            <option>2023</option>
+            <option>2024</option>
+            <option>2025</option>
+            <option>2026</option>
+            <option>2027</option>
+            
+        
+    </select>
+    
+<button (click)="makepayment1()">Make Payment</button>
+
+</div>

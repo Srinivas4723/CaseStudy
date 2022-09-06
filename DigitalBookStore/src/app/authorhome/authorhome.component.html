@@ -1,0 +1,59 @@
+<p>authorhome works!</p>
+<h3>Your Books are Here</h3>
+
+
+<div id="authorBookContainer">
+    <div id="searchbookContainer">
+        <input type="text" [(ngModel)]="searchbookdata.category" placeholder="Enter Category">
+        <input type="text" [(ngModel)]="searchbookdata.author" placeholder="Enter Author">
+        <input type="text" [(ngModel)]="searchbookdata.price" placeholder="Enter Price">
+        <input type="text" [(ngModel)]="searchbookdata.publisher" placeholder="Enter Publisher">
+        <button (click)="searchBooks()">Search Books</button>
+        
+    </div>
+     <div class="row" >
+      <p>{{nobookFoundMessage}}</p>
+    <div *ngFor="let book of Books">
+    <div class="column card" >
+        <div class="column1" style="background-color:red">
+            {{book.title}}<br/><span style="font-size: 20px">{{book.category}}</span>
+            <br/><span style="font-size: 20px">{{book.publisher}}</span>
+        </div>
+        <h4>{{book.title}}</h4>
+        Chapeters : {{book.chapters}}<br/>
+        Publisheddate: {{book.publisheddate}}<br/>
+        <button (click)="editbook(book)">edit Book</button>
+    </div> 
+</div>
+<div class="column card">
+    <div style="text-align: center;margin:auto;">
+        <button><a routerLink="/createbook">create book</a></button>
+    </div>
+</div>
+</div>
+  </div>
+  
+<div *ngIf="flag" id="editBookContainer">
+    Book title : <input type="text" [(ngModel)]="hastoeditbook.title" placeholder="Enter Book title">
+
+    {{updatebookblankResponse.title}}<br/>
+Book category : <input type="text" [(ngModel)]="hastoeditbook.category" placeholder="Enter Book category">
+
+    {{updatebookblankResponse.category}}<br/>
+Book Price : <input type="text" [(ngModel)]="hastoeditbook.price"  >
+
+    {{updatebookblankResponse.price}}<br/>
+Book publisher : <input type="text" [(ngModel)]="hastoeditbook.publisher" placeholder="Enter Book publisher">
+
+    {{updatebookblankResponse.publisher}}<br/>
+Book published Date : <input type="text" [(ngModel)]="hastoeditbook.publisheddate" placeholder="Enter Book published Date">
+
+    {{updatebookblankResponse.publisheddate}}<br/>
+Book chapeters : <input type="text" [(ngModel)]="hastoeditbook.chapters" placeholder="Enter Book chapeters">
+
+    {{updatebookblankResponse.chapters}}<br/>
+    
+    <button (click)="updateBook()">Update Book</button>
+
+</div>
+  

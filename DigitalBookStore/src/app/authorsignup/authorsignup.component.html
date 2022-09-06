@@ -1,0 +1,18 @@
+<div id="signupContainer">
+    
+Author Name : <input type="text" [(ngModel)]="author.authorname" placeholder="Enter Author Name">
+    {{this.signUpblankResponse.authorname}}
+    {{this.signUpAuthorNameExists}}<br/>
+Author Email : <input type="email" [(ngModel)]="author.authoremail" placeholder="Enter Email Address">
+{{this.signUpblankResponse.authoremail}}
+{{this.signUpAuthorEmailExists}}<br/>
+Author Password : <input type="password" [(ngModel)]="author.password" placeholder="Enter Password">
+{{this.signUpblankResponse.authorpassword}}<br/>
+<button (click)="saveAuthor()">Signup</button>
+<p>{{signUpResponse}}</p>
+    
+</div>
+<div id="signupSuccessContainer">
+    <p>{{successMessage}}</p><br/>
+    Please <a routerLink="/authorsignin">Click here</a> to Signin 
+</div>

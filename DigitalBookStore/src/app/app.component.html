@@ -1,0 +1,41 @@
+<html>
+  
+  <body >
+    <nav id="authorloginContainer">
+      <ul>
+        <li><a routerLink="/authorsignup">Author Signup</a></li>
+        <li><a routerLink="/authorsignin">Author Signin</a></li>
+      </ul>
+    </nav>
+    <nav id="authorhomeContainer" style="display: none;">
+      <ul>
+        <li><button (click)="signout()" routerLink>Signout</button></li>
+      </ul>
+    </nav>
+    
+    <div id="digitalBooksContainer">
+      <h3>Books Available in Store</h3>
+      <div class="row" >
+          <p>{{nobookFoundMessage}}</p>
+          <div *ngFor="let book of Books">
+            <div class="column card" >
+                <div class="column1" style="background-color:red">
+                    {{book.title}}<br/><span style="font-size: 20px">{{book.category}}</span>
+                    <br/><span style="font-size: 20px">{{book.publisher}}</span>
+                </div>
+                <h4>{{book.title}}</h4>
+                Chapeters : {{book.chapters}}<br/>
+                Publisheddate: {{book.publisheddate}}<br/>
+                <button (click)="buyBook(book)">Buy</button>
+            </div> 
+          </div>
+      </div>
+    </div>
+
+    
+
+
+    <router-outlet></router-outlet>
+  </body>
+  
+</html>
