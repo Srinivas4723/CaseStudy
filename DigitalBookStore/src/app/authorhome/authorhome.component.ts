@@ -87,10 +87,10 @@ export class AuthorhomeComponent implements OnInit {
   }
   ngOnInit(): void {
     
-    const authorloginContainer:any= document.getElementById("authorloginContainer");
-    authorloginContainer.style.display="none";
-    const authorhomeContainer:any=document.getElementById("authorhomeContainer");
-    authorhomeContainer.style.display="block";
+    // const authorloginContainer:any= document.getElementById("authorloginContainer");
+    // authorloginContainer.style.display="none";
+    // const authorhomeContainer:any=document.getElementById("authorhomeContainer");
+    // authorhomeContainer.style.display="block";
     const observable=this.userService.getbooksByAuthorID();
     observable.subscribe((responseBody:any)=>{
      

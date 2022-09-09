@@ -28,9 +28,11 @@ import com.bookservice.repository.BookRepository;
 import com.bookservice.repository.ReaderRepository;
 import com.bookservice.request.BuyBookRequest;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
+
+@Getter
 @CrossOrigin
 @RestController // spring bean
 @RequestMapping("/api/v1/digitalbooks")
@@ -57,18 +59,18 @@ public class ReaderController extends ErrorController {
 	}
 	@PostMapping("/books/buy")//reader can buy book
 	ResponseEntity<?> buyBooks(@Valid @RequestBody BuyBookRequest buybookrequest){
-		if(bookrepository.existsById(buybookrequest.getBookid())){
+		if(bookrepository.existsById(buybookrequest.getBookId())){
 			
 			Reader reader;
-			Optional<Reader> reader1= readerrepository.findByreadername(buybookrequest.getReadername());
-			Optional<Reader> reader2 = readerrepository.findByreaderemail(buybookrequest.getReaderemail());
+			Optional<Reader> reader1= readerrepository.findByreadername(buybookrequest.getReaderName());
+			Optional<Reader> reader2 = readerrepository.findByreaderemail(buybookrequest.getReaderEmail());
 			if(reader1.isPresent() && reader2.isPresent() ) {
 				
-				if(reader1.get().getReaderemail().equals(buybookrequest.getReaderemail()) ) {
+				if(reader1.get().getReaderemail().equals(buybookrequest.getReaderEmail()) ) {
 					
-					if(!reader1.get().getBooks().contains(""+buybookrequest.getBookid())) {
-						String pid=buybook(reader1.get(),buybookrequest.getBookid());
-						buybookrequest.setPid(pid);
+					if(!reader1.get().getBooks().contains(""+buybookrequest.getBookId())) {
+						String pid=buybook(reader1.get(),buybookrequest.getBookId());
+						buybookrequest.setPaymentId(pid);
 						readerrepository.save(reader1.get());
 						return ResponseEntity.ok("Book Purchase Successful \n Please note the Payment Id for your reference\nPayment Id : "+pid);
 					}
@@ -84,9 +86,11 @@ public class ReaderController extends ErrorController {
 				return ResponseEntity.badRequest().body("User/Email has already exists,\n Please Try with different one's");
 			}
 			else {
-				reader = new Reader(buybookrequest.getReadername(),buybookrequest.getReaderemail());
-				String pid=buybook(reader,buybookrequest.getBookid());
-				buybookrequest.setPid(pid);
+				reader = new Reader();
+				reader.setReadername(buybookrequest.getReaderName());
+				reader.setReaderemail(buybookrequest.getReaderEmail());
+				String pid=buybook(reader,buybookrequest.getBookId());
+				buybookrequest.setPaymentId(pid);
 				readerrepository.save(reader);
 				return ResponseEntity.ok("Book Purchase Successful \n Please note the Payment Id for your reference\nPayment Id : "+pid);
 			}

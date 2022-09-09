@@ -1,0 +1,26 @@
+package com.bookservice.request;
+
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+
+import com.bookservice.controller.ErrorController;
+import com.bookservice.entity.Reader;
+
+import lombok.Data;
+
+@Data
+public class BuyBookRequest extends ErrorController{
+	@Id
+	private Long bookId;
+
+	@NotBlank(message = "readername cannot be blank#######")
+	private String readerName;
+	@NotBlank(message = "readeremail cannot be blank#######")
+	private String readerEmail;
+	private String paymentId;
+	
+	
+
+	
+	
+}

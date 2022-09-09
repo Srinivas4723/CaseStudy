@@ -1,0 +1,17 @@
+package com.bookservice.request;
+
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+
+import lombok.Data;
+@Data
+public class BuyBookRequest{
+	@Id
+	private Long bookId;
+	@NotBlank(message = "readername cannot be blank#######")
+	private String readerName;
+	@NotBlank(message = "Reader Email canno t be blank#######")
+	private String readerEmail;
+	private String paymentId;
+	private int id;
+}

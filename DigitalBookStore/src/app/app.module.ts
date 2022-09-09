@@ -22,7 +22,8 @@ const routes: Routes=[
   {path:"updatebook",component:UpdatebookComponent},
   {path:"searchbook",component:SearchbookComponent},
   {path:"readerpage",component:ReaderpageComponent},
-  {path:"getmybooks",component:GetmybooksComponent}
+  {path:"getmybooks",component:GetmybooksComponent},
+  
   
   
 ]

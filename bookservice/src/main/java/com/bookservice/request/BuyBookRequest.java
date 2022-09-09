@@ -3,65 +3,18 @@ package com.bookservice.request;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 
-import com.bookservice.controller.ErrorController;
-import com.bookservice.entity.Reader;
-
-public class BuyBookRequest extends ErrorController{
+import lombok.Data;
+@Data
+public class BuyBookRequest{
+	public BuyBookRequest(Long valueOf, String string, String string2) {
+		// TODO Auto-generated constructor stub
+	}
 	@Id
-	private Long bookid;
-
+	private Long bookId;
 	@NotBlank(message = "readername cannot be blank#######")
-	private String readername;
-	@NotBlank(message = "readeremail cannot be blank#######")
-	private String readeremail;
-	private String pid;
-	public String getPid() {
-		return pid;
-	}
-
-	public void setPid(String pid) {
-		this.pid = pid;
-	}
-
-	public Long getBookid() {
-		return bookid;
-	}
-
-	public void setBookid(Long bookid) {
-		this.bookid = bookid;
-	}
-
-	public String getReadername() {
-		return readername;
-	}
-
-	public void setReadername(String readername) {
-		this.readername = readername;
-	}
-
-	public String getReaderemail() {
-		return readeremail;
-	}
-
-	public void setReaderemail(String readeremail) {
-		this.readeremail = readeremail;
-	}
-
-	public BuyBookRequest(Long bookid, @NotBlank(message = "readername cannot be blank#######") String readername,
-			@NotBlank(message = "readeremail cannot be blank#######") String readeremail) {
-		super();
-		this.bookid = bookid;
-		this.readername = readername;
-		this.readeremail = readeremail;
-		
-	}
-	
-	public BuyBookRequest() {
-		super();
-	}
-
-	
-
-	
-	
+	private String readerName;
+	@NotBlank(message = "Reader Email canno t be blank#######")
+	private String readerEmail;
+	private String paymentId;
+	private int id;
 }

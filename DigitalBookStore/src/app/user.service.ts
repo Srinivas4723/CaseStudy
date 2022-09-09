@@ -7,8 +7,23 @@ const URL ="http://localhost:8083/api/v1/digitalbooks/"
   providedIn: 'root'
 })
 export class UserService {
-  getMyBooks() {
-    return this.http.
+//flags
+slideShowFlag:boolean=true;
+mydigitalBooksContainerFlag:boolean=true;
+digitalBooksContainerFlag:boolean=true;
+  
+  toggleFlag(flag:boolean){
+    return !flag;
+  }
+  returnBook(book:any, readeremail:any) {
+    return this.http.post(URL+"readers/"+readeremail+"/books/"+book.id+"/refund",null);
+  }
+  readBookByPaymentID(reader:any) {
+
+    return this.http.post(URL+"readers/"+reader.readeremail+"/books?pid="+reader.paymentId,null);
+  }
+  getMyBooksByReaderEmail(email:any) {
+    return this.http.get(URL+"readers/"+email+"/books");
   }
   buybook(reader: any) {
    return this.http.post(URL+"books/buy",reader);

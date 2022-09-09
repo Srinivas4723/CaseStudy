@@ -1,13 +1,9 @@
 /* Create three equal columns that floats next to each other */
 .column {
     float: left;
-    width: auto;
-    padding: 10px;
-    margin:10px;
-    height: 300px;
-  }
-  .card{
-  display: -ms-flexbox;
+    width:20%;
+    margin: 20px 25px;
+    display: -ms-flexbox;
   display: flex;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -15,27 +11,86 @@
   word-wrap: break-word;
   background-color: #fff;
   background-clip: border-box;
-  border: 1px solid rgba(0,0,0,.125);
-  border-radius: 0.25rem;
+  box-shadow: 0 4px 8px 0 rgb(0,0,02);
+  background-color: rgb(250, 248, 248);
+  
+  
+  
+    height: 300px
+  }
+ 
+.column img{
+  margin:4px;
 }
-  .column1 {
-    float: left;
-    
+.buybook{
+background-color: yellow;
+}
+  .rows{
+    margin:50px;
+  }
+  .rows h2{
+    color:#163f68;
     text-align: center;
-    
-    border-radius: 0.25rem;
-    background-image: linear-gradient(140deg, #EADEDB 0%, #BC70A4 50%, #BFD641 75%);
-    height: 150px; 
-    color:#f3f3f3;
-    font-size:30px;
-    font-weight:550;
-    padding-top:90px;
   }
   
-  
   /* Clear floats after the columns */
-  .row:after {
+  .rows:after {
     content: "";
     display: table;
     clear: both;
+    
   }
+
+  /********************************************************************
+  ************************************************************
+  *************************************/
+  
+  .spacer {
+    flex: 1;
+  }
+
+  .toolbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    background-color: #163f68;
+    color: white;
+    font-weight: 600;
+  }
+
+  .toolbar img {
+    margin: 0 16px;
+  }
+
+  .toolbar a{
+    
+    margin:10px;
+    text-decoration: none;
+    font-size: 15px;
+    padding:7px;
+   
+  }
+  .toolbar a:hover{
+    background-color: green;
+    color: white;
+  }
+ 
+  .error-messages{
+    color:red;
+    
+  }
+  .button:hover{
+    background-color: green;
+  }
+  .searchfields input{
+    margin:0 20px;
+  }
+.w3-button:hover{color:#000!important;background-color:#ccc!important}
+.w3-black,.w3-hover-black:hover{color:rgb(20, 20, 20)!important;background-color:rgb(233, 225, 225)!important}
+.w3-display-left{position:absolute;top:50%;left:0%;transform:translate(0%,-50%);-ms-transform:translate(-0%,-50%)}
+.w3-display-right{position:absolute;top:50%;right:0%;transform:translate(0%,-50%);-ms-transform:translate(0%,-50%)}
+.w3-button{border:none;display:inline-block;padding:18px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;cursor:pointer;white-space:nowrap}

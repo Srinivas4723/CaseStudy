@@ -79,6 +79,7 @@ class LoginControllerTest {
 		when(authorRepository.findByAuthorname(loginrequest.getAuthorname())).thenReturn(author);
 		assertEquals(logincontroller.signoutAuthor(loginrequest),ResponseEntity.ok("Author Signout Success"));
 		
+		author.get().setLoginstatus(false);
 		when(authorRepository.findByAuthorname(loginrequest.getAuthorname())).thenReturn(author);
 		assertEquals(logincontroller.signoutAuthor(loginrequest),ResponseEntity.badRequest().body("Error: Please signin first to signout"));
 		

@@ -118,7 +118,7 @@ public class BookController extends ErrorController {// accept requests
 					return ResponseEntity.badRequest().body("Please Login to Update Book");
 				}
 		}
-		return new ResponseEntity<String>("No book found to Update"+authorRepository.existsById(bookid),HttpStatus.UNAUTHORIZED);
+		return new ResponseEntity<String>("No book found to Update",HttpStatus.UNAUTHORIZED);
 		
 	}
 	

@@ -1,5 +1,6 @@
 import { applySourceSpanToStatementIfNeeded } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserService } from '../user.service';
 
 @Component({
@@ -8,56 +9,70 @@ import { UserService } from '../user.service';
   styleUrls: ['./readerpage.component.css']
 })
 export class ReaderpageComponent implements OnInit {
+  cardnumberblankResponse: string="";
 
-  constructor(public userSerive:UserService) { }
-  book:any=this.userSerive.book;
+  constructor(public userService:UserService,public router:Router) { }
+  book:any=this.userService.book;
+  readerFormFlag=true;
+ 
+  buyBookContainerFlag=true;
+  cardnumber:string="";
   reader={
     readername:"",
     readeremail:"",
-    bookid:this.book.id
+    bookid:this.userService.book.id
   }
   readerblankResponse:any={
     readername:"",
     readeremail:""
   }
-  bookPurchaseSuccessMessage1:any;
   bookPurchaseSuccessMessage:any;
   bookPurchaseFailureMessage:any;
-  makepayment1(){
-    this.bookPurchaseSuccessMessage=this.bookPurchaseSuccessMessage1;
-    const cardDetails:any=document.getElementById("cardDetails");
-    cardDetails.style.display="none";
-  }
   makepayment(){
+    this.cardnumberblankResponse="";
+    this.readerblankResponse.readername="";
+    this.readerblankResponse.readeremail="";
     this.bookPurchaseFailureMessage="";
     this.bookPurchaseSuccessMessage="";
-    const observable=this.userSerive.buybook(this.reader);
+    if(this.cardnumber===""){
+      this.cardnumberblankResponse="Card Number cannot be Blank";
+    }
+    const observable=this.userService.buybook(this.reader);
     observable.subscribe((responseBody)=>{
-      console.log("E"+JSON.stringify(responseBody));
+      
       this.readerblankResponse=responseBody;
     },
     (error:any)=>{
       console.log("R"+JSON.stringify(error.error));
       if(typeof error.error.text==='string'){
+        this.readerFormFlag=false;
+        this.bookPurchaseSuccessMessage=error.error.text;
         
-        this.bookPurchaseSuccessMessage1=error.error.text.replace("\n","\r\n");
-        const buybookContainer:any=document.getElementById("buybookContainer");
-          buybookContainer.style.display="none";
-          const cardDetails:any=document.getElementById("cardDetails");
-        cardDetails.style.display="block";
+      }
+      else if(typeof error.error==="string" && error.error.includes("Valid Email")){
+        this.readerblankResponse.readeremail=error.error;
       }
       else{
+        this.reader.readername="";
+        this.reader.readeremail="";
+        this.cardnumber="";
       this.bookPurchaseFailureMessage=error.error;
       }
-    })
-
+    });
+    
+    
   }
+  cancelpurchase(){
+    this.userService.digitalBooksContainerFlag=true;
+    this.userService.slideShowFlag=true;
+    this.router.navigate(["/"]);
+  }
+  
   ngOnInit(): void {
-    const digitalBooksContainer:any=document.getElementById("digitalBooksContainer");
-    digitalBooksContainer.style.display="none";
-    const cardDetails:any=document.getElementById("cardDetails");
-        cardDetails.style.display="none";
-    console.log("b"+this.book);
+   console.log(this.userService.book);
+    // const digitalBooksContainer:any=document.getElementById("digitalBooksContainer");
+    // digitalBooksContainer.style.display="none";
+    
   }
 
 }

@@ -1,0 +1,53 @@
+
+…
+java:S2293j"YReplace the type specification in this constructor call with the diamond operator ("<>").(„Î×²H…RMINORZ
+CODE_SMELL
+g	java:S125"<This block of commented-out lines of code should be removed.(åÜÍH©RMAJORZ
+CODE_SMELL
+g	java:S125m"<This block of commented-out lines of code should be removed.(åÜÍH¤RMAJORZ
+CODE_SMELL
+[
+java:S1452’"&Remove usage of generic wildcard type.(ˆ¯òùÿÿÿÿHœRCRITICALZ
+CODE_SMELL
+†
+java:S2293Œ"YReplace the type specification in this constructor call with the diamond operator ("<>").(™‡îžHžRMINORZ
+CODE_SMELL
+\
+java:S1066ƒ"/Merge this if statement with the enclosing one.(¢»ÁÔHªRMAJORZ
+CODE_SMELL
+…
+java:S2293¡"YReplace the type specification in this constructor call with the diamond operator ("<>").(¾­ßoH RMINORZ
+CODE_SMELL
+U
+java:S1452v"&Remove usage of generic wildcard type.(¬âÿÎH›RCRITICALZ
+CODE_SMELL
+U
+java:S1452<"&Remove usage of generic wildcard type.(¨ÒÌ—H„RCRITICALZ
+CODE_SMELL
+ˆ
+java:S1192r"TDefine a constant instead of duplicating this literal "Email Doesn't Exist" 4 times.(œ¾íÀÿÿÿÿÿHŠRCRITICALZ
+CODE_SMELL
+‹
+java:S2293»"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ð—œµüÿÿÿÿH¬RMINORZ
+CODE_SMELL
+f
+java:S4973-"<Strings and Boxed types should be compared using "equals()".(§Ç¶éýÿÿÿÿH‡RMAJORZBUG
+m	java:S125´"<This block of commented-out lines of code should be removed.(×ÎöŸÿÿÿÿÿH¥RMAJORZ
+CODE_SMELL
+
+java:S3776<"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(¨ÒÌ—HRCRITICALZ
+CODE_SMELL
+[
+java:S1452ª"&Remove usage of generic wildcard type.(‘åŒ®ÿÿÿÿÿHƒRCRITICALZ
+CODE_SMELL
+†
+java:S2293¾"YReplace the type specification in this constructor call with the diamond operator ("<>").(¸”½îH§RMINORZ
+CODE_SMELL
+h	java:S125š"<This block of commented-out lines of code should be removed.(åÜÍH¢RMAJORZ
+CODE_SMELL
+Z
+java:S21402")Use "java.util.Random.nextInt()" instead.(„ªªòþÿÿÿÿHRMINORZ
+CODE_SMELL
+U
+java:S1452g"&Remove usage of generic wildcard type.(Þ¹óéHRCRITICALZ
+CODE_SMELL

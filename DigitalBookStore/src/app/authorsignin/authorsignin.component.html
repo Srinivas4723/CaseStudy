@@ -1,15 +1,25 @@
-<p>authorsignin works!</p>
-<div id="signinContainer">
-    Author Name : <input type="text" [(ngModel)]="loginRequest.authorname" placeholder="Enter Author Name">
-    {{this.signInBlankResponse.authorname}}
-    <br/>
-
-Author Password : <input type="password" [(ngModel)]="loginRequest.password" placeholder="Enter Password">
-{{this.signInBlankResponse.password}}<br/>
-<button (click)="authorSignIn()">Signin</button>
-<p>{{signInIvalidResponse}}</p>
-</div>
-
-<div id="authorhomeContainer" style="display:none">
-
+<div class="register-photo">
+    <div class="form-container">
+        <div class="image-holder"></div>
+        <div  class="form">
+            
+            <div >
+                <p class="error-messages">{{signInIvalidResponse}}</p>
+            <h2 class="text-center"><strong>Enter</strong> your Credentials</h2>
+            <div class="form-group"><input [(ngModel)]="loginRequest.authorname" placeholder="Enter Author Name" class="form-control" type="text" >
+                <p class="error-messages"> 
+                    {{this.signInBlankResponse.authorname}}</p>
+             </div>
+            
+             <div class="form-group "><input [(ngModel)]="loginRequest.password" class="form-control" type="password"  placeholder="Enter Password">
+                 <p class="error-messages">{{this.signInBlankResponse.password}}</p>
+             </div>
+           
+            <div class="form-group">
+                <button (click)="authorSignIn()" class="btn btn-success button" type="submit">Sign In</button>
+                <button (click)="cancelsignin()" class="btn btn-secondary" >Cancel</button></div>
+            <a  routerLink="/authorsignup"> Dont have an Account? SignUp here.</a>
+            </div>
+        </div>
+    </div>
 </div>

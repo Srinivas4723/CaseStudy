@@ -21,7 +21,11 @@ export class AuthorsigninComponent implements OnInit {
   signInIvalidResponse:any;
   
   constructor(public userService: UserService,public router:Router) { }
-  
+  cancelsignin(){
+    this.userService.digitalBooksContainerFlag=true;
+    this.userService.slideShowFlag=true;
+    this.router.navigate(["/"]);
+  }
   authorSignIn(){
     const observable= this.userService.authorSignin(this.loginRequest);
     observable.subscribe((responseBody:any)=>{
@@ -47,8 +51,8 @@ export class AuthorsigninComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-    const digitalBooksContainer:any=document.getElementById("digitalBooksContainer");
-    digitalBooksContainer.style.display="none";
+    this.userService.digitalBooksContainerFlag=false;
+    this.userService.slideShowFlag=false;
   }
 
 }

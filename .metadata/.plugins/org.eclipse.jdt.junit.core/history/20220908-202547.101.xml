@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="Rerun testSignoutAuthor()" project="bookservice" tests="1" started="1" failures="0" errors="0" ignored="0">
+  <testsuite name="com.bookservice.controller.LoginControllerTest" time="0.774" displayname="LoginControllerTest" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.LoginControllerTest]">
+    <testcase name="testSignoutAuthor" classname="com.bookservice.controller.LoginControllerTest" time="0.774" displayname="testSignoutAuthor()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.LoginControllerTest]/[method:testSignoutAuthor()]"/>
+  </testsuite>
+</testrun>
