@@ -8,7 +8,6 @@ import { AuthorsignupComponent } from './authorsignup/authorsignup.component';
 import { AuthorsigninComponent } from './authorsignin/authorsignin.component';
 import { CreatebookComponent } from './createbook/createbook.component';
 import { UpdatebookComponent } from './updatebook/updatebook.component';
-import { SearchbookComponent } from './searchbook/searchbook.component';
 import { AuthorhomeComponent } from './authorhome/authorhome.component';
 import { ReaderpageComponent } from './readerpage/readerpage.component';
 import { GetmybooksComponent } from './getmybooks/getmybooks.component';
@@ -20,7 +19,7 @@ const routes: Routes=[
   {path:"authorhome",component:AuthorhomeComponent},
   {path:"createbook",component:CreatebookComponent},
   {path:"updatebook",component:UpdatebookComponent},
-  {path:"searchbook",component:SearchbookComponent},
+  
   {path:"readerpage",component:ReaderpageComponent},
   {path:"getmybooks",component:GetmybooksComponent},
   
@@ -37,7 +36,7 @@ const routes: Routes=[
     AuthorhomeComponent,
     CreatebookComponent,
     UpdatebookComponent,
-    SearchbookComponent,
+    
     ReaderpageComponent,
     GetmybooksComponent
   ],

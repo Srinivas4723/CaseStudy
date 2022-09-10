@@ -9,6 +9,9 @@ import { UserService } from './user.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  title(title: any) {
+    throw new Error('Method not implemented.');
+  }
   //////slide show
 slidingImageFlags=[true,false,false,false];
 slideIndex:any = 0;
@@ -17,6 +20,7 @@ searchbookdata={
 }
 Books:any=null;
   nobookFoundMessage:any;
+  signoutSuccessMessage: string="";
 //flags
 
 // authorhomeContainerFlag:boolean=false;
@@ -57,6 +61,9 @@ showSlidingImages(n:any) {
   constructor(public userService:UserService,public router:Router){}
   signout(){
     sessionStorage.removeItem('authorId');
+    this.userService.createbooknavFlag=false;
+    this.userService.authorsignupNavFlag=true;
+    this.signoutSuccessMessage="Sign Out Success";
     this.ngOnInit();
   }
   buyBook(book:any){
@@ -66,10 +73,16 @@ showSlidingImages(n:any) {
     this.userService.book=book;
     this.router.navigate(['/readerpage']);
   }
-  ngOnInit(): void {  
-    console.log("x");
+   ngOnInit() {  
+     this.userService.updateBookPageFlag=false;
+    this.userService.editBookContainerFlag=false;
+    this.signoutSuccessMessage="";
     this.userService.slideShowFlag=true;
     this.userService.digitalBooksContainerFlag=true; 
+    if(sessionStorage.getItem("authorId")!==null){
+      this.userService.authorsignupNavFlag=false;
+      this.userService.createbooknavFlag=true;
+    }
     const observable=this.userService.getAllBooks();
     observable.subscribe((responseBody:any)=>{
       if(responseBody.length===0){

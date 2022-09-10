@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserService } from '../user.service';
 
 @Component({
@@ -12,19 +13,8 @@ export class AuthorhomeComponent implements OnInit {
   }
   nobookFoundMessage:any;
   AllBooksOfAuthoId : any;
-  Books:any;
-  hastoeditbook={
-    id:'',
-    authorid:"",
-    title:'',
-    category:'',
-    author:'',
-    price:'',
-    publisher:'',
-    publisheddate:'',
-    chapters:'',
-    active:'',
-  };
+  authorBooks:any;
+  
   updatebookblankResponse={
     title:'',
     category:'',
@@ -36,31 +26,29 @@ export class AuthorhomeComponent implements OnInit {
     active:'',
   }
   flag=false;
-  constructor(public userService: UserService) { }
-  updateBook(){
-    const observable= this.userService.updateBook(this.hastoeditbook);
-    observable.subscribe((responseBody:any)=>{
-      console.log("R"+JSON.stringify(responseBody));
-    },
-    (error:any)=>{
-      console.log("E"+JSON.stringify(error.error));
-     if(typeof error.error.text==="string"){
-      const authorBookContainer:any = document.getElementById("authorBookContainer");
-      authorBookContainer.style.display="block";
-      const editBookContainer:any=document.getElementById("editBookContainer");
-      editBookContainer.style.display="none";
-      this.flag=false;
-      console.log("E"+JSON.stringify(error.error));
-       this.nobookFoundMessage=error.error.text;
-     }
-    })
+  authorName=sessionStorage.getItem("authorName");
+  getmyBooksContainerFlag: boolean=true;
+  readcontentbook: any;
+  bookcontentFlag: boolean=false;
+  authorBooksContainerFlag:boolean=true;
+  constructor(public userService: UserService,public router:Router) { }
+  readBook(book:any){
+    this.authorBooksContainerFlag=false;
+    this.readcontentbook=book;
+   this.bookcontentFlag=true;
+    
   }
+  
   editbook(book:any){
-    const authorBookContainer:any = document.getElementById("authorBookContainer");
-    authorBookContainer.style.display="none";
-    this.hastoeditbook=book;
+    // const authorBookContainer:any = document.getElementById("authorBookContainer");
+    // authorBookContainer.style.display="none";
+    this.userService.hastoeditbook=book;
     console.log(JSON.stringify(book));
-    this.flag=true;
+    this.authorBooksContainerFlag=false;
+    this.userService.hastoeditbook=book;
+    this.userService.editBookContainerFlag=true;
+    this.userService.updateBookPageFlag=true;
+    this.router.navigate(["/updatebook"]);
 
   }
   searchBooks(){
@@ -80,13 +68,17 @@ export class AuthorhomeComponent implements OnInit {
         this.nobookFoundMessage=error.error;
       }
       else{
-      this.Books=JSON.parse(JSON.stringify(error.error));
+      this.authorBooks=JSON.parse(JSON.stringify(error.error));
       }
     });
   }
   }
   ngOnInit(): void {
+    console.log("C");
+    this.userService.digitalBooksContainerFlag=false;
+    this.userService.slideShowFlag=false;
     
+    this.userService.createBookContainerFlag=false;
     // const authorloginContainer:any= document.getElementById("authorloginContainer");
     // authorloginContainer.style.display="none";
     // const authorhomeContainer:any=document.getElementById("authorhomeContainer");
@@ -94,7 +86,7 @@ export class AuthorhomeComponent implements OnInit {
     const observable=this.userService.getbooksByAuthorID();
     observable.subscribe((responseBody:any)=>{
      
-      this.Books=JSON.parse(JSON.stringify(responseBody));
+      this.authorBooks=JSON.parse(JSON.stringify(responseBody));
     },
     (error:any)=>{
       

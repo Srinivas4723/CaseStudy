@@ -11,15 +11,15 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import lombok.Data;
+import com.bookservice.controller.BaseController;
 
-@Data
+
 @Entity
 @Table(	name = "authors", 
 uniqueConstraints = { 
 	@UniqueConstraint(columnNames = "id")
 })
-public class Author {//not a spring bean
+public class Author extends BaseController {//not a spring bean
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -51,7 +51,7 @@ public class Author {//not a spring bean
 	private String authoremail;
 	
 	@NotBlank(message = "Password cannot be blank")
-	@Size(min=8,max = 12)
+	@Size(min=8,max=120)
 	private String password;
 	
 	public boolean isLoginstatus() {

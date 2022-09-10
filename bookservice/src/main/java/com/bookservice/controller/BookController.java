@@ -36,7 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController // spring bean
 @RequestMapping("/api/v1/digitalbooks")
-public class BookController extends ErrorController {// accept requests
+public class BookController extends BaseController {// accept requests
 	@Autowired // DI
 	BookRepository bookRepository; // dependency
 	
@@ -104,8 +104,8 @@ public class BookController extends ErrorController {// accept requests
 			@PathVariable("authorid") Long authorid, 
 			@PathVariable("bookid") Long bookid){
 		
-		Optional<Author> author= authorRepository.findById(authorid);
-		if(authorRepository.existsById(bookid) ) {
+		Optional<Author> author= authorRepository.findById(Long.valueOf(3));
+		if(bookRepository.existsById(bookid) ) {
 			
 				if(author.get().isLoginstatus()) {
 					book.setAuthorid(authorid);
@@ -118,7 +118,7 @@ public class BookController extends ErrorController {// accept requests
 					return ResponseEntity.badRequest().body("Please Login to Update Book");
 				}
 		}
-		return new ResponseEntity<String>("No book found to Update",HttpStatus.UNAUTHORIZED);
+		return new ResponseEntity<String>("No book found to Update"+authorRepository.existsById(bookid),HttpStatus.UNAUTHORIZED);
 		
 	}
 	

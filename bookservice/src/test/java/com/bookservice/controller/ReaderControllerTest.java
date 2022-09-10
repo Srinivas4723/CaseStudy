@@ -49,40 +49,39 @@ class ReaderControllerTest {
 	void testBuyBooks() {
 		BuyBookRequest buybookrequest=SampleBuyBookRequest();
 		Reader reader = SampleReader();
-		when(bookrepository.existsById(buybookrequest.getBookId())).thenReturn(true);
+		when(bookrepository.existsById(buybookrequest.getBookid())).thenReturn(true);
 		reader.setBooks("");
-		when(bookrepository.existsById(buybookrequest.getBookId())).thenReturn(true);
-		when(readerrepository.findByreadername(buybookrequest.getReaderName())).thenReturn(Optional.ofNullable(reader));
-		when(readerrepository.findByreaderemail(buybookrequest.getReaderEmail())).thenReturn(Optional.ofNullable(reader));
+		when(readerrepository.findByreadername(buybookrequest.getReadername())).thenReturn(Optional.ofNullable(reader));
+		when(readerrepository.findByreaderemail(buybookrequest.getReaderemail())).thenReturn(Optional.ofNullable(reader));
 		
-		//assertEquals(readerController.buyBooks(buybookrequest),ResponseEntity.ok("Book Purchase Successful \n Please note the Payment Id for your reference\nPayment Id : "+reader.getPaymentid().replace(",","")));
+		assertEquals(readerController.buyBooks(buybookrequest),ResponseEntity.ok("Book Purchase Successful \n Please note the Payment Id for your reference\nPayment Id : "+reader.getPaymentid().replace(",","")));
 		
-		//assertEquals(readerController.buyBooks(buybookrequest),ResponseEntity.badRequest().body("Book is already purchased"));
+		assertEquals(readerController.buyBooks(buybookrequest),ResponseEntity.badRequest().body("Book is already purchased"));
 		
 		
-		buybookrequest.setBookId(Long.valueOf(2));
-		when(bookrepository.existsById(buybookrequest.getBookId())).thenReturn(true);
-		assertEquals(readerController.buyBooks(buybookrequest),ResponseEntity.ok("Book Purchase Successful \n Please note the Payment Id for your reference\nPayment Id : "+buybookrequest.getPaymentId().replace(",","")));
+		buybookrequest.setBookid(Long.valueOf(2));
+		when(bookrepository.existsById(buybookrequest.getBookid())).thenReturn(true);
+		assertEquals(readerController.buyBooks(buybookrequest),ResponseEntity.ok("Book Purchase Successful \n Please note the Payment Id for your reference\nPayment Id : "+buybookrequest.getPid().replace(",","")));
 		
 		reader.setReaderemail("abc1@gmail.com");
-		when(readerrepository.findByreaderemail(buybookrequest.getReaderEmail())).thenReturn(Optional.ofNullable(reader));
+		when(readerrepository.findByreaderemail(buybookrequest.getReaderemail())).thenReturn(Optional.ofNullable(reader));
 		assertEquals(readerController.buyBooks(buybookrequest),ResponseEntity.badRequest().body("User/Email has already exists,\n Please Try with different one's"));
 		
-		when(readerrepository.findByreadername(buybookrequest.getReaderName())).thenReturn(Optional.ofNullable(reader));
-		when(readerrepository.findByreaderemail(buybookrequest.getReaderEmail())).thenReturn(Optional.empty());
+		when(readerrepository.findByreadername(buybookrequest.getReadername())).thenReturn(Optional.ofNullable(reader));
+		when(readerrepository.findByreaderemail(buybookrequest.getReaderemail())).thenReturn(Optional.empty());
 		assertEquals(readerController.buyBooks(buybookrequest),ResponseEntity.badRequest().body("User/Email has already exists,\n Please Try with different one's"));
 				
-		when(readerrepository.findByreadername(buybookrequest.getReaderName())).thenReturn(Optional.empty());
-		when(readerrepository.findByreaderemail(buybookrequest.getReaderEmail())).thenReturn(Optional.ofNullable(reader));
+		when(readerrepository.findByreadername(buybookrequest.getReadername())).thenReturn(Optional.empty());
+		when(readerrepository.findByreaderemail(buybookrequest.getReaderemail())).thenReturn(Optional.ofNullable(reader));
 		assertEquals(readerController.buyBooks(buybookrequest),ResponseEntity.badRequest().body("User/Email has already exists,\n Please Try with different one's"));		
 		
-		when(readerrepository.findByreadername(buybookrequest.getReaderName())).thenReturn(Optional.empty());
-		when(readerrepository.findByreaderemail(buybookrequest.getReaderEmail())).thenReturn(Optional.empty());
-		assertEquals(readerController.buyBooks(buybookrequest),ResponseEntity.ok("Book Purchase Successful \n Please note the Payment Id for your reference\nPayment Id : "+buybookrequest.getPaymentId()));
+		when(readerrepository.findByreadername(buybookrequest.getReadername())).thenReturn(Optional.empty());
+		when(readerrepository.findByreaderemail(buybookrequest.getReaderemail())).thenReturn(Optional.empty());
+		assertEquals(readerController.buyBooks(buybookrequest),ResponseEntity.ok("Book Purchase Successful \n Please note the Payment Id for your reference\nPayment Id : "+buybookrequest.getPid()));
 		
 		
 		
-		when(bookrepository.existsById(buybookrequest.getBookId())).thenReturn(false);
+		when(bookrepository.existsById(buybookrequest.getBookid())).thenReturn(false);
 		assertEquals(readerController.buyBooks(buybookrequest),ResponseEntity.badRequest().body("Invalid Book Id / Book not available"));
 	}
 
@@ -103,7 +102,7 @@ class ReaderControllerTest {
 		assertEquals(readerController.getPurchasedBooks(emailid),ResponseEntity.ok(books));
 		
 		when(readerrepository.findByreaderemail(emailid)).thenReturn(Optional.empty());
-		assertEquals(readerController.getPurchasedBooks(emailid),ResponseEntity.badRequest().body("Email Doesn't Exist"));
+		assertEquals(readerController.getPurchasedBooks(emailid),ResponseEntity.badRequest().body("No books Purchased with this email"));
 	}
 
 	@Test

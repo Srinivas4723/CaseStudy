@@ -9,9 +9,17 @@ const URL ="http://localhost:8083/api/v1/digitalbooks/"
 export class UserService {
 //flags
 slideShowFlag:boolean=true;
+createbooknavFlag:boolean=false;
+createBookContainerFlag:boolean=false;
+createbooksuccessContainerFlag:boolean=false;
+authorsignupNavFlag:boolean=true;
 mydigitalBooksContainerFlag:boolean=true;
 digitalBooksContainerFlag:boolean=true;
-  
+editBookContainerFlag:boolean=false;
+editbooksuccessContainerFlag:boolean=false;
+updateBookPageFlag:boolean=false;
+hastoeditbook: any;
+
   toggleFlag(flag:boolean){
     return !flag;
   }

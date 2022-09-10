@@ -9,6 +9,7 @@ target/
 .classpath
 .factorypath
 .project
+.sonarlint
 .settings
 .springBeans
 .sts4-cache

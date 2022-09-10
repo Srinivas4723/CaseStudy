@@ -31,6 +31,9 @@ export class CreatebookComponent implements OnInit {
     chapters:'',
     active:'',
   }
+  cancelcreatebook(){
+    this.router.navigate(["/authorhome"]);
+  }
   createBook(){
     const observable = this.userService.createBook(this.book);
     observable.subscribe((responseBody:any)=>{
@@ -47,10 +50,13 @@ export class CreatebookComponent implements OnInit {
     (error:any)=>{
       console.log(JSON.stringify(error.error));
       if(typeof error.error!=='string'){
-        const createbooksuccessMessageContainer:any= document.getElementById("createbooksuccessMessageContainer");
-        createbooksuccessMessageContainer.style.display="block";
-        const createbookContainer:any=document.getElementById("createbookContainer");
-        createbookContainer.style.display="none";
+        this.userService.createBookContainerFlag=false;
+        this.userService.createbooksuccessContainerFlag=true;
+        console.log("X");
+        // const createbooksuccessMessageContainer:any= document.getElementById("createbooksuccessMessageContainer");
+        // createbooksuccessMessageContainer.style.display="block";
+        // const createbookContainer:any=document.getElementById("createbookContainer");
+        // createbookContainer.style.display="none";
       }
       
     }
@@ -58,10 +64,15 @@ export class CreatebookComponent implements OnInit {
   }
   ngOnInit(): void {
     console.log("oninit");
-    const createbooksuccessMessageContainer:any= document.getElementById("createbooksuccessMessageContainer");
-        createbooksuccessMessageContainer.style.display="none";
-        const createbookContainer:any=document.getElementById("createbookContainer");
-        createbookContainer.style.display="block";
+    this.userService.digitalBooksContainerFlag=false;
+    this.userService.slideShowFlag=false;
+    
+    this.userService.createBookContainerFlag=true;
+    this.userService.createbooksuccessContainerFlag=false;
+    // const createbooksuccessMessageContainer:any= document.getElementById("createbooksuccessMessageContainer");
+    //     createbooksuccessMessageContainer.style.display="none";
+    //     const createbookContainer:any=document.getElementById("createbookContainer");
+    //     createbookContainer.style.display="block";
   }
 
 }

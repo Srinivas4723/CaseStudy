@@ -1,50 +1,50 @@
 
-
-java:S2293K"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÅÌëlRMINORZ
+g	java:S125?"<This block of commented-out lines of code should be removed.(èĞ¸HâRMAJORZ
 CODE_SMELL
-‚
-java:S2293N"YReplace the type specification in this constructor call with the diamond operator ("<>").(ı¸RMINORZ
+v
+java:S3655Y"LCall "author.isPresent()" or "!author.isEmpty()" before accessing the value.(÷á±–şÿÿÿÿHãRMAJORZBUG
+j
+java:S1155J">Use isEmpty() to check whether the collection is empty or not.(šÊ°ÖHäRMINORZ
 CODE_SMELL
-‡
-java:S2293c"YReplace the type specification in this constructor call with the diamond operator ("<>").(šÙùÿÿÿÿRMINORZ
+Z
+java:S1452S"&Remove usage of generic wildcard type.(¬ê²¾ùÿÿÿÿHçRCRITICALZ
 CODE_SMELL
-‡
-java:S2293y"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ÿ¹ÇşÿÿÿÿRMINORZ
+Z
+java:S1452g"&Remove usage of generic wildcard type.(¨éÌ½ıÿÿÿÿHèRCRITICALZ
 CODE_SMELL
-s
-java:S3655Y"LCall "author.isPresent()" or "!author.isEmpty()" before accessing the value.(÷á±–şÿÿÿÿRMAJORZBUG
-s
-java:S3655n"LCall "author.isPresent()" or "!author.isEmpty()" before accessing the value.(÷á±–şÿÿÿÿRMAJORZBUG
-R
-java:S14524"&Remove usage of generic wildcard type.(š²…·RCRITICALZ
-CODE_SMELL
-d	java:S125?"<This block of commented-out lines of code should be removed.(èĞ¸RMAJORZ
-CODE_SMELL
-g
-java:S1155J">Use isEmpty() to check whether the collection is empty or not.(šÊ°ÖRMINORZ
-CODE_SMELL
-t
-java:S4684S"@Replace this persistent entity with a simple POJO or DTO object.(¬ê²¾ùÿÿÿÿRCRITICALZVULNERABILITY
-W
-java:S1452S"&Remove usage of generic wildcard type.(¬ê²¾ùÿÿÿÿRCRITICALZ
-CODE_SMELL
-t
-java:S4684g"@Replace this persistent entity with a simple POJO or DTO object.(¨éÌ½ıÿÿÿÿRCRITICALZVULNERABILITY
-W
-java:S1452g"&Remove usage of generic wildcard type.(¨éÌ½ıÿÿÿÿRCRITICALZ
-CODE_SMELL
-p
-java:S1128	"BRemove this unused import 'javax.validation.constraints.NotBlank'.(µã‡ıÿÿÿÿRMINORZ
-CODE_SMELL
-y
-java:S1128"PRemove this unused import 'org.springframework.http.ResponseEntity.BodyBuilder'.(úÎ¬©RMINORZ
-CODE_SMELL
-r
-java:S1128"IRemove this unused import 'org.springframework.util.LinkedMultiValueMap'.(µÂî‹RMINORZ
-CODE_SMELL
-q
-java:S1128"CRemove this unused import 'org.springframework.util.MultiValueMap'.(·ÚÀŞùÿÿÿÿRMINORZ
+…
+java:S2293y"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ò½©‚HéRMINORZ
 CODE_SMELL
 |
-java:S1128"SRemove this unused import 'org.springframework.web.bind.annotation.ResponseStatus'.(¯×ñRMINORZ
+java:S1128"PRemove this unused import 'org.springframework.http.ResponseEntity.BodyBuilder'.(úÎ¬©HëRMINORZ
+CODE_SMELL
+v
+java:S3655n"LCall "author.isPresent()" or "!author.isEmpty()" before accessing the value.(÷á±–şÿÿÿÿHíRMAJORZBUG
+s
+java:S1128	"BRemove this unused import 'javax.validation.constraints.NotBlank'.(µã‡ıÿÿÿÿHîRMINORZ
+CODE_SMELL
+U
+java:S14524"&Remove usage of generic wildcard type.(š²…·HğRCRITICALZ
+CODE_SMELL
+u
+java:S1128"IRemove this unused import 'org.springframework.util.LinkedMultiValueMap'.(µÂî‹HñRMINORZ
+CODE_SMELL
+„
+java:S2293K"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÅÌëlHóRMINORZ
+CODE_SMELL
+t
+java:S1128"CRemove this unused import 'org.springframework.util.MultiValueMap'.(·ÚÀŞùÿÿÿÿHõRMINORZ
+CODE_SMELL
+w
+java:S4684S"@Replace this persistent entity with a simple POJO or DTO object.(¬ê²¾ùÿÿÿÿH÷RCRITICALZVULNERABILITY
+Š
+java:S2293c"YReplace the type specification in this constructor call with the diamond operator ("<>").(šÙùÿÿÿÿHøRMINORZ
+CODE_SMELL
+w
+java:S4684g"@Replace this persistent entity with a simple POJO or DTO object.(¨éÌ½ıÿÿÿÿHúRCRITICALZVULNERABILITY
+…
+java:S2293N"YReplace the type specification in this constructor call with the diamond operator ("<>").(ı¸HûRMINORZ
+CODE_SMELL
+
+java:S1128"SRemove this unused import 'org.springframework.web.bind.annotation.ResponseStatus'.(¯×ñHıRMINORZ
 CODE_SMELL

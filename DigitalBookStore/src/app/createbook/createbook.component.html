@@ -1,17 +1,63 @@
-<p>createbook works!</p>
+<div class="register-photo">
+    <div class="form-container">
+        
+        <div  class="form">
+            <!-- <p class="error-messages">{{failureMessage}}</p> -->
+            <!-- <p class="success-messages">{{successMessage}}</p>  -->
+            <div *ngIf="userService.createbooksuccessContainerFlag" id="createbooksuccessMessageContainer">
+               <p class="success-messages"> Book Created SuccessFull.....!!!!<br/></p>
+                <a (click)='ngOnInit()' routerLink="/createbook">Click here</a> to create new books
+            
+            </div>
+            <div *ngIf="userService.createBookContainerFlag" >
+            <h2 class="text-center"><strong>Create</strong> a book</h2>
+            <div class="form-group">
+                <label><strong>Boot Title</strong></label>
+                <input [(ngModel)]="book.title" placeholder="Enter Book title" class="form-control" type="text" >
+                <p class="error-messages"> {{createbookblankResponse.title}}</p>
+             </div>
+             <div class="form-group ">
+                <label><strong>Boot Category</strong></label>
+                 <input [(ngModel)]="book.category" placeholder="Enter Book category" class="form-control" type="email" >
+                 <p class="error-messages">{{createbookblankResponse.category}}</p>
+             </div>
+             <div class="form-group ">
+                <label><strong>Boot Publisher</strong></label> 
+                <input [(ngModel)]="book.publisher" class="form-control" type="text"  placeholder="Enter Publisher">
+                 <p class="error-messages">{{createbookblankResponse.publisher}}</p>
+             </div>
+             <div class="form-group ">
+                <label><strong>Book Published</strong></label>
+                 <input [(ngModel)]="book.publisheddate" class="form-control"  onfocus="(this.type='date')" placeholder="Enter Published Date">
+                <p class="error-messages">{{createbookblankResponse.publisheddate}}</p>
+            </div>
+            <div class="form-group ">
+                <label><strong>Book Chapters</strong></label>
+                <input [(ngModel)]="book.chapters" class="form-control" type="number"  placeholder="Enter Published Date">
+                <p class="error-messages">{{createbookblankResponse.chapters}}</p>
+            </div>
+            <div class="form-group ">
+                <label><strong>Book Price</strong></label>
+                <input [(ngModel)]="book.price" class="form-control" type="number"  placeholder="Enter Published Date">
+                <p class="error-messages">{{createbookblankResponse.price}}</p>
+            </div>
+            <div class="form-group">
+                <button class="button btn btn-success" (click)="createBook()">Create Book</button>
+                <button class="btn btn-secondary" (click)="cancelcreatebook()">Cancel</button></div> 
+            
+            </div>
+        </div>
+    </div>
+</div>
+<!--------------------Original-->
+
+<!-- <p>createbook works!</p>
 <div id="createbookContainer">
-    Book title : <input type="text" [(ngModel)]="book.title" placeholder="Enter Book title">
-
-    {{createbookblankResponse.title}}<br/>
-Book category : <input type="text" [(ngModel)]="book.category" placeholder="Enter Book category">
-
-    {{createbookblankResponse.category}}<br/>
+   
 Book Price : <input type="text" [(ngModel)]="book.price"  >
 
     {{createbookblankResponse.price}}<br/>
-Book publisher : <input type="text" [(ngModel)]="book.publisher" placeholder="Enter Book publisher">
 
-    {{createbookblankResponse.publisher}}<br/>
 Book published Date : <input type="text" [(ngModel)]="book.publisheddate" placeholder="Enter Book published Date">
 
     {{createbookblankResponse.publisheddate}}<br/>
@@ -21,9 +67,6 @@ Book chapeters : <input type="text" [(ngModel)]="book.chapters" placeholder="Ent
 
 
     <button (click)="createBook()">Create Book</button>
-</div>
+</div> -->
 
-<div id="createbooksuccessMessageContainer">
-    Book Created SuccessFull.....!!!!<br/>
-    <a (click)='ngOnInit()' routerLink="/createbook">Click here</a> to create new books
-</div>
+

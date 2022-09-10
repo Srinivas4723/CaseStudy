@@ -11,7 +11,7 @@ export class AuthorsigninComponent implements OnInit {
 
   loginRequest ={
     authorname:"abc",
-    password:"abc"
+    password:"abcabcabc"
 
   }
   signInBlankResponse ={
@@ -46,6 +46,8 @@ export class AuthorsigninComponent implements OnInit {
        sessionStorage.setItem("authorName",this.loginRequest.authorname);
         sessionStorage.setItem('authorId',error.error.text.replace("Author Login Success",""));
         console.log(sessionStorage.getItem('authorId'));
+        this.userService.authorsignupNavFlag=false;
+        this.userService.createbooknavFlag=true;
         this.router.navigate(['/authorhome']);
       }
     });

@@ -6,15 +6,24 @@
 /> 
   <h1>IIHT Book Store</h1>
     <div class="spacer"></div>
+    <div *ngIf="userService.authorsignupNavFlag">
     <a class="btn btn-light" routerLink="getmybooks">My Books</a>
     <a class="btn btn-light" routerLink="authorsignup">AuthorSignup</a>
     <a class="btn btn-light" routerLink="authorsignin">AuthorSignIn</a>
-    <img style="width:40px;" class="rounded-pill" alt="avatar " src="assets/avt.png">
+   
+  </div>
+  <div *ngIf="userService.createbooknavFlag">
+    <a class="btn btn-light" routerLink="authorhome">My Books</a>
+    <a class="btn btn-light" routerLink="createbook">Create Book</a>
+    <button class="btn btn-light" (click)="signout()">Sign Out</button>
+
+  </div>
+  <img style="width:40px;" class="rounded-pill" alt="avatar " src="assets/avt.png">
 </div>  
 <!--------------------------------------------------------------------------
 -------------------SLIde Show------------------------------------->
 <br/><br/><br/>
-
+<p class="success-messages">{{signoutSuccessMessage}}</p>
 <div *ngIf="userService.slideShowFlag" class="w3-content w3-display-container">
 
   <div *ngIf="slidingImageFlags[0]" class="w3-display-container mySlides">

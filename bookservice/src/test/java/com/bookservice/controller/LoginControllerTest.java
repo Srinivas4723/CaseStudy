@@ -26,7 +26,7 @@ import com.bookservice.request.LoginRequest;
 @ExtendWith(MockitoExtension.class)
 class LoginControllerTest {
 	@InjectMocks LoginController logincontroller;
-	@InjectMocks ErrorController errorcontroller;
+	@InjectMocks BaseController basecontroller;
 	@Mock AuthorRepository authorRepository;
 	
 	
@@ -57,16 +57,24 @@ class LoginControllerTest {
 		when(authorRepository.findByAuthorname(loginrequest.getAuthorname())).thenReturn(author);
 		assertEquals(logincontroller.authenticateAuthor(loginrequest),ResponseEntity.ok("Author Login Success"+author.get().getId()));
 		
-		author.get().setAuthorname("abcd");//wrong author name
-		when(authorRepository.findByAuthorname(loginrequest.getAuthorname())).thenReturn(Optional.empty());
-		assertEquals(logincontroller.authenticateAuthor(loginrequest),ResponseEntity.badRequest().body("Error: Invalid Credentials"));
+		
 		
 		author.get().setPassword("abcd");//wrong password
 		when(authorRepository.findByAuthorname(loginrequest.getAuthorname())).thenReturn(author);
 		assertEquals(logincontroller.authenticateAuthor(loginrequest),ResponseEntity.badRequest().body("Error: Invalid Credentials"));
 		
+		author.get().setAuthorname("");
+		when(authorRepository.findByAuthorname(loginrequest.getAuthorname())).thenReturn(author);
+		assertEquals(logincontroller.authenticateAuthor(loginrequest),ResponseEntity.badRequest().body("Error: Invalid Credentials"));
+	}
+	@Test
+	void testAuthenticateAutorFailure() {
+		LoginRequest loginrequest= SampleLoginRequest();
+		Optional<Author> author= SampleAuthor();
 		
-		
+		author.get().setAuthorname("abcd");//wrong author name
+		when(authorRepository.findByAuthorname(loginrequest.getAuthorname())).thenReturn(Optional.empty());
+		assertEquals(logincontroller.authenticateAuthor(loginrequest),ResponseEntity.badRequest().body("Error: Invalid Credentials"));
 	}
 	
 		

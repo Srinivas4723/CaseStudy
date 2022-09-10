@@ -83,6 +83,13 @@ background-color: yellow;
     color:red;
     
   }
+  .success-messages{
+    color:white;
+    text-align: center;
+    margin:20px;
+    width:300px;
+    background-color: green;
+  }
   .button:hover{
     background-color: green;
   }
