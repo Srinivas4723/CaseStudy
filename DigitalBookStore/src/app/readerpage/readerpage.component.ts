@@ -10,11 +10,9 @@ import { UserService } from '../user.service';
 })
 export class ReaderpageComponent implements OnInit {
   cardnumberblankResponse: string="";
-
   constructor(public userService:UserService,public router:Router) { }
   book:any=this.userService.book;
   readerFormFlag=true;
- 
   buyBookContainerFlag=true;
   cardnumber:string="";
   reader={
@@ -59,8 +57,6 @@ export class ReaderpageComponent implements OnInit {
       this.bookPurchaseFailureMessage=error.error;
       }
     });
-    
-    
   }
   cancelpurchase(){
     this.userService.digitalBooksContainerFlag=true;
@@ -68,11 +64,6 @@ export class ReaderpageComponent implements OnInit {
     this.router.navigate(["/"]);
   }
   
-  ngOnInit(): void {
-   console.log(this.userService.book);
-    // const digitalBooksContainer:any=document.getElementById("digitalBooksContainer");
-    // digitalBooksContainer.style.display="none";
-    
+  ngOnInit(): void {   
   }
-
 }

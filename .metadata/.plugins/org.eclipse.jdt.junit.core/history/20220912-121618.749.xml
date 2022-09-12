@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="Rerun testHashCode()" project="bookservice" tests="1" started="1" failures="0" errors="0" ignored="0">
+  <testsuite name="com.bookservice.entity.AuthorTest" time="0.027" displayname="AuthorTest" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.entity.AuthorTest]">
+    <testcase name="testHashCode" classname="com.bookservice.entity.AuthorTest" time="0.027" displayname="testHashCode()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.entity.AuthorTest]/[method:testHashCode()]"/>
+  </testsuite>
+</testrun>

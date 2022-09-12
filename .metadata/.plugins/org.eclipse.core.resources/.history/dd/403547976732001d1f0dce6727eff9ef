@@ -1,0 +1,89 @@
+package com.bookservice.entity;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
+
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+
+class AuthorTest {
+	Author author1= new Author();
+	Author author2= new Author();
+	@Test
+	void testHashCode() {				
+					
+		assertEquals(author1.hashCode(),author2.hashCode());
+	}
+
+	@Test
+	void testGetId() {
+		author.setId(Long.valueOf(1));
+		assertEquals(Long.valueOf(1),author.getId());
+	}
+
+	@Test
+	void testGetAuthorname() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testGetAuthoremail() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testGetPassword() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testIsLoginstatus() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testSetId() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testSetAuthorname() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testSetAuthoremail() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testSetPassword() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testSetLoginstatus() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testEqualsObject() {
+		
+	}
+
+	@Test
+	void testCanEqual() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testToString() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testAuthor() {
+		fail("Not yet implemented");
+	}
+
+}

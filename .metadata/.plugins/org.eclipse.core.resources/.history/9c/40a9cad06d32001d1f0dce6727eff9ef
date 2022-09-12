@@ -1,0 +1,28 @@
+package com.bookservice.entity;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class ReaderTest {
+	Reader reader1 =new Reader();
+	Reader reader2= new Reader();
+	@Test
+	void testHashCode() {
+		assertEquals(reader1.hashCode(),reader2.hashCode());
+	}
+
+	@Test
+	void testEqualsObject() {
+		assertTrue(reader1.equals(reader2));
+		reader1.setReadername("abc");
+		reader2.setReadername("xyz");
+		assertFalse(reader1.equals(reader2));
+	}
+
+	@Test
+	void testToString() {
+		assertEquals(reader1.toString(),reader2.toString());
+	}
+
+}

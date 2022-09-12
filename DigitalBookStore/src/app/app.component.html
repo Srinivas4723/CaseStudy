@@ -1,91 +1,63 @@
-<div class="toolbar" role="banner">
-  <img
- width="50"
- alt="Angular Logo"
- src="assets/logo2.jpg"
-/> 
+<div class="toolbar">
+  <img width="50" alt="Angular Logo" src="assets/logo2.jpg"/> 
   <h1>IIHT Book Store</h1>
-    <div class="spacer"></div>
-    <div *ngIf="userService.authorsignupNavFlag">
-    <a class="btn btn-light" routerLink="getmybooks">My Books</a>
+  <div class="spacer"></div>
+  <div *ngIf="userService.authorsignupNavFlag">
+    <a class="btn btn-light" routerLink="getmybooks">Get My Books</a>
     <a class="btn btn-light" routerLink="authorsignup">AuthorSignup</a>
     <a class="btn btn-light" routerLink="authorsignin">AuthorSignIn</a>
-   
   </div>
   <div *ngIf="userService.createbooknavFlag">
     <a class="btn btn-light" routerLink="authorhome">My Books</a>
     <a class="btn btn-light" routerLink="createbook">Create Book</a>
     <button class="btn btn-light" (click)="signout()">Sign Out</button>
-
   </div>
   <img style="width:40px;" class="rounded-pill" alt="avatar " src="assets/avt.png">
 </div>  
-<!--------------------------------------------------------------------------
--------------------SLIde Show------------------------------------->
+
 <br/><br/><br/>
 <p class="success-messages">{{signoutSuccessMessage}}</p>
 <div *ngIf="userService.slideShowFlag" class="w3-content w3-display-container">
-
   <div *ngIf="slidingImageFlags[0]" class="w3-display-container mySlides">
     <img src="assets/sliding1.jpg" width="100%" height="300">
-    
   </div>
-
-<div *ngIf="slidingImageFlags[1]" class="w3-display-container mySlides">
-  <img src="assets/sliding2.jpg" width="100%" height="300">
+  <div *ngIf="slidingImageFlags[1]" class="w3-display-container mySlides">
+    <img src="assets/sliding2.jpg" width="100%" height="300">
+  </div>
+  <div *ngIf="slidingImageFlags[2]" class="w3-display-container mySlides">
+    <img src="assets/sliding3.jpg" width="100%" height="300">
+  </div>
+  <div *ngIf="slidingImageFlags[3]" class="w3-display-container mySlides">
+    <img src="assets/sliding4.jpg" width="100%" height="300" >
+  </div>
+  <button class="w3-button w3-display-left w3-black" (click)="showSlidingImages(-1)">&#10094;</button>
+  <button class="w3-button w3-display-right w3-black" (click)="showSlidingImages(1)">&#10095;</button>
+</div>
  
-</div>
-<div *ngIf="slidingImageFlags[2]" class="w3-display-container mySlides">
-  <img src="assets/sliding3.jpg" width="100%" height="300">
-  
-</div>
-
-<div *ngIf="slidingImageFlags[3]" class="w3-display-container mySlides">
-  <img src="assets/sliding4.jpg" width="100%" height="300" >
-  
-</div>
-<button class="w3-button w3-display-left w3-black" (click)="showSlidingImages(-1)">&#10094;</button>
-<button class="w3-button w3-display-right w3-black" (click)="showSlidingImages(1)">&#10095;</button>
-
-</div>
- <!--------------------------------------------------------------------------------------------------------->
-   
- <!-- <nav id="authorloginContainer">
-       <ul>
-        <li><a routerLink="/authorsignup">Author Signup</a></li>
-        <li><a routerLink="/authorsignin">Author Signin</a></li>
-      </ul> 
-    </nav>
-    <nav id="authorhomeContainer"  >
-      <ul>
-        <li><button (click)="signout()" routerLink>Signout</button></li>
-      </ul>
-    </nav> -->
-
-  <!-------Home All books from Store----------------------------------->
-    
-    <div *ngIf="userService.digitalBooksContainerFlag" id="digitalBooksContainer">
-      <!--<h2>Books Available in Store</h2>-->
-      <div class="rows" >
-        <div id="searchFilters" class="searchfields" >
-        <input type="text"  [(ngModel)]="searchbookdata.category" placeholder="Enter Category">
-        <input type="text"  [(ngModel)]="searchbookdata.author" placeholder="Enter Author">
-        <input type="text"  [(ngModel)]="searchbookdata.price" placeholder="Enter Price">
-        <input type="text"   [(ngModel)]="searchbookdata.publisher" placeholder="Enter Publisher">
-        <button class="btn btn-secondary" (click)="searchBooks()">Search Filters</button>
-        
-        </div>
-          <p class="error-messages">{{nobookFoundMessage}}</p>
-          <div *ngFor="let book of Books">
-            <div class="column" >
-              <img src="assets/book{{book.id}}.jpg" alt="book image" width="220" height="220">
-                <div style="text-align: center;font-size: small;">
-                <h3 style="font-weight:bold;text-decoration:underline;text-align: center;font-size: small;">{{book.title}}</h3>
-                 <span style="color:#163f68;">By  {{book.author}}</span>
-                </div>
-                <button  class="button btn btn-secondary" (click)="buyBook(book)">Buy Now @Rs.{{book.price}}</button>
-            </div> 
-          </div>
-      </div>
+<div *ngIf="userService.digitalBooksContainerFlag" id="digitalBooksContainer">
+  <!--<h2>Books Available in Store</h2>-->
+  <div class="rows" >
+  <div id="searchFilters" class="searchfields" >
+   <input list="categories" [(ngModel)]="searchbookdata.category" placeholder="Enter Book Category" >
+    <datalist id="categories">
+      <option *ngFor="let category of bookcategory" [ngValue]="category">{{category}}</option>
+    </datalist>
+    <input type="text"  [(ngModel)]="searchbookdata.author" placeholder="Enter Author">
+    <input type="text"  [(ngModel)]="searchbookdata.price" placeholder="Enter Price">
+    <input type="text"   [(ngModel)]="searchbookdata.publisher" placeholder="Enter Publisher">
+    <button class="btn btn-secondary" (click)="searchBooks()">Search Filters</button>
     </div>
-    <router-outlet></router-outlet>
+      <p class="error-messages">{{nobookFoundMessage}}</p>
+      <div *ngFor="let book of Books">
+      <div class="column" >
+        <img src="assets/book{{book.id}}.jpg" alt="book image" width="220" height="220">
+        <div style="text-align: center;font-size: small;">
+        <h3 style="font-weight:bold;text-decoration:underline;text-align: center;font-size: small;">{{book.title}}</h3>
+          <span style="color:#163f68;">By  {{book.author}}</span>
+        </div>
+        <button  class="button btn btn-secondary" (click)="buyBook(book)">Buy Now @Rs.{{book.price}}</button>
+      </div> 
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>

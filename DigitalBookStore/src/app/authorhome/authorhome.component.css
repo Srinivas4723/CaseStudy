@@ -32,13 +32,6 @@ border-radius: 0.25rem;
   padding-top:90px;
 }
 
-
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
 .error-messages{
   color:red;
 }
@@ -73,8 +66,8 @@ h2{
   text-align:center;
 }
 .error-messages{
-  color:tomato;
+  color:rgb(197, 23, 23);
   text-align: center;
-  margin:10px;
-  background-color: wheat;
+  
+ 
 }

@@ -1,0 +1,23 @@
+package com.bookservice.entity;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import lombok.Data;
+
+@Entity
+@Data
+@Table(	name = "readers")
+public class Reader {
+	@Id
+	@NotBlank(message = "readername cannot be blank#######")
+	private String readername;
+	@Id
+	@NotBlank(message = "readeremail cannot be blank#######")
+	private String readeremail;
+	 private String purchasedbooks;
+	 private String paymentid;
+}

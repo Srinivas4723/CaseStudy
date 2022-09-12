@@ -1,0 +1,37 @@
+package com.bookservice.request;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class BuyBookRequestTest {
+	private BuyBookRequest SampleBuyBookRequest1() {
+		BuyBookRequest buyBookRequest = new BuyBookRequest();
+		buyBookRequest.setBookid(Long.valueOf(1));
+		buyBookRequest.setReadername("abc");
+		buyBookRequest.setReaderemail("abc@gmail.com");
+		return buyBookRequest;
+	}
+	private BuyBookRequest SampleBuyBookRequest2() {
+		BuyBookRequest buyBookRequest = new BuyBookRequest();
+		buyBookRequest.setBookid(Long.valueOf(1));
+		buyBookRequest.setReadername("abc");
+		buyBookRequest.setReaderemail("abc@gmail.com");
+		return buyBookRequest;
+	}
+	@Test
+	void testHashCode() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testEqualsObject() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testToString() {
+		fail("Not yet implemented");
+	}
+
+}

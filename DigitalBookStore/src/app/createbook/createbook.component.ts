@@ -1,26 +1,29 @@
+import { DatePipe } from '@angular/common';
+import { compileClassMetadata } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from '../user.service';
+import { UserService, Category } from '../user.service';
 
 @Component({
   selector: 'app-createbook',
   templateUrl: './createbook.component.html',
   styleUrls: ['./createbook.component.css']
 })
-export class CreatebookComponent implements OnInit {
 
-  constructor(public userService:UserService,public router:Router) { }
+export class CreatebookComponent implements OnInit {
+  createbookFailureMessage: string="";
+  constructor(public userService:UserService,public router:Router) { }  
+  obj=Object.values(Category).filter(value => typeof value==="string");
   book={
-    title:'title1',
-    category:'category1',
+    title:"",
+    category:Category,
     author:""+sessionStorage.getItem("authorName"),
-    price:'600',
-    publisher:'pub1',
-    publisheddate:'date1',
-    chapters:'5',
-    active:"true",
+    price:Number,
+    publisher:"",
+    publisheddate:DatePipe,
+    chapters:Number,
+    active:Boolean,
   }
-  
   createbookblankResponse={
     title:'',
     category:'',
@@ -37,44 +40,49 @@ export class CreatebookComponent implements OnInit {
   createBook(){
     const observable = this.userService.createBook(this.book);
     observable.subscribe((responseBody:any)=>{
-    this.createbookblankResponse.title=responseBody.title;
-    this.createbookblankResponse.category=responseBody.category;
-    this.createbookblankResponse.author=responseBody.author;
-    this.createbookblankResponse.publisher=responseBody.publisher;
-    this.createbookblankResponse.publisheddate=responseBody.publisheddate;
-    this.createbookblankResponse.chapters=responseBody.chapters;
-    this.createbookblankResponse.active=responseBody.active;
-    this.createbookblankResponse.price=responseBody.price;
-    console.log(JSON.stringify(responseBody));
+      this.createbookblankResponse.title=responseBody.title;
+      this.createbookblankResponse.category=responseBody.category;
+      this.createbookblankResponse.author=responseBody.author;
+      this.createbookblankResponse.publisher=responseBody.publisher;
+      this.createbookblankResponse.publisheddate=responseBody.publisheddate;
+      this.createbookblankResponse.chapters=responseBody.chapters;
+      this.createbookblankResponse.active=responseBody.active;
+      this.createbookblankResponse.price=responseBody.price;
+      console.log(JSON.stringify(responseBody));
     },
     (error:any)=>{
-      console.log(JSON.stringify(error.error));
-      if(typeof error.error!=='string'){
+      console.log("E"+error.error.status+JSON.stringify(error.error));
+      if(typeof error.error!=='string' && error.error.status!==500 ){
         this.userService.createBookContainerFlag=false;
         this.userService.createbooksuccessContainerFlag=true;
-        console.log("X");
-        // const createbooksuccessMessageContainer:any= document.getElementById("createbooksuccessMessageContainer");
-        // createbooksuccessMessageContainer.style.display="block";
-        // const createbookContainer:any=document.getElementById("createbookContainer");
-        // createbookContainer.style.display="none";
+        this.book={title:"",
+        category:Category,
+        author:""+sessionStorage.getItem("authorName"),
+        price:Number,
+        publisher:"",
+        publisheddate:DatePipe,
+        chapters:Number,
+        active:Boolean,}
       }
-      
-    }
-    )
+      else{
+        this.book={title:"",
+        category:Category,
+        author:""+sessionStorage.getItem("authorName"),
+        price:Number,
+        publisher:"",
+        publisheddate:DatePipe,
+        chapters:Number,
+        active:Boolean,};
+        this.createbookFailureMessage="OOPS !!! Something Went Wrong";
+      }
+    });
   }
   ngOnInit(): void {
-    console.log("oninit");
     this.userService.digitalBooksContainerFlag=false;
     this.userService.slideShowFlag=false;
-    
     this.userService.createBookContainerFlag=true;
     this.userService.createbooksuccessContainerFlag=false;
-    // const createbooksuccessMessageContainer:any= document.getElementById("createbooksuccessMessageContainer");
-    //     createbooksuccessMessageContainer.style.display="none";
-    //     const createbookContainer:any=document.getElementById("createbookContainer");
-    //     createbookContainer.style.display="block";
   }
-
 }
 
 

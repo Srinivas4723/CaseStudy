@@ -1,7 +1,6 @@
-import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from './user.service';
+import { UserService,Category } from './user.service';
 
 @Component({
   selector: 'app-root',
@@ -9,58 +8,56 @@ import { UserService } from './user.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title(title: any) {
-    throw new Error('Method not implemented.');
+  bookcategory=Object.values(Category).filter(value => typeof value==="string");
+  slidingImageFlags=[true,false,false,false];
+  slideIndex:any = 0;
+  searchbookdata={
+    category:"",author:"",price:"",publisher:""
   }
-  //////slide show
-slidingImageFlags=[true,false,false,false];
-slideIndex:any = 0;
-searchbookdata={
-  category:"",author:"",price:"",publisher:""
-}
-Books:any=null;
-  nobookFoundMessage:any;
-  signoutSuccessMessage: string="";
-//flags
-
-// authorhomeContainerFlag:boolean=false;
-// authorloginContainerFalg:boolean=false;
-//this.showDivs(slideIndex);
-searchBooks(){
-  if(this.searchbookdata.author==="" &&
-  this.searchbookdata.category==="" &&
-  this.searchbookdata.price==="" &&
-  this.searchbookdata.publisher===""){
-    alert("Search Fields Cannnot be Blank");
-  }
-  else{
-  const observable= this.userService.searchBooks(this.searchbookdata);
-  observable.subscribe((responseBody:any)=>{
-   
-  },
-  (error:any)=>{
-    if(typeof error.error==='string'){
-      this.nobookFoundMessage=error.error;
+  Books:any=null;
+    nobookFoundMessage:any;
+    signoutSuccessMessage: string="";
+    title: any;
+  constructor(public userService:UserService,public router:Router){}
+  searchBooks(){
+    this.nobookFoundMessage="";
+    if(this.searchbookdata.author==="" && this.searchbookdata.category===null &&
+        this.searchbookdata.price==="" &&  this.searchbookdata.publisher===""){
+      alert("Search Fields Cannnot be Blank");
     }
     else{
-    this.Books=JSON.parse(JSON.stringify(error.error));
+      const observable= this.userService.searchBooks(this.searchbookdata);
+      console.log("test"+JSON.stringify(this.searchbookdata));
+      observable.subscribe((responseBody)=>{
+        console.log(responseBody);
+      },(error:any)=>{
+        if(typeof error.error==='string'){
+          alert("No Books Found with Your Filter....!!!!!");
+          this.nobookFoundMessage=error.error;
+        }
+        else{
+          this.Books=JSON.parse(JSON.stringify(error.error));
+        }
+      });
     }
-  });
-}
-}
-showSlidingImages(n:any) {
-  this.slidingImageFlags[this.slideIndex]=!this.slidingImageFlags[this.slideIndex];
-  let i=this.slideIndex+=n;
-  if (i >3) {this.slideIndex = 0}
-  if (i < 0) {this.slideIndex = 3}
-  this.slidingImageFlags[this.slideIndex]=!this.slidingImageFlags[this.slideIndex];
-}
-
-  ////slide show
-  
-  constructor(public userService:UserService,public router:Router){}
+  }
+  showSlidingImages(n:any) {
+    this.slidingImageFlags[this.slideIndex]=!this.slidingImageFlags[this.slideIndex];
+    let i=this.slideIndex+=n;
+    if (i >3) {this.slideIndex = 0}
+    if (i < 0) {this.slideIndex = 3}
+    this.slidingImageFlags[this.slideIndex]=!this.slidingImageFlags[this.slideIndex];
+  }
   signout(){
+    const observable=this.userService.signout(sessionStorage.getItem("authorId"));
+    observable.subscribe((responseBody:any)=>{
+      console.log(JSON.stringify(responseBody));
+    },
+    (error:any)=>{
+      console.log(JSON.stringify(error));
+    })
     sessionStorage.removeItem('authorId');
+    sessionStorage.removeItem("authorName");
     this.userService.createbooknavFlag=false;
     this.userService.authorsignupNavFlag=true;
     this.signoutSuccessMessage="Sign Out Success";
@@ -73,8 +70,10 @@ showSlidingImages(n:any) {
     this.userService.book=book;
     this.router.navigate(['/readerpage']);
   }
-   ngOnInit() {  
-     this.userService.updateBookPageFlag=false;
+  ngOnInit() { 
+    this.userService.authorBooksContainerFlag=false; 
+    this.userService.editbooksuccessContainerFlag=false;
+    this.userService.updateBookPageFlag=false;
     this.userService.editBookContainerFlag=false;
     this.signoutSuccessMessage="";
     this.userService.slideShowFlag=true;
@@ -86,31 +85,12 @@ showSlidingImages(n:any) {
     const observable=this.userService.getAllBooks();
     observable.subscribe((responseBody:any)=>{
       if(responseBody.length===0){
-        this.nobookFoundMessage="No Book Avalable in the Store";
+        
+        this.nobookFoundMessage="No Books Avalable in the Store";
       }
       else{
         this.Books=responseBody;
       }
     });
-    
-    if(sessionStorage.getItem('authorId')!==null){//authorhome
-      
-    // const authorhomeContainer:any = document.getElementById("authorhomeContainer");
-    // authorhomeContainer.style.display="block";
-    //   const authorloginContainer:any=document.getElementById("authorloginContainer");
-    //   authorloginContainer.style.display="none";
-     
-  }
-  else{//Home
-
-    // const authorhomeContainer:any = document.getElementById("authorhomeContainer");
-    // authorhomeContainer.style.display="none";
-    //   const authorloginContainer:any=document.getElementById("authorloginContainer");
-    //   authorloginContainer.style.display="block";
-     
-      
-  }
-  
-    
   }
 }

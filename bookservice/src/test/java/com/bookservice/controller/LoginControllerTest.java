@@ -2,147 +2,162 @@ package com.bookservice.controller;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
-
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.core.MethodParameter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-
-import com.bookservice.entity.*;
+import com.bookservice.entity.Author;
+import com.bookservice.entity.Category;
+import com.bookservice.entity.Book;
+import com.bookservice.entity.Reader;
 import com.bookservice.repository.AuthorRepository;
 import com.bookservice.request.LoginRequest;
 
-
 @ExtendWith(MockitoExtension.class)
 class LoginControllerTest {
-	@InjectMocks LoginController logincontroller;
-	@InjectMocks BaseController basecontroller;
-	@Mock AuthorRepository authorRepository;
 	
+	@InjectMocks LoginController loginController;
+	@InjectMocks BaseController baseController;
+	@Mock AuthorRepository authorRepository;
+	@Mock BindingResult bindingResult;
 	
 	public static LoginRequest SampleLoginRequest() {
 		LoginRequest loginrequest = new LoginRequest();
-		
 		loginrequest.setAuthorname("abc");
-		loginrequest.setPassword("abcd");
+		loginrequest.setPassword("abc");
 		return loginrequest;
 	}
+	
 	public static Optional<Author> SampleAuthor() {
-		Base64.Encoder encoder = Base64.getMimeEncoder();
-		String password=encoder.encodeToString("abcd".getBytes());
 		Optional<Author> author = Optional.ofNullable(new Author());
 		author.get().setId(Long.valueOf(1));
 		author.get().setAuthorname("abc");
 		author.get().setAuthoremail("abc@gmail.com");
 		author.get().setLoginstatus(false);
-		author.get().setPassword(password);
+		author.get().setPassword("abc");
 		return author;
 	}
-	
+	LoginRequest loginRequest= SampleLoginRequest();
+	Optional<Author> author= SampleAuthor();
+	/**
+	 * SignIn Success Test Case
+	 */
 	@Test
-	void testAuthenticateAuthor() {
-		LoginRequest loginrequest= SampleLoginRequest();
-		Optional<Author> author= SampleAuthor();
-		
-		when(authorRepository.findByAuthorname(loginrequest.getAuthorname())).thenReturn(author);
-		assertEquals(logincontroller.authenticateAuthor(loginrequest),ResponseEntity.ok("Author Login Success"+author.get().getId()));
-		
-		
-		
+	void testAuthenticateAuthorSignInSuccess() {
+		when(authorRepository.findByAuthorname(loginRequest.getAuthorname())).thenReturn(author);
+		assertEquals(loginController.authenticateAuthor(loginRequest),ResponseEntity.ok("Author Login Success"+author.get().getId()));
+	}
+	/**
+	 * SignIn Fail By wrong author name
+	 */
+	@Test
+	void testAuthenticateAuthorFailByWrongAuthorName() {
+		author.get().setAuthorname("abcd");
+		when(authorRepository.findByAuthorname(loginRequest.getAuthorname())).thenReturn(Optional.empty());
+		assertEquals(loginController.authenticateAuthor(loginRequest),ResponseEntity.badRequest().body("Error: Invalid Credentials"));
+	}
+	/**
+	 * SignIn Fail By author not Exists
+	 */
+	@Test
+	void testAuthenticateAuthorFailByAuthorNameNotExists() {
+		when(authorRepository.findByAuthorname(loginRequest.getAuthorname())).thenReturn(Optional.empty());
+		assertEquals(loginController.authenticateAuthor(loginRequest),ResponseEntity.badRequest().body("Error: Invalid Credentials"));
+	}
+	/**
+	 * SignIn Fail By Wrong Password
+	 */
+	@Test
+	void testAuthenticateAuthorFailByInvalidPassword() {
 		author.get().setPassword("abcd");//wrong password
-		when(authorRepository.findByAuthorname(loginrequest.getAuthorname())).thenReturn(author);
-		assertEquals(logincontroller.authenticateAuthor(loginrequest),ResponseEntity.badRequest().body("Error: Invalid Credentials"));
-		
-		author.get().setAuthorname("");
-		when(authorRepository.findByAuthorname(loginrequest.getAuthorname())).thenReturn(author);
-		assertEquals(logincontroller.authenticateAuthor(loginrequest),ResponseEntity.badRequest().body("Error: Invalid Credentials"));
-	}
-	@Test
-	void testAuthenticateAutorFailure() {
-		LoginRequest loginrequest= SampleLoginRequest();
-		Optional<Author> author= SampleAuthor();
-		
-		author.get().setAuthorname("abcd");//wrong author name
-		when(authorRepository.findByAuthorname(loginrequest.getAuthorname())).thenReturn(Optional.empty());
-		assertEquals(logincontroller.authenticateAuthor(loginrequest),ResponseEntity.badRequest().body("Error: Invalid Credentials"));
+		when(authorRepository.findByAuthorname(loginRequest.getAuthorname())).thenReturn(author);
+		assertEquals(loginController.authenticateAuthor(loginRequest),ResponseEntity.badRequest().body("Error: Invalid Credentials"));
 	}
 	
-		
+	//----------------------Sign out ---------------------------------------------//
 	
+	/**
+	 * Signout Success Case
+	 */
 	@Test
 	void testSignoutAuthor() {
-		LoginRequest loginrequest= SampleLoginRequest();
-		Optional<Author> author= SampleAuthor();
 		author.get().setLoginstatus(true);
-		when(authorRepository.findByAuthorname(loginrequest.getAuthorname())).thenReturn(author);
-		assertEquals(logincontroller.signoutAuthor(loginrequest),ResponseEntity.ok("Author Signout Success"));
-		
+		when(authorRepository.findById(author.get().getId())).thenReturn(author);
+		assertEquals(loginController.signoutAuthor(author.get().getId()),ResponseEntity.ok("Author Signout Success"));
+	}
+	/**
+	 * Signout Fail By Not LoggedIn
+	 */
+	@Test 
+	void testSignoutAuthorFailByNotLoggedIn(){
 		author.get().setLoginstatus(false);
-		when(authorRepository.findByAuthorname(loginrequest.getAuthorname())).thenReturn(author);
-		assertEquals(logincontroller.signoutAuthor(loginrequest),ResponseEntity.badRequest().body("Error: Please signin first to signout"));
+		when(authorRepository.findById(author.get().getId())).thenReturn(author);
+		assertEquals(loginController.signoutAuthor(author.get().getId()),ResponseEntity.badRequest().body("Error: Please signin first, to signout"));
 		
-		when(authorRepository.findByAuthorname(loginrequest.getAuthorname())).thenReturn(author);
-		assertEquals(logincontroller.signoutAuthor(loginrequest),ResponseEntity.badRequest().body("Error: Please signin first to signout"));
+	}
+	/**
+	 * Signout Fail By Author not Exists
+	 */
+	@Test
+	void testSignoutAuthorFailByAuthorNotExists(){
+		when(authorRepository.findById(author.get().getId())).thenReturn(Optional.empty());
+		assertEquals(loginController.signoutAuthor(author.get().getId()),ResponseEntity.badRequest().body("Error: Please signin first, to signout"));
 		
-		when(authorRepository.findByAuthorname(loginrequest.getAuthorname())).thenReturn(Optional.empty());
-		assertEquals(logincontroller.signoutAuthor(loginrequest),ResponseEntity.badRequest().body("Error: Please signin first to signout"));
-		
-
 	}
 	
+	//------------------------Signup-------------------------------------//
 	
+	/**
+	 * SignUp Success
+	 */
 	@Test
-	void testRegisterUser() {
-		Optional<Author> author= SampleAuthor();
-		//when(emailValidation.ValidateEmail(author.get().getAuthoremail())).thenReturn(true);
+	void testSignupAuthorSuccess() {
 		when(authorRepository.existsByAuthorname(author.get().getAuthorname())).thenReturn(false);
 		when(authorRepository.existsByAuthoremail(author.get().getAuthoremail())).thenReturn(false);
-		assertEquals(logincontroller.signinAuthor(author.get()),ResponseEntity.ok("Author registered successfully! \n Your Author ID : "+author.get().getId()));
-		
+		assertEquals(loginController.signupAuthor(author.get()),ResponseEntity.ok("Author registered successfully! \n Your Author ID : "+author.get().getId()));
+	}
+	/**
+	 * SignUp Fail By Author Name Exists
+	 */
+	@Test
+	void testSignupAuthorFailByAuthorNameExists() {
 		when(authorRepository.existsByAuthorname(author.get().getAuthorname())).thenReturn(true);
-		assertEquals(logincontroller.signinAuthor(author.get()),ResponseEntity
-				.badRequest()
-				.body("Author Name is already in use !"));
-		
-		when(authorRepository.existsByAuthorname(author.get().getAuthorname())).thenReturn(false
-				);
+		assertEquals(loginController.signupAuthor(author.get()),ResponseEntity.badRequest().body("Author Name is already in use !"));
+	}
+	/**
+	 * Signup Fail By Author Email Exists
+	 */
+	@Test
+	void testSignupAuthorFailByAuthorEmailExists() {
+		when(authorRepository.existsByAuthorname(author.get().getAuthorname())).thenReturn(false);
 		when(authorRepository.existsByAuthoremail(author.get().getAuthoremail())).thenReturn(true);
-		assertEquals(logincontroller.signinAuthor(author.get()),ResponseEntity
-				.badRequest()
-				.body("Author Email is already in use!"));
-		
-		author.get().setAuthoremail("abc");
-		assertEquals(logincontroller.signinAuthor(author.get()),ResponseEntity.badRequest().body("Please Enter a Valid Email "));
-		
-		
+		assertEquals(loginController.signupAuthor(author.get()),ResponseEntity.badRequest().body("Author Email is already in use!"));
 	}
 	
-	
-
-	
-
 //	@Test
 //	void testHandleException() {
-////		LoginRequest loginrequest= SampleLoginRequest();
-////		Optional<Author> author= SampleAuthor();
-////		loginrequest.setAuthorname("");
-////		BindingResult br=new BindingResult();
-////		br.getAllErrors().
-////		//when(authorRepository.findByAuthorname(loginrequest.getAuthorname())).thenThrow(new MethodArgumentNotValidException(null,null));
-////		Map<String,String> map= new HashMap<String,String>();
-////		map.put("authorname", "must not be blank");
-////		
-////		assertEquals(logincontroller.authenticateAuthor(loginrequest),map);
+//		
+//		
+//		MethodParameter mp= new MethodParameter(mp);
+//		ObjectError obj= OjbectError("x","x");
+//		bindingResult.addError(obj);
+//				
+//		when(authorRepository.findByAuthorname(loginRequest.getAuthorname())).thenThrow(new MethodArgumentNotValidException(mp,bindingResult));
+//		Map<String,String> map= new HashMap<String,String>();
+//		map.put("authorname", "must not be blank");
+//		
+//		assertEquals(loginController.authenticateAuthor(loginRequest),map);
 //	}
 //
 //	@Test
@@ -154,5 +169,7 @@ class LoginControllerTest {
 //	void testRequestParamNotFoundMissingServletRequestParameterException() {
 //		fail("Not yet implemented");
 //	}
+
+	
 
 }

@@ -1,0 +1,28 @@
+package com.bookservice.entity;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import com.bookservice.controller.BaseController;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Entity
+@Data
+@EqualsAndHashCode(callSuper=false)
+public class Author extends BaseController {//not a spring bean
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	@NotBlank(message = "Author Name cannot be blank")
+	private String authorname;
+	@NotBlank(message = "Author Email cannot be blank")
+	private String authoremail;
+	@NotBlank(message = "Password cannot be blank")
+	@Size(min=8,max=40)
+	private String password;
+	private boolean loginstatus;
+}

@@ -1,0 +1,35 @@
+package com.bookservice.entity;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
+
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+
+class AuthorTest {
+	Author author= new Author();
+	@Test
+	void testHashCode() {				
+		Author author1= new Author();			
+		assertEquals(author.hashCode(),author1.hashCode());
+	}
+
+	@Test
+	void testGetId() {
+		author.setId(Long.valueOf(1));
+		assertEquals(Long.valueOf(1),author.getId());
+	}
+
+	
+
+	@Test
+	void testToString() {
+		
+	}
+
+	@Test
+	void testAuthor() {
+		fail("Not yet implemented");
+	}
+
+}

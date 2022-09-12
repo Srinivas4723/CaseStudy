@@ -1,0 +1,25 @@
+package com.bookservice.entity;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class ReaderTest {
+	Reader reader1 =new Reader();
+	Reader reader2= new Reader();
+	@Test
+	void testHashCode() {
+		assertEquals(reader1.hashCode(),reader2.hashCode());
+	}
+
+	@Test
+	void testEqualsObject() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testToString() {
+		fail("Not yet implemented");
+	}
+
+}

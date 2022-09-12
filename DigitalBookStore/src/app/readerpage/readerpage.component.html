@@ -1,101 +1,87 @@
-
-<nav>
-    <!-- <ul>
-        <li><a (onclick)="cancelpayment()" routerLink="/readerpage">Home page</a></li>
-        <li> <a routerLink="/getmybooks">getmy books</a></li>
-        <a routerLink="/readerpage">Home page</a>
-       
-    </ul> -->
-</nav>
 <div *ngIf="buyBookContainerFlag" id="buyBookContainer" class="register-photo">
-    <div id="detailsOfBook" class="bookdetails">
-        
-    </div>
     <div class="form-container">
         <div class="image-holder">
             <h4>Details of the Book : </h4>
             <table >
-            <tr>
-                <td>Book Ttile</td>
-                <td>:</td>
-                <td>{{book.title}}</td>
-            </tr>
-            <tr>
-                <td>Book Author</td>
-                <td>:</td>
-                <td>{{book.author}}</td>
-            </tr>
-            <tr>
-                <td>Book Category</td>
-                <td>:</td>
-                <td>{{book.category}}</td>
-            </tr>
-            <tr>
-                <td>Book Publisher</td>
-                <td>:</td>
-                <td>{{book.publisher}}</td>
-            </tr>
-            <tr>
-                <td>Book Price</td>
-                <td>:</td>
-                <td>Rs. {{book.price}}</td>
-            </tr>
-            <tr>
-                <td>Book Publisheddate</td>
-                <td>:</td>
-                <td>Rs. {{book.publisheddate}}</td>
-            </tr>
-            <tr>
-                <td>Book Chapters</td>
-                <td>:</td>
-                <td>{{book.chapters}}</td>
-            </tr>
+                <tr>
+                    <td>Book Ttile</td>
+                    <td>:</td>
+                    <td> &nbsp;{{book.title}}</td>
+                </tr>
+                <tr>
+                    <td>Book Author</td>
+                    <td>:</td>
+                    <td>&nbsp;{{book.author}}</td>
+                </tr>
+                <tr>
+                    <td>Book Category</td>
+                    <td>:</td>
+                    <td> &nbsp;{{book.category}}</td>
+                </tr>
+                <tr>
+                    <td>Book Publisher</td>
+                    <td>:</td>
+                    <td> &nbsp;{{book.publisher}}</td>
+                </tr>
+                <tr>
+                    <td>Book Price</td>
+                    <td>:</td>
+                    <td> &nbsp;Rs. {{book.price}}</td>
+                </tr>
+                <tr>
+                    <td>Book Publisheddate</td>
+                    <td>:</td>
+                    <td> {{book.publisheddate}}</td>
+                </tr>
+                <tr>
+                    <td>Book Chapters</td>
+                    <td>:</td>
+                    <td> {{book.chapters}}</td>
+                </tr>
             </table>
         </div>
         <div  id="readerForm" class="form">
-             <p class="success-messages">{{bookPurchaseSuccessMessage}}</p> 
+            <p class="success-messages">{{bookPurchaseSuccessMessage}}</p> 
             <div *ngIf="readerFormFlag" >
-            <h2 class="text-center"><strong>Enter</strong> Details</h2>
-            <p class="text-center error-messages">{{bookPurchaseFailureMessage}}</p>
-            <div class="form-group"><input [(ngModel)]="reader.readername" class="form-control" type="text" name="readername" placeholder="Reader Name">
-               <p class="error-messages"> {{readerblankResponse.readername}}</p>
+                <h2 class="text-center"><strong>Enter</strong> Details</h2>
+                <p class="text-center error-messages">{{bookPurchaseFailureMessage}}</p>
+                <div class="form-group"><input [(ngModel)]="reader.readername" class="form-control" type="text" name="readername" placeholder="Reader Name">
+                    <p class="error-messages"> {{readerblankResponse.readername}}</p>
+                </div>
+                <div class="form-group "><input [(ngModel)]="reader.readeremail" class="form-control" type="email" name="reader email" placeholder="Reader Email">
+                    <p class="error-messages">{{readerblankResponse.readeremail}}</p>
+                </div>
+                <div class="form-group">
+                    <input type='tel' class="form-control" [(ngModel)]="cardnumber"  placeholder="Card Number : xxxx xxxx xxxx">
+                    <p class="error-messages">{{cardnumberblankResponse}}</p>
+                </div>
+                <div class="form-group">
+                    <div class="column">
+                    <select class="dropdown form-control" id="mm">
+                        <option>01</option>
+                        <option>02</option>
+                        <option>03</option>
+                        <option>04</option>
+                        <option>05</option>
+                        <option>06</option>
+                        <option>07</option>
+                        <option>08</option>
+                    </select>
+                </div>
+                <div class="column"></div>
+                    <select  class="dropdown form-control" id="YYYY">
+                        <option>2023</option>
+                        <option>2024</option>
+                        <option>2025</option>
+                        <option>2026</option>
+                        <option>2027</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button (click)="makepayment()" class="btn btn-success " type="submit">Buy Now</button>
+                    <button (click)="cancelpurchase()" class="btn btn-secondary " type="submit">Cancel </button>
+                </div>
             </div>
-            <div class="form-group "><input [(ngModel)]="reader.readeremail" class="form-control" type="email" name="reader email" placeholder="Reader Email">
-                <p class="error-messages">{{readerblankResponse.readeremail}}</p>
-            </div>
-            <div class="form-group">
-             <input type='tel' class="form-control" [(ngModel)]="cardnumber"  placeholder="Card Number : xxxx xxxx xxxx">
-             <p class="error-messages">{{cardnumberblankResponse}}</p>
-            </div>
-            <div class="form-group">
-            <div class="column">
-            <select class="dropdown form-control" id="mm">
-                <option>01</option>
-                <option>02</option>
-                <option>03</option>
-                <option>04</option>
-                <option>05</option>
-                <option>06</option>
-                <option>07</option>
-                <option>08</option>
-            </select>
         </div>
-        <div class="column"></div>
-            <select  class="dropdown form-control" id="YYYY">
-                <option>2023</option>
-                <option>2024</option>
-                <option>2025</option>
-                <option>2026</option>
-                <option>2027</option>
-            </select>
-        </div>
-            
-            <div class="form-group">
-                <button (click)="makepayment()" class="btn btn-success " type="submit">Buy Now</button>
-                <button (click)="cancelpurchase()" class="btn btn-secondary " type="submit">Cancel </button>
-            </div>
-        </div>
-        </div>
+    </div>
 </div>
-<!---------original------>
-

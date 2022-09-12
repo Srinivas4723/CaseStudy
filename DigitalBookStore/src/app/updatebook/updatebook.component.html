@@ -1,51 +1,48 @@
- <div *ngIf="userService.updateBookPageFlag" class="register-photo">
+<div *ngIf="userService.updateBookPageFlag" class="register-photo">
     <div class="form-container">
-        
         <div  class="form">
-            <!-- <p class="error-messages">{{failureMessage}}</p> --> 
-            <!-- <p class="success-messages">{{successMessage}}</p> -->
             <div *ngIf="userService.editbooksuccessContainerFlag" id="createbooksuccessMessageContainer">
                <p class="success-messages"> {{bookupdateSuccessMessage}}.....!!!!<br/></p>
-                <a (click)='ngOnInit()' routerLink="/authorhome">Click here</a> to go to your home page
-            
+                <button (click)='cancelupdatebook()' class="btn btn-link" >Click here</button> to go to your home page
             </div>
             <div *ngIf="userService.editBookContainerFlag" >
-            
                 <h2 class="text-center"><strong>Edit</strong> your book</h2>
-            <div class="form-group">
-                <label><strong>Boot Title</strong></label>
-                <input [(ngModel)]="book.title" placeholder="Enter Book title" class="form-control" type="text" >
-                <p class="error-messages"> {{updatebookblankResponse.title}}</p>
-             </div>
-             <div class="form-group ">
-                <label><strong>Boot Category</strong></label>
-                 <input [(ngModel)]="book.category" placeholder="Enter Book category" class="form-control" type="email" >
-                 <p class="error-messages">{{updatebookblankResponse.category}}</p>
-             </div>
-             <div class="form-group ">
-                <label><strong>Boot Publisher</strong></label> 
-                <input [(ngModel)]="book.publisher" class="form-control" type="text"  placeholder="Enter Publisher">
-                 <p class="error-messages">{{updatebookblankResponse.publisher}}</p>
-             </div>
-             <div class="form-group ">
-                <label><strong>Book Published</strong></label>
-                 <input [(ngModel)]="book.publisheddate" class="form-control"  onfocus="(this.type='date')" placeholder="Enter Published Date">
-                <p class="error-messages">{{updatebookblankResponse.publisheddate}}</p>
-            </div>
-            <div class="form-group ">
-                <label><strong>Book Chapters</strong></label>
-                <input [(ngModel)]="book.chapters" class="form-control" type="number"  placeholder="Enter Published Date">
-                <p class="error-messages">{{updatebookblankResponse.chapters}}</p>
-            </div>
-            <div class="form-group ">
-                <label><strong>Book Price</strong></label>
-                <input [(ngModel)]="book.price" class="form-control" type="number"  placeholder="Enter Published Date">
-                <p class="error-messages">{{updatebookblankResponse.price}}</p>
-            </div>
-            <div class="form-group">
-                <button class="button btn btn-success" (click)="updateBook()">Update Book</button>
-                <button class="btn btn-secondary" (click)="cancelupdatebook()">Cancel</button></div> 
-            
+                <div class="form-group">
+                    <label><strong>Boot Title</strong></label>
+                    <input [(ngModel)]="book.title" placeholder="Enter Book title" class="form-control" type="text" >
+                    <p class="error-messages"> {{updatebookblankResponse.title}}</p>
+                </div>
+                <div class="form-group ">
+                    <label><strong>Boot Category</strong></label>
+                    <select [(ngModel)]="book.category" placeholder="Enter Book Category" class="form-control">
+                        <option *ngFor="let category of bookcategory" [ngValue]="category">{{category}}</option>
+                    </select>
+                    <p class="error-messages">{{updatebookblankResponse.category}}</p>
+                </div>
+                <div class="form-group ">
+                    <label><strong>Boot Publisher</strong></label> 
+                    <input [(ngModel)]="book.publisher" class="form-control" type="text"  placeholder="Enter Publisher">
+                    <p class="error-messages">{{updatebookblankResponse.publisher}}</p>
+                </div>
+                <div class="form-group ">
+                    <label><strong>Book Published</strong></label>
+                    <input [(ngModel)]="book.publisheddate" class="form-control"  type="date">
+                    <p class="error-messages">{{updatebookblankResponse.publisheddate}}</p>
+                </div>
+                <div class="form-group ">
+                    <label><strong>Book Chapters</strong></label>
+                    <input [(ngModel)]="book.chapters" class="form-control" type="number"  placeholder="Enter Published Date">
+                    <p class="error-messages">{{updatebookblankResponse.chapters}}</p>
+                </div>
+                <div class="form-group ">
+                    <label><strong>Book Price</strong></label>
+                    <input [(ngModel)]="book.price" class="form-control" type="number"  placeholder="Enter Published Date">
+                    <p class="error-messages">{{updatebookblankResponse.price}}</p>
+                </div>
+                <div class="form-group">
+                    <button class="button btn btn-success" (click)="updateBook()">Update Book</button>
+                    <button class="btn btn-secondary" (click)="cancelupdatebook()">Cancel</button>
+                </div> 
             </div>
         </div>
     </div>

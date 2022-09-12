@@ -12,9 +12,9 @@ import { Router } from '@angular/router';
 export class AuthorsignupComponent implements OnInit {
 
   author = {
-    authorname: "James Bordon",
-    authoremail:"james@gmail.com",
-    password:"JamesBordon"
+    authorname: "",
+    authoremail:"",
+    password:""
     
   }
   signUpblankResponse:any={
@@ -31,7 +31,7 @@ export class AuthorsignupComponent implements OnInit {
   failureMessage:any;
   signupContainerFlag:boolean=true;
     constructor(public userService: UserService,
-      public router:Router) { }
+        public router:Router) { }
   cancelsignup(){
     this.userService.digitalBooksContainerFlag=true;
     this.userService.slideShowFlag=true;
@@ -40,13 +40,10 @@ export class AuthorsignupComponent implements OnInit {
   saveAuthor(){
     const observable= this.userService.saveAuthor(this.author);
     observable.subscribe((responseBody:any)=>{
-      
-      this.signUpblankResponse.authorname=responseBody.authorname;
-      this.signUpblankResponse.authorpassword=responseBody.password;
-      this.signUpblankResponse.authoremail=responseBody.authoremail;
-      
-      console.log("R"+responseBody);
-
+    this.signUpblankResponse.authorname=responseBody.authorname;
+    this.signUpblankResponse.authorpassword=responseBody.password;
+    this.signUpblankResponse.authoremail=responseBody.authoremail;
+    console.log("R"+responseBody);
     },
     (error:any)=>{
       console.log(JSON.stringify(error.error));
@@ -67,31 +64,20 @@ export class AuthorsignupComponent implements OnInit {
           this.author.password="";
           this.failureMessage="SomeThing Went Wrong!!!"
         }
-        
-
       }
       else{
-        // const signupcontainer:any=document.getElementById('signupContainer');
-        // signupcontainer.style.display="none";
-        // const signupsuccesscontainer:any=document.getElementById('signupSuccessContainer');
-        // signupsuccesscontainer.style.display="block";
-        console.log("succ");
         this.signupContainerFlag=false;
         this.successMessage=error.error.text;
-        
       }
-      
-      
-    })
-
+    });
   }
   ngOnInit(): void {
-    this.userService.digitalBooksContainerFlag=false;
-    this.userService.slideShowFlag=false;
-    // const signupsuccesscontainer:any=document.getElementById('signupSuccessContainer');
-    // signupsuccesscontainer.style.display="none";
-    // const digitalBooksContainer:any=document.getElementById("digitalBooksContainer");
-    // digitalBooksContainer.style.display="none";
+    if(sessionStorage.getItem("authorId")!==null){
+      this.router.navigate(["/authorhome"]);
+    }
+    else{
+      this.userService.digitalBooksContainerFlag=false;
+      this.userService.slideShowFlag=false;
+    }
   }
-
 }

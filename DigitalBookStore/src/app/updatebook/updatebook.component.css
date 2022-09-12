@@ -83,15 +83,19 @@
     opacity: 0.9;
     text-decoration: none;
   }
+
   .button{
       margin:15px;
   }
+
   .error-messages{
       color:red;
   }
+
   .success-messages{
       color:green;
   }
+  
   label{
       color:#163f68;
   }

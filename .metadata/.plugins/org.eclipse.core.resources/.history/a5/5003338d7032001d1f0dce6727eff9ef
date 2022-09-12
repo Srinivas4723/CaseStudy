@@ -1,0 +1,44 @@
+package com.bookservice.request;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+import com.bookservice.entity.Book;
+
+class LoginRequestTest {
+	public static LoginRequest SampleLoginRequest1() {
+		LoginRequest loginrequest = new LoginRequest();
+		loginrequest.setAuthorname("abc");
+		loginrequest.setPassword("abc");
+		return loginrequest;
+	}
+	public static LoginRequest SampleLoginRequest2() {
+		LoginRequest loginrequest = new LoginRequest();
+		loginrequest.setAuthorname("abc");
+		loginrequest.setPassword("abc");
+		return loginrequest;
+	}
+	LoginRequest loginRequest1= SampleLoginRequest1();
+	LoginRequest loginRequest2= SampleLoginRequest1();
+	LoginRequest loginRequest3= SampleLoginRequest2();
+	@Test
+	void testHashCode() {
+		assertEquals(new Book().hashCode(),new Book().hashCode());
+		assertEquals(book1.hashCode(),book2.hashCode());
+		assertNotEquals(book1.hashCode(),book3.hashCode());
+	}
+
+	@Test
+	void testEqualsObject() {
+		assertTrue(new Book().equals(new Book()));
+		assertFalse(book1.equals(book3));
+		assertTrue(book1.equals(book2));
+	}
+
+	@Test
+	void testToString() {
+		assertEquals(book1.toString(),book1.toString());
+	}
+
+}

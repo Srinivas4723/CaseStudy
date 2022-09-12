@@ -1,0 +1,46 @@
+package com.bookservice.entity;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.Month;
+
+import org.junit.jupiter.api.Test;
+
+class BookTest {
+	private  Book SampleBook() {
+		Book book = new Book();
+		book.setId(Long.valueOf(1));
+		book.setAuthorid(Long.valueOf(1));
+		book.setTitle("title");
+		book.setCategory(Category.COMICS);
+		book.setPrice(BigDecimal.valueOf(500.00));
+		book.setAuthor("author");
+		book.setPublisher("publisher");
+		book.setPublisheddate(LocalDate.of(1997,Month.SEPTEMBER,5));
+		book.setChapters(5);
+		book.setActive(true);
+		return book;
+	}
+	Book book1= SampleBook();
+	Book book2=SampleBook();
+	@Test
+	void testHashCode() {
+		assertEquals(book1.hashCode(),book2.hashCode());
+	}
+
+	@Test
+	void testEqualsObject() {
+		assertTrue(book1.equals(book2));
+		book1.setAuthor("abc");
+		book2.setAuthorn("xyz");
+		assertFalse(book1.equals(book2));
+	}
+
+	@Test
+	void testToString() {
+		assertEquals(book1.toString(),book1.toString());
+	}
+
+}

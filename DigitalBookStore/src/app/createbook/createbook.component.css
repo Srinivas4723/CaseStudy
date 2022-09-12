@@ -27,12 +27,6 @@
     color: #505e6c;
   }
   
-  @media (max-width:991px) {
-    .register-photo .form {
-      padding: 40px;
-    }
-  }
-  
   .register-photo .form h2 {
     font-size: 24px;
     line-height: 1.5;
@@ -83,15 +77,19 @@
     opacity: 0.9;
     text-decoration: none;
   }
+
   .button{
       margin:15px;
   }
+
   .error-messages{
       color:red;
   }
+
   .success-messages{
       color:green;
   }
+  
   label{
       color:#163f68;
   }

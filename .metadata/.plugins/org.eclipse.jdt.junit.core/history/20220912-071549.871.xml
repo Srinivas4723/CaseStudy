@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="LoginControllerTest" project="bookservice" tests="3" started="3" failures="0" errors="0" ignored="0">
+  <testsuite name="com.bookservice.controller.LoginControllerTest" time="1.331" displayname="LoginControllerTest" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.LoginControllerTest]">
+    <testcase name="testAuthenticateAuthorSignInSuccess" classname="com.bookservice.controller.LoginControllerTest" time="1.31" displayname="testAuthenticateAuthorSignInSuccess()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.LoginControllerTest]/[method:testAuthenticateAuthorSignInSuccess()]"/>
+    <testcase name="testAuthenticateAuthorFailByAuthorNameNotFound" classname="com.bookservice.controller.LoginControllerTest" time="0.009" displayname="testAuthenticateAuthorFailByAuthorNameNotFound()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.LoginControllerTest]/[method:testAuthenticateAuthorFailByAuthorNameNotFound()]"/>
+    <testcase name="testAuthenticateAuthorFailByWrongAuthorName" classname="com.bookservice.controller.LoginControllerTest" time="0.012" displayname="testAuthenticateAuthorFailByWrongAuthorName()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.LoginControllerTest]/[method:testAuthenticateAuthorFailByWrongAuthorName()]"/>
+  </testsuite>
+</testrun>

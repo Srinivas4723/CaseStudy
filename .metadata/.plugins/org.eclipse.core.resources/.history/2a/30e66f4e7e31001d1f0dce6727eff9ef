@@ -1,0 +1,136 @@
+package com.bookservice.controller;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import com.bookservice.entity.Author;
+import com.bookservice.entity.Book;
+import com.bookservice.entity.Category;
+import com.bookservice.repository.AuthorRepository;
+import com.bookservice.repository.BookRepository;
+
+@CrossOrigin
+@RestController
+@RequestMapping("/digitalbooks")
+public class BookController extends BaseController {
+	
+	@Autowired BookRepository bookRepository;
+	@Autowired AuthorRepository authorRepository;
+	
+	/**
+	 * Finding all books from the digital store
+	 * @return
+	 */
+	
+	@GetMapping("/allbooks")
+	List<Book> getAllBooks() {
+		return bookRepository.findAll();
+	}
+	
+	/**
+	 * Searching the books by filter (author, category, price, publisher)
+	 * @param author
+	 * @param category
+	 * @param price
+	 * @param publisher
+	 * @return
+	 */
+	
+	@GetMapping("/books/search")
+	ResponseEntity<?> searchBook( @RequestParam Optional<String> author,
+			@RequestParam Optional<Category> category,
+			@RequestParam Optional<BigDecimal> price,
+			@RequestParam Optional<String> publisher) {
+		Stream<Book> stream= bookRepository.findAll().stream();
+		if(author.isPresent() ) {
+			stream = stream.filter(book -> book.getAuthor().equals(author.get()));
+		}
+		if(category.isPresent()) {
+			stream= stream.filter(book -> book.getCategory().equals(category.get()));
+		}
+		if(price.isPresent()) {
+			stream=stream.filter(book ->String.valueOf(book.getPrice()).equals(String.valueOf(price.get())));
+		}
+		if(publisher.isPresent()) {
+			stream=stream.filter(book -> book.getPublisher().equalsIgnoreCase(publisher.get()));
+		}
+		List<Book> searchResult= stream.collect(Collectors.toList());
+		if(!searchResult.isEmpty()) {
+			return new ResponseEntity<>(searchResult, HttpStatus.FOUND);
+		}
+		return new ResponseEntity<>("NO Books Found",HttpStatus.NOT_FOUND);
+		
+	}
+	
+	/**
+	 * Creating a book 
+	 * @param book
+	 * @param authorid
+	 * @return
+	 */
+	
+	@PostMapping("/author/{authorid}/books")
+	ResponseEntity<?> createBook(@Valid @RequestBody Book book,@PathVariable("authorid") Long authorid) {
+
+		
+		Optional<Author> author= authorRepository.findById(authorid);
+		if(authorRepository.existsById(authorid) ) {
+			
+				if(author.get().isLoginstatus()) {
+					book.setAuthorid(authorid);
+					//book.setCategory(0);
+					bookRepository.save(book);//mock
+					
+					return ResponseEntity.ok("Book Created Successfully"+book.getCategory());
+				}
+				else {
+					return ResponseEntity.badRequest().body("Please Login to Create Book");
+				}
+		}
+		return new ResponseEntity<String>("Invalid Author to create book",HttpStatus.UNAUTHORIZED);
+	}
+	
+	@PutMapping("/author/{authorid}/books/{bookid}")//updating book
+	ResponseEntity<?> updateBook(@Valid @RequestBody Book book,
+			@PathVariable("authorid") Long authorid, 
+			@PathVariable("bookid") Long bookid){
+		
+		Optional<Author> author= authorRepository.findById(authorid);
+		if(bookRepository.existsById(bookid) ) {
+			
+				if(author.get().isLoginstatus()) {
+					book.setAuthorid(authorid);
+					book.setId(bookid);
+					bookRepository.save(book);
+					
+					return ResponseEntity.ok("Book Updated Successfully");
+				}
+				else {
+					return ResponseEntity.badRequest().body("Please Login to Update Book");
+				}
+		}
+		return new ResponseEntity<String>("No book found to Update"+authorRepository.existsById(bookid),HttpStatus.UNAUTHORIZED);
+		
+	}
+	
+	@GetMapping("/books/{authorid}")
+	List<Book> getBooksByAuthorId(@PathVariable("authorid") Long authorid){
+		return bookRepository.findAllByAuthorid( authorid);
+	}
+}

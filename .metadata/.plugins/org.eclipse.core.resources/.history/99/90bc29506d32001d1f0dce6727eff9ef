@@ -1,0 +1,46 @@
+package com.bookservice.entity;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
+
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+
+class AuthorTest {
+	public static Author SampleAuthor() {
+		Author author = new Author();
+		author.get().setId(Long.valueOf(1));
+		author.get().setAuthorname("abc");
+		author.get().setAuthoremail("abc@gmail.com");
+		author.get().setLoginstatus(false);
+		author.get().setPassword("abc");
+		return author;
+	}
+	Author author1= new Author();
+	Author author2= new Author();
+	@Test
+	void testHashCode() {				
+		assertEquals(author1.hashCode(),author2.hashCode());
+	}
+
+	@Test
+	void testEqualsObject() {
+		assertTrue(author1.equals(author2));
+		author1.setAuthorname("abc");
+		author2.setAuthorname("xyz");
+		assertFalse(author1.equals(author2));
+		
+	}
+
+	
+
+	@Test
+	void testToString() {
+		assertEquals(author1.toString(),author1.toString());
+	}
+
+	
+
+}

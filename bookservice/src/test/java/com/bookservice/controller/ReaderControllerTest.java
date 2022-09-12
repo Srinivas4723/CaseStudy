@@ -3,11 +3,13 @@ package com.bookservice.controller;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,162 +17,210 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import com.bookservice.entity.Book;
+import com.bookservice.entity.Category;
 import com.bookservice.entity.Reader;
 import com.bookservice.repository.AuthorRepository;
 import com.bookservice.repository.BookRepository;
 import com.bookservice.repository.ReaderRepository;
 import com.bookservice.request.BuyBookRequest;
+
 @ExtendWith(MockitoExtension.class)
 class ReaderControllerTest {
-	@InjectMocks ReaderController readerController;
-	@Mock BookRepository bookrepository;
-	@Mock AuthorRepository authorRepository;
-	@Mock ReaderRepository readerrepository;
 	
-	public static Book SampleBook() {
-		Book book = new Book(Long.valueOf(1),Long.valueOf(1),"title","category",500,"author","publisher","27/03/2022",5,true);
+	@InjectMocks ReaderController readerController;
+	@Mock BookRepository bookRepository;
+	@Mock AuthorRepository authorRepository;
+	@Mock ReaderRepository readerRepository;
+	
+	private  Book SampleBook() {
+		Book book = new Book();
+		book.setId(Long.valueOf(1));
+		book.setAuthorid(Long.valueOf(1));
+		book.setTitle("title");
+		book.setCategory(Category.COMICS);
+		book.setPrice(BigDecimal.valueOf(500.00));
+		book.setAuthor("author");
+		book.setPublisher("publisher");
+		book.setPublisheddate(LocalDate.of(1997,Month.SEPTEMBER,5));
+		book.setChapters(5);
+		book.setActive(true);
 		return book;
 	}
 	private BuyBookRequest SampleBuyBookRequest() {
-		BuyBookRequest buybookrequest = new BuyBookRequest(Long.valueOf(1),"abc","abc@gmail.com");
-		return buybookrequest;
+		BuyBookRequest buyBookRequest = new BuyBookRequest();
+		buyBookRequest.setBookid(Long.valueOf(1));
+		buyBookRequest.setReadername("abc");
+		buyBookRequest.setReaderemail("abc@gmail.com");
+		return buyBookRequest;
 	}
 	private Reader SampleReader() {
 		Reader reader = new Reader();
 		reader.setId(Long.valueOf(1));
 		reader.setReadername("abc");
 		reader.setReaderemail("abc@gmail.com");
-		reader.setBooks("");
+		reader.setPurchasedbooks("");
 		return reader;
 	}
+	BuyBookRequest buybookrequest=SampleBuyBookRequest();
+	Reader reader = SampleReader();
+	Book book=SampleBook();
+	Long bookid=Long.valueOf(1);
+	/**
+	 * Buy Book Success By Existing Reader
+	 */
 	@Test
-	void testBuyBooks() {
-		BuyBookRequest buybookrequest=SampleBuyBookRequest();
-		Reader reader = SampleReader();
-		when(bookrepository.existsById(buybookrequest.getBookid())).thenReturn(true);
-		reader.setBooks("");
-		when(readerrepository.findByreadername(buybookrequest.getReadername())).thenReturn(Optional.ofNullable(reader));
-		when(readerrepository.findByreaderemail(buybookrequest.getReaderemail())).thenReturn(Optional.ofNullable(reader));
-		
-		assertEquals(readerController.buyBooks(buybookrequest),ResponseEntity.ok("Book Purchase Successful \n Please note the Payment Id for your reference\nPayment Id : "+reader.getPaymentid().replace(",","")));
-		
+	void testBuyBooksSuccessByExistingReader() {
+		reader.setPurchasedbooks("2,");
+		reader.setPaymentid("PID12022345,");
+		when(bookRepository.existsById(buybookrequest.getBookid())).thenReturn(true);
+		when(readerRepository.findByReadernameAndReaderemail(buybookrequest.getReadername(),buybookrequest.getReaderemail())).thenReturn(Optional.ofNullable(reader));
+		when(readerRepository.findByReadernameOrReaderemail(buybookrequest.getReadername(),buybookrequest.getReaderemail())).thenReturn(Optional.ofNullable(reader));
+		assertEquals(readerController.buyBooks(buybookrequest),ResponseEntity.ok("Book Purchase Successful \n Please note the Payment Id for your reference\nPayment Id : "+reader.getPaymentid().replace("PID12022345,","").replace(",", "")));
+	}
+	/**
+	 * Buy Book Fail By book is already Purchased
+	 */
+	@Test
+	void testBuyBookFailByBookAlreadyPurchased() {
+		when(bookRepository.existsById(buybookrequest.getBookid())).thenReturn(true);
+		reader.setPurchasedbooks("1,");
+		when(readerRepository.findByReadernameAndReaderemail(buybookrequest.getReadername(),buybookrequest.getReaderemail())).thenReturn(Optional.ofNullable(reader));
+		when(readerRepository.findByReadernameOrReaderemail(buybookrequest.getReadername(),buybookrequest.getReaderemail())).thenReturn(Optional.ofNullable(reader));
 		assertEquals(readerController.buyBooks(buybookrequest),ResponseEntity.badRequest().body("Book is already purchased"));
+	}
+	/**
+	 * Buy Book Success By New Reader
+	 */
+	@Test
+	void testBuyBookSuccessByNewReader() {
+		when(bookRepository.existsById(buybookrequest.getBookid())).thenReturn(true);
+		when(readerRepository.findByReadernameAndReaderemail(buybookrequest.getReadername(),buybookrequest.getReaderemail())).thenReturn(Optional.empty());
+		when(readerRepository.findByReadernameOrReaderemail(buybookrequest.getReadername(),buybookrequest.getReaderemail())).thenReturn(Optional.empty());
+		assertEquals(readerController.buyBooks(buybookrequest),ResponseEntity.ok("Book Purchase Successful \n Please note the Payment Id for your reference\nPayment Id : "+buybookrequest.getPaymentid().replace(",","")));
 		
-		
-		buybookrequest.setBookid(Long.valueOf(2));
-		when(bookrepository.existsById(buybookrequest.getBookid())).thenReturn(true);
-		assertEquals(readerController.buyBooks(buybookrequest),ResponseEntity.ok("Book Purchase Successful \n Please note the Payment Id for your reference\nPayment Id : "+buybookrequest.getPid().replace(",","")));
-		
-		reader.setReaderemail("abc1@gmail.com");
-		when(readerrepository.findByreaderemail(buybookrequest.getReaderemail())).thenReturn(Optional.ofNullable(reader));
+	}
+	/**
+	 * Buy Book Fail By Existing reader or Email (but not both)
+	 */
+	@Test
+	void testBuyBookFailByExistingReaderOrEmail() {
+		when(bookRepository.existsById(buybookrequest.getBookid())).thenReturn(true);
+		when(readerRepository.findByReadernameAndReaderemail(buybookrequest.getReadername(),buybookrequest.getReaderemail())).thenReturn(Optional.empty());
+		when(readerRepository.findByReadernameOrReaderemail(buybookrequest.getReadername(),buybookrequest.getReaderemail())).thenReturn(Optional.ofNullable(reader));
 		assertEquals(readerController.buyBooks(buybookrequest),ResponseEntity.badRequest().body("User/Email has already exists,\n Please Try with different one's"));
-		
-		when(readerrepository.findByreadername(buybookrequest.getReadername())).thenReturn(Optional.ofNullable(reader));
-		when(readerrepository.findByreaderemail(buybookrequest.getReaderemail())).thenReturn(Optional.empty());
-		assertEquals(readerController.buyBooks(buybookrequest),ResponseEntity.badRequest().body("User/Email has already exists,\n Please Try with different one's"));
-				
-		when(readerrepository.findByreadername(buybookrequest.getReadername())).thenReturn(Optional.empty());
-		when(readerrepository.findByreaderemail(buybookrequest.getReaderemail())).thenReturn(Optional.ofNullable(reader));
-		assertEquals(readerController.buyBooks(buybookrequest),ResponseEntity.badRequest().body("User/Email has already exists,\n Please Try with different one's"));		
-		
-		when(readerrepository.findByreadername(buybookrequest.getReadername())).thenReturn(Optional.empty());
-		when(readerrepository.findByreaderemail(buybookrequest.getReaderemail())).thenReturn(Optional.empty());
-		assertEquals(readerController.buyBooks(buybookrequest),ResponseEntity.ok("Book Purchase Successful \n Please note the Payment Id for your reference\nPayment Id : "+buybookrequest.getPid()));
-		
-		
-		
-		when(bookrepository.existsById(buybookrequest.getBookid())).thenReturn(false);
+	}
+	/**
+	 * Buy Book Fail By Invalid Book Id
+	 */
+	@Test
+	void testBuyBookFailByInvalidBook() {
+		when(bookRepository.existsById(buybookrequest.getBookid())).thenReturn(false);
 		assertEquals(readerController.buyBooks(buybookrequest),ResponseEntity.badRequest().body("Invalid Book Id / Book not available"));
 	}
-
-	
-
-	
-
+	/**
+	 * Get Purchased Books of Reader
+	 */
 	@Test
 	void testGetPurchasedBooks() {
 		String emailid="abc@gmail.com";
 		Reader reader = SampleReader();
-		reader.setBooks("1,");
+		reader.setPurchasedbooks("1,");
 		Book book = SampleBook();
 		List<Book> books=new ArrayList<Book>();
 		books.add(book);
-		when(readerrepository.findByreaderemail(emailid)).thenReturn(Optional.ofNullable(reader));
-		when(bookrepository.findAllById(Arrays.asList(Long.valueOf(1)))).thenReturn(books);
+		when(readerRepository.findByreaderemail(emailid)).thenReturn(Optional.ofNullable(reader));
+		when(bookRepository.findAllById(Arrays.asList(Long.valueOf(1)))).thenReturn(books);
 		assertEquals(readerController.getPurchasedBooks(emailid),ResponseEntity.ok(books));
-		
-		when(readerrepository.findByreaderemail(emailid)).thenReturn(Optional.empty());
-		assertEquals(readerController.getPurchasedBooks(emailid),ResponseEntity.badRequest().body("No books Purchased with this email"));
 	}
-
+	/**
+	 * Get Purchased Books of Reader for Zero Books
+	 */
 	@Test
-	void testGetBookContent() {
-		String emailid="abc@gmail.com";
-		Long bookid=Long.valueOf(1);
-		Reader reader = SampleReader();
-		Book book = SampleBook();
-		when(readerrepository.findByreaderemail(emailid)).thenReturn(Optional.ofNullable(reader));
-		when(bookrepository.findById(bookid)).thenReturn(Optional.ofNullable(book));
-		assertEquals(readerController.getBookContent(emailid, bookid),new ResponseEntity<String>("Unauthorised to read book",HttpStatus.NOT_FOUND));
-		
-		reader.setBooks("1,");
-		assertEquals(readerController.getBookContent(emailid, bookid),ResponseEntity.ok(book));
-		
-		reader.setBooks("2,3");
-		when(readerrepository.findByreaderemail(emailid)).thenReturn(Optional.ofNullable(reader));
-		assertEquals(readerController.getBookContent(emailid, bookid),new ResponseEntity<String>("Unauthorised to read book",HttpStatus.NOT_FOUND));
-		
-		when(bookrepository.findById(bookid)).thenReturn(Optional.empty());
-		assertEquals(readerController.getBookContent(emailid, bookid),new ResponseEntity<String>("Unauthorised to read book",HttpStatus.NOT_FOUND));
-		
-		reader.setBooks("2,3");
-		when(readerrepository.findByreaderemail(emailid)).thenReturn(Optional.ofNullable(reader));
-		assertEquals(readerController.getBookContent(emailid, bookid),new ResponseEntity<String>("Unauthorised to read book",HttpStatus.NOT_FOUND));
-		
-		when(readerrepository.findByreaderemail(emailid)).thenReturn(Optional.empty());
-		assertEquals(readerController.getBookContent(emailid, bookid),ResponseEntity.badRequest().body("Email Doesn't Exist"));
+	void testGetPurchasedBooksForZeroBooks() {
+		when(readerRepository.findByreaderemail(reader.getReaderemail())).thenReturn(Optional.ofNullable(reader));
+		assertEquals(readerController.getPurchasedBooks(reader.getReaderemail()),ResponseEntity.badRequest().body("No Books Purchased"));
 	}
-
+	/**
+	 * Get Purchased Books Fail By Invalid Mail
+	 */
 	@Test
-	void testGetBookByPID() {
-		String emailid="abc@gmail.com";
-		String pid="PID1234";
-		Reader reader= SampleReader();
-		Book book = SampleBook();
-		reader.setBooks("1,2");
+	void testGetPurchasedBooksFailByInvalidMail() {	
+		when(readerRepository.findByreaderemail(reader.getReaderemail())).thenReturn(Optional.empty());
+		assertEquals(readerController.getPurchasedBooks(reader.getReaderemail()),ResponseEntity.badRequest().body("No books Purchased with this email"));
+	}
+	/**
+	 * Get Book By BookId Fail By Invalid Reader
+	 */
+	@Test
+	void testGetBookContentFailByInvalidReader() {
+		when(readerRepository.findByreaderemail(reader.getReaderemail())).thenReturn(Optional.ofNullable(reader));
+		when(bookRepository.findById(bookid)).thenReturn(Optional.ofNullable(book));
+		assertEquals(readerController.getBookContent(reader.getReaderemail(), bookid),new ResponseEntity<String>("Unauthorised to read book",HttpStatus.NOT_FOUND));
+	}
+	@Test
+	void testGetBookContentSuccess() {
+		reader.setPurchasedbooks("2,1,");
+		when(readerRepository.findByreaderemail(reader.getReaderemail())).thenReturn(Optional.ofNullable(reader));
+		when(bookRepository.findById(bookid)).thenReturn(Optional.ofNullable(book));
+		assertEquals(readerController.getBookContent(reader.getReaderemail(), bookid),ResponseEntity.ok(book));
+	}
+	@Test
+	void testGetBookContentInvalidReader1() {
+		reader.setPurchasedbooks("2,3");
+		when(readerRepository.findByreaderemail(reader.getReaderemail())).thenReturn(Optional.ofNullable(reader));
+		assertEquals(readerController.getBookContent(reader.getReaderemail(), bookid),new ResponseEntity<String>("Unauthorised to read book",HttpStatus.NOT_FOUND));
+	}
+	@Test
+	void testGetBookContentInvalidEmail() {
+		when(readerRepository.findByreaderemail(reader.getReaderemail())).thenReturn(Optional.empty());
+		assertEquals(readerController.getBookContent(reader.getReaderemail(), bookid),ResponseEntity.badRequest().body("Email Doesn't Exist"));
+	}
+	/**
+	 * Get Books By Payment Id Success
+	 */
+	@Test
+	void testGetBookByPaymentIdSuccess() {
+		String paymentid="PID1234";
+		reader.setPurchasedbooks("1,2");
 		reader.setPaymentid("PID1234,PID12345");
-		when(readerrepository.findByreaderemail(emailid)).thenReturn(Optional.ofNullable(reader));
-		when(bookrepository.findById(Long.valueOf(1))).thenReturn(Optional.ofNullable(book));
-		assertEquals(readerController.getBookByPID(emailid, pid),ResponseEntity.ok(Optional.ofNullable(book)));
-		
+		when(readerRepository.findByreaderemail(reader.getReaderemail())).thenReturn(Optional.ofNullable(reader));
+		when(bookRepository.findById(Long.valueOf(1))).thenReturn(Optional.ofNullable(book));
+		assertEquals(readerController.getBookByPID(reader.getReaderemail(), paymentid),ResponseEntity.ok(Optional.ofNullable(book)));
+	}
+	@Test
+	void testGetBookByPaymentIdFailByInvalidPaymentId() {
+		String paymentid="PID1234";
 		reader.setPaymentid("PID12345,PID123456");
-		when(readerrepository.findByreaderemail(emailid)).thenReturn(Optional.ofNullable(reader));
+		when(readerRepository.findByreaderemail(reader.getReaderemail())).thenReturn(Optional.ofNullable(reader));
 	
-		assertEquals(readerController.getBookByPID(emailid, pid),new ResponseEntity<String>("Invalid Payment ID",HttpStatus.NOT_FOUND));
-		
-		when(readerrepository.findByreaderemail(emailid)).thenReturn(Optional.empty());
-		assertEquals(readerController.getBookByPID(emailid, pid),ResponseEntity.badRequest().body("Email Doesn't Exist"));
+		assertEquals(readerController.getBookByPID(reader.getReaderemail(), paymentid),new ResponseEntity<String>("Invalid Payment ID",HttpStatus.NOT_FOUND));
+	}
+	@Test
+	void testGetBookByPaymentIdFailByInvalidEmail() {
+		String paymentid="PID1234";
+		when(readerRepository.findByreaderemail(reader.getReaderemail())).thenReturn(Optional.empty());
+		assertEquals(readerController.getBookByPID(reader.getReaderemail(), paymentid),ResponseEntity.badRequest().body("Email Doesn't Exist"));
 	}
 
 	@Test
 	void testGetRefundBookByBookId() {
-		String emailid="abc@gmail.com";
-		String bookid="1";
-		Reader reader= SampleReader();
-		reader.setBooks("1,2");
+		reader.setPurchasedbooks("1,2");
 		reader.setPaymentid("PID1234,PID12345");
-		when(readerrepository.findByreaderemail(emailid)).thenReturn(Optional.ofNullable(reader));
-		assertEquals(readerController.getRefundBookByBookId(emailid, bookid),new ResponseEntity<String>("Book Unpurchased, refund will be credited shortly",HttpStatus.OK));
-		
-		reader.setBooks("2,3");
+		when(readerRepository.findByreaderemail(reader.getReaderemail())).thenReturn(Optional.ofNullable(reader));
+		assertEquals(readerController.getRefundBookByBookId(reader.getReaderemail(), bookid),new ResponseEntity<String>("Book Unpurchased, refund will be credited shortly",HttpStatus.OK));
+	}
+	@Test
+	void testGetRefundBookByBookIdFailByNotPurchased() {
+		reader.setPurchasedbooks("2,3");
 		reader.setPaymentid("PID1234,PID12345");
-		when(readerrepository.findByreaderemail(emailid)).thenReturn(Optional.ofNullable(reader));
-		assertEquals(readerController.getRefundBookByBookId(emailid, bookid),new ResponseEntity<String>("Book Not purchased  to return",HttpStatus.NOT_FOUND));
-		
-		when(readerrepository.findByreaderemail(emailid)).thenReturn(Optional.empty());
-		assertEquals(readerController.getRefundBookByBookId(emailid, bookid),ResponseEntity.badRequest().body("Email Doesn't Exist"));
+		when(readerRepository.findByreaderemail(reader.getReaderemail())).thenReturn(Optional.ofNullable(reader));
+		assertEquals(readerController.getRefundBookByBookId(reader.getReaderemail(), bookid),new ResponseEntity<String>("Book Not purchased  to return",HttpStatus.NOT_FOUND));
+	}
+	@Test
+	void testGetRefundBookByBookIdFailByInvalidEmai() {
+		when(readerRepository.findByreaderemail(reader.getReaderemail())).thenReturn(Optional.empty());
+		assertEquals(readerController.getRefundBookByBookId(reader.getReaderemail(), bookid),ResponseEntity.badRequest().body("Email Doesn't Exist"));
 		
 	}
 

@@ -1,0 +1,35 @@
+package com.bookservice.entity;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
+
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+
+class AuthorTest {
+	Author author1= new Author();
+	Author author2= new Author();
+	@Test
+	void testHashCode() {				
+		assertEquals(author1.hashCode(),author2.hashCode());
+	}
+
+	@Test
+	void testEqualsObject() {
+		assertTrue(author1.equals(author2));
+		author1.setAuthorname("abc");
+		author2.setAuthorname("xyz");
+		assertFalse(author1.equals(author2));
+		
+	}
+
+	
+
+	@Test
+	void testToString() {
+		assertEquals(author1.toString(),author1.toString());
+	}
+
+	
+
+}

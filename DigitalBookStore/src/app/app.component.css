@@ -1,103 +1,121 @@
-/* Create three equal columns that floats next to each other */
 .column {
-    float: left;
-    width:20%;
-    margin: 20px 25px;
-    display: -ms-flexbox;
+  float: left;
+  width:20%;
+  margin: 20px 25px;
+  display: -ms-flexbox;
   display: flex;
-  -ms-flex-direction: column;
   flex-direction: column;
-  
   word-wrap: break-word;
   background-color: #fff;
   background-clip: border-box;
   box-shadow: 0 4px 8px 0 rgb(0,0,02);
   background-color: rgb(250, 248, 248);
-  
-  
-  
-    height: 300px
-  }
+  height: 300px
+}
  
 .column img{
   margin:4px;
 }
+
 .buybook{
-background-color: yellow;
+  background-color: yellow;
 }
-  .rows{
-    margin:50px;
-  }
-  .rows h2{
-    color:#163f68;
-    text-align: center;
-  }
+.rows{
+  margin:50px;
+}
+.rows h2{
+  color:#163f68;
+  text-align: center;
+}
+
+.rows:after {
+  content: "";
+  display: table;
+  clear: both;
   
-  /* Clear floats after the columns */
-  .rows:after {
-    content: "";
-    display: table;
-    clear: both;
-    
-  }
+}
 
-  /********************************************************************
-  ************************************************************
-  *************************************/
+.spacer {
+  flex: 1;
+}
+
+.toolbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  background-color: #163f68;
+  color: white;
+  font-weight: 600;
+}
+
+.toolbar img {
+  margin: 0 16px;
+}
+
+.toolbar a{
   
-  .spacer {
-    flex: 1;
-  }
+  margin:10px;
+  text-decoration: none;
+  font-size: 15px;
+  padding:7px;
+  
+}
+.toolbar a:hover{
+  background-color: green;
+  color: white;
+}
 
-  .toolbar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    background-color: #163f68;
-    color: white;
-    font-weight: 600;
-  }
-
-  .toolbar img {
-    margin: 0 16px;
-  }
-
-  .toolbar a{
-    
-    margin:10px;
-    text-decoration: none;
-    font-size: 15px;
-    padding:7px;
-   
-  }
-  .toolbar a:hover{
-    background-color: green;
-    color: white;
-  }
- 
-  .error-messages{
-    color:red;
-    
-  }
-  .success-messages{
-    color:white;
-    text-align: center;
-    margin:20px;
-    width:300px;
-    background-color: green;
-  }
-  .button:hover{
-    background-color: green;
-  }
-  .searchfields input{
-    margin:0 20px;
-  }
-.w3-button:hover{color:#000!important;background-color:#ccc!important}
-.w3-black,.w3-hover-black:hover{color:rgb(20, 20, 20)!important;background-color:rgb(233, 225, 225)!important}
-.w3-display-left{position:absolute;top:50%;left:0%;transform:translate(0%,-50%);-ms-transform:translate(-0%,-50%)}
-.w3-display-right{position:absolute;top:50%;right:0%;transform:translate(0%,-50%);-ms-transform:translate(0%,-50%)}
-.w3-button{border:none;display:inline-block;padding:18px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;cursor:pointer;white-space:nowrap}
+.error-messages{
+  color:red;
+  
+}
+.success-messages{
+  color:white;
+  text-align: center;
+  margin:20px;
+  width:300px;
+  background-color: green;
+}
+.button:hover{
+  background-color: green;
+}
+.searchfields input {
+  margin:0 20px;
+}
+.searchfields select{
+  width:100px;
+  
+}
+.w3-button:hover{
+  color:#000!important;
+  background-color:#ccc!important
+}
+.w3-black,.w3-hover-black:hover{
+  color:rgb(20, 20, 20)!important;
+  background-color:rgb(233, 225, 225)!important
+}
+.w3-display-left{
+  position:absolute;
+  top:50%;left:0%;
+}
+.w3-display-right{
+  position:absolute;
+  top:50%;right:0%;
+}
+.w3-button{
+  border:none;
+  display:inline-block;
+  padding:18px 16px;
+  vertical-align:middle;
+  overflow:hidden;
+  text-decoration:none;
+  color:inherit;
+  background-color:inherit;
+  text-align:center;
+  cursor:pointer;
+  white-space:nowrap
+}

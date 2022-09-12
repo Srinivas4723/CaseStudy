@@ -1,104 +1,69 @@
 package com.bookservice.controller;
 
-import java.util.Base64;
 import java.util.Optional;
-import java.util.regex.Pattern;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-
-
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.bookservice.entity.Author;
 import com.bookservice.repository.AuthorRepository;
 import com.bookservice.request.LoginRequest;
 
-
-
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/v1/digitalbooks/author")
+@RequestMapping("/digitalbooks/author")
 public class LoginController extends BaseController {
-	
-	@Autowired
-	AuthorRepository authorRepository;
-	
-	public static boolean ValidateEmail(String email) {
-		String regex="^(.+)@(.+)$";
-		Pattern pattern = Pattern.compile(regex);
-		return pattern.matcher(email).matches();
-	}
-	
-	
-
+	@Autowired AuthorRepository authorRepository;
+	/**
+	 * Authenticates Author and Author sign in
+	 * @param loginRequest
+	 * @return
+	 */
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateAuthor(@Valid @RequestBody LoginRequest loginRequest) {
-		
 		Optional<Author> author= authorRepository.findByAuthorname(loginRequest.getAuthorname());
-		
-		if(author.isPresent() ) { 
-				if(author.get().getPassword().equals(loginRequest.getPassword())) {
-					author.get().setLoginstatus(true);
-					authorRepository.save(author.get());
-					return ResponseEntity.ok("Author Login Success"+author.get().getId());
-			}
+		if(author.isPresent() && author.get().getPassword().equals(loginRequest.getPassword())) {
+				author.get().setLoginstatus(true);
+				authorRepository.save(author.get());
+				return ResponseEntity.ok("Author Login Success"+author.get().getId());
 		}
-	return  ResponseEntity
-			.badRequest()
-			.body("Error: Invalid Credentials");
+	return  ResponseEntity.badRequest().body("Error: Invalid Credentials");
 	}
-	@PostMapping("/signout")
-	public ResponseEntity<?> signoutAuthor(@Valid @RequestBody LoginRequest loginRequest) {
-		
-		Optional<Author> author= authorRepository.findByAuthorname(loginRequest.getAuthorname());
-		if(author.isPresent()) {
-			if(author.get().isLoginstatus()) {
-				
-				
+	/**
+	 * Author Sign out 
+	 * @param loginRequest
+	 * @return
+	 */
+	@PostMapping("/{authorid}/signout")
+	public ResponseEntity<?> signoutAuthor(@PathVariable Long authorid) {
+		Optional<Author> author= authorRepository.findById(authorid);
+		if(author.isPresent() && author.get().isLoginstatus()) {
 				author.get().setLoginstatus(false);
 				authorRepository.save(author.get());
 				return ResponseEntity.ok("Author Signout Success");
-			}
 		}
-	return  ResponseEntity
-			.badRequest()
-			.body("Error: Please signin first to signout");
+		return  ResponseEntity.badRequest().body("Error: Please signin first, to signout");
 	}
-
+	/**
+	 * Creates an Account for Author
+	 * @param author
+	 * @return
+	 */
 	@PostMapping("/signup")
-	public ResponseEntity<?> signinAuthor(@Valid @RequestBody Author author) {
-		
-	 if(ValidateEmail(author.getAuthoremail())) {
+	public ResponseEntity<?> signupAuthor(@Valid @RequestBody Author author) {
 		if (authorRepository.existsByAuthorname(author.getAuthorname())) {
-			return ResponseEntity
-					.badRequest()
-					.body("Author Name is already in use !");
+			return ResponseEntity.badRequest().body("Author Name is already in use !");
 		}
-
 		if (authorRepository.existsByAuthoremail(author.getAuthoremail())) {
-			return ResponseEntity
-					.badRequest()
-					.body("Author Email is already in use!");
-		}
-
-		// Create new user's account
-		
-		author.setPassword( author.getPassword());
-									
+			return ResponseEntity.badRequest().body("Author Email is already in use!");
+		}		
+		author.setPassword(author.getPassword());
 		authorRepository.save(author);
-
 		return ResponseEntity.ok("Author registered successfully! \n Your Author ID : "+author.getId());
-		}
-	 else {
-		 return ResponseEntity.badRequest().body("Please Enter a Valid Email ");
-	 }
-		
 	}
 }

@@ -8,10 +8,9 @@ import { UserService } from '../user.service';
   styleUrls: ['./authorsignin.component.css']
 })
 export class AuthorsigninComponent implements OnInit {
-
   loginRequest ={
-    authorname:"abc",
-    password:"abcabcabc"
+    authorname:"",
+    password:""
 
   }
   signInBlankResponse ={
@@ -19,7 +18,6 @@ export class AuthorsigninComponent implements OnInit {
     password:""
   }
   signInIvalidResponse:any;
-  
   constructor(public userService: UserService,public router:Router) { }
   cancelsignin(){
     this.userService.digitalBooksContainerFlag=true;
@@ -32,14 +30,13 @@ export class AuthorsigninComponent implements OnInit {
       console.log("RB"+responseBody);
       this.signInBlankResponse.authorname=responseBody.authorname;
       this.signInBlankResponse.password=responseBody.password;
-      
-      
-      //this.signInResponse=JSON.stringify(responseBody);
     },
     (error:any)=>{
       console.log("eR"+JSON.stringify(error.error));
       if(typeof error.error==='string'){
-      this.signInIvalidResponse=error.error;
+        this.signInIvalidResponse=error.error;
+        this.loginRequest.authorname="";
+        this.loginRequest.password="";
       }
       else{
         console.log(error.error.text);
@@ -53,8 +50,12 @@ export class AuthorsigninComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-    this.userService.digitalBooksContainerFlag=false;
-    this.userService.slideShowFlag=false;
+    if(sessionStorage.getItem("authorId")===null){
+      this.userService.digitalBooksContainerFlag=false;
+      this.userService.slideShowFlag=false;
+    }
+    else{
+      this.router.navigate(["/authorhome"]);
+    }
   }
-
 }
