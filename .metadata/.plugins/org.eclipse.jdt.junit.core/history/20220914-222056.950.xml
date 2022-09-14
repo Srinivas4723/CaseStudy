@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="ReaderTest" project="bookservice" tests="3" started="3" failures="0" errors="0" ignored="0">
+  <testsuite name="com.bookservice.entity.ReaderTest" time="0.0" displayname="ReaderTest" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.entity.ReaderTest]">
+    <testcase name="testToString" classname="com.bookservice.entity.ReaderTest" time="0.0" displayname="testToString()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.entity.ReaderTest]/[method:testToString()]"/>
+    <testcase name="testEqualsObject" classname="com.bookservice.entity.ReaderTest" time="0.0" displayname="testEqualsObject()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.entity.ReaderTest]/[method:testEqualsObject()]"/>
+    <testcase name="testHashCode" classname="com.bookservice.entity.ReaderTest" time="0.0" displayname="testHashCode()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.entity.ReaderTest]/[method:testHashCode()]"/>
+  </testsuite>
+</testrun>

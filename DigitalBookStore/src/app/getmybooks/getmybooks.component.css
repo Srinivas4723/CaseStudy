@@ -67,6 +67,8 @@ h2{
   color:white;
   text-align: center;
   margin:auto 50px;
-  
   background-color: #163f68;
+}
+.align-right{
+  text-align: right;
 }

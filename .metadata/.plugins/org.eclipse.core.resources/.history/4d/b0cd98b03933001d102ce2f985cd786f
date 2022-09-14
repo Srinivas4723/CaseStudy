@@ -1,0 +1,5 @@
+package com.bookservice.entity;
+
+public class PurchasedBooks {
+
+}

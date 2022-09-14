@@ -13,12 +13,8 @@ l
 <src/main/java/com/bookservice/repository/BookRepository.java,c\3\c30fe8e8704158e4c6c86fc33b7f01f2bee4277d
 n
 >src/main/java/com/bookservice/repository/AuthorRepository.java,0\9\09f35c5a4bd353184ea3239962e05f46fff1af29
-f
-6src/main/java/com/bookservice/service/BookService.java,5\7\57bf21bc0ad0f0794efafdd92b6adc816f5d39fc
 i
 9src/main/java/com/bookservice/BookServiceApplication.java,f\b\fbc015918ecbfe8ec514f61b0e89575157cb447e
-m
-=src/main/java/com/bookservice/controller/ErrorController.java,c\4\c4bad060bc7720d59a99649dca72bc6795bc0d8a
 r
 Bsrc/test/java/com/bookservice/controller/ReaderControllerTest.java,f\8\f8914f13e8d34b1a03f5365384b278d96325882d
 p

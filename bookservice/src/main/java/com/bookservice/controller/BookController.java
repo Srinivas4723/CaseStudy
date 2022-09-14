@@ -24,119 +24,122 @@ import com.bookservice.entity.Category;
 import com.bookservice.repository.AuthorRepository;
 import com.bookservice.repository.BookRepository;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin
 @RestController
 @RequestMapping("/digitalbooks")
 public class BookController extends BaseController {
-	
-	@Autowired BookRepository bookRepository;
-	@Autowired AuthorRepository authorRepository;
-	
+
+	@Autowired
+	BookRepository bookRepository;
+	@Autowired
+	AuthorRepository authorRepository;
+	BigDecimal bd;
+
 	/**
-	 * Finding all books from the digital store
+	 * Finding all active books from the digital store
+	 * 
 	 * @return
 	 */
-	
+
 	@GetMapping("/allbooks")
 	List<Book> getAllBooks() {
 		return bookRepository.findAll();
 	}
-	
+
 	/**
 	 * Searching the books by filter (author, category, price, publisher)
+	 * 
 	 * @param author
 	 * @param category
 	 * @param price
 	 * @param publisher
 	 * @return
 	 */
-	
+
 	@GetMapping("/books/search")
-	ResponseEntity<?> searchBook( @RequestParam Optional<String> author,
-			@RequestParam Optional<Category> category,
-			@RequestParam Optional<BigDecimal> price,
-			@RequestParam Optional<String> publisher) {
-		Stream<Book> stream= bookRepository.findAll().stream();
-		if(author.isPresent() ) {
-			stream = stream.filter(book -> book.getAuthor().equals(author.get()));
+	ResponseEntity<?> searchBook(@RequestParam Optional<String> author, @RequestParam Optional<Category> category,
+			@RequestParam Optional<BigDecimal> price, @RequestParam Optional<String> publisher) {
+		Stream<Book> stream = bookRepository.findAll().stream();
+		if (author.isPresent()) {
+			stream = stream.filter(book -> book.getAuthor().replace(" ", "").equalsIgnoreCase(author.get().replace(" ", "")));
 		}
-		if(category.isPresent()) {
-			stream= stream.filter(book -> book.getCategory().equals(category.get()));
+		if (category.isPresent()) {
+			stream = stream.filter(book -> book.getCategory().equals(category.get()));
 		}
-		if(price.isPresent()) {
-			stream=stream.filter(book ->String.valueOf(book.getPrice()).equals(String.valueOf(price.get())));
+		if (price.isPresent()) {
+			stream = stream.filter(book ->String.valueOf(book.getPrice().intValue()).equals(String.valueOf(price.get().intValue())));
 		}
-		if(publisher.isPresent()) {
-			stream=stream.filter(book -> book.getPublisher().equalsIgnoreCase(publisher.get()));
+		if (publisher.isPresent()) {
+			stream = stream.filter(book -> book.getPublisher().replace(" ", "").equalsIgnoreCase(publisher.get().replace(" ", "")));
 		}
-		List<Book> searchResult= stream.collect(Collectors.toList());
-		if(!searchResult.isEmpty()) {
+		List<Book> searchResult = stream.collect(Collectors.toList());
+		if (!searchResult.isEmpty()) {
 			return new ResponseEntity<>(searchResult, HttpStatus.FOUND);
 		}
-		return new ResponseEntity<>("NO Books Found",HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>("NO Books Found", HttpStatus.NOT_FOUND);
 	}
-	
+
 	/**
-	 * Creating a book 
+	 * Creating a book
+	 * 
 	 * @param book
 	 * @param authorid
 	 * @return
 	 */
 	@PostMapping("/author/{authorid}/books")
-	ResponseEntity<?> createBook(@Valid @RequestBody Book book,@PathVariable("authorid") Long authorid) {
-		Optional<Author> author= authorRepository.findById(authorid);
-		if(author.isPresent()) {
-			if(author.get().isLoginstatus()) {
+	ResponseEntity<?> createBook(@Valid @RequestBody Book book, @PathVariable("authorid") Long authorid) {
+		Optional<Author> author = authorRepository.findById(authorid);
+		if (author.isPresent()) {
+			if (author.get().isLoginstatus()) {
 				book.setAuthorid(authorid);
 				book.setActive(true);
 				bookRepository.save(book);
 				return ResponseEntity.ok("Book Created Successfully");
-			}
-			else {
+			} else {
 				return ResponseEntity.badRequest().body("Please Login to Create Book");
 			}
 		}
-		return new ResponseEntity<>("Invalid Author to create book",HttpStatus.UNAUTHORIZED);
+		return new ResponseEntity<>("Invalid Author to create book", HttpStatus.UNAUTHORIZED);
 	}
-	
+
 	/**
 	 * Updating / Editing an Existing Book
+	 * 
 	 * @param book
 	 * @param authorid
 	 * @param bookid
 	 * @return
 	 */
 	@PutMapping("/author/{authorid}/books/{bookid}")
-	ResponseEntity<?> updateBook(@Valid @RequestBody Book book,
-			@PathVariable("authorid") Long authorid, 
-			@PathVariable("bookid") Long bookid){		
-		Optional<Author> author= authorRepository.findById(authorid);
-		if(bookRepository.existsById(bookid)) {
-			if(author.isPresent()) {
-				if(author.get().isLoginstatus()) {
+	ResponseEntity<?> updateBook(@Valid @RequestBody Book book, @PathVariable("authorid") Long authorid,
+			@PathVariable("bookid") Long bookid) {
+		Optional<Author> author = authorRepository.findById(authorid);
+		if (bookRepository.existsById(bookid)) {
+			if (author.isPresent()) {
+				if (author.get().isLoginstatus()) {
 					book.setAuthorid(authorid);
 					book.setId(bookid);
 					bookRepository.save(book);
 					return ResponseEntity.ok("Book Update Successfull");
-				}
-				else {
+				} else {
 					return ResponseEntity.badRequest().body("Please Login to Update Book");
 				}
-			}
-			else {
+			} else {
 				return ResponseEntity.badRequest().body("Invalid Author");
 			}
 		}
-		return new ResponseEntity<>("No book found to Update",HttpStatus.UNAUTHORIZED);
-		
+		return new ResponseEntity<>("No book found to Update", HttpStatus.UNAUTHORIZED);
+
 	}
+
 	/**
 	 * Finding all Books by Author Id
+	 * 
 	 * @param authorid
 	 * @return
 	 */
 	@GetMapping("/books/{authorid}")
-	List<Book> getBooksByAuthorId(@PathVariable("authorid") Long authorid){
+	List<Book> getBooksByAuthorId(@PathVariable("authorid") Long authorid) {
 		return bookRepository.findAllByAuthorid(authorid);
 	}
 }

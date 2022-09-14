@@ -1,5 +1,6 @@
 package com.bookservice.controller;
 
+import java.util.Base64;
 import java.util.Optional;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import com.bookservice.request.LoginRequest;
 @RequestMapping("/digitalbooks/author")
 public class LoginController extends BaseController {
 	@Autowired AuthorRepository authorRepository;
+	Base64.Encoder encoder= Base64.getEncoder() ;
 	/**
 	 * Authenticates Author and Author sign in
 	 * @param loginRequest
@@ -27,7 +29,7 @@ public class LoginController extends BaseController {
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateAuthor(@Valid @RequestBody LoginRequest loginRequest) {
 		Optional<Author> author= authorRepository.findByAuthorname(loginRequest.getAuthorname());
-		if(author.isPresent() && author.get().getPassword().equals(loginRequest.getPassword())) {
+		if(author.isPresent() && author.get().getPassword().equals(encoder.encodeToString(loginRequest.getPassword().getBytes()))) {
 				author.get().setLoginstatus(true);
 				authorRepository.save(author.get());
 				return ResponseEntity.ok("Author Login Success"+author.get().getId());
@@ -61,8 +63,9 @@ public class LoginController extends BaseController {
 		}
 		if (authorRepository.existsByAuthoremail(author.getAuthoremail())) {
 			return ResponseEntity.badRequest().body("Author Email is already in use!");
-		}		
-		author.setPassword(author.getPassword());
+		}	
+		
+		author.setPassword(encoder.encodeToString((author.getPassword().getBytes())));
 		authorRepository.save(author);
 		return ResponseEntity.ok("Author registered successfully! \n Your Author ID : "+author.getId());
 	}

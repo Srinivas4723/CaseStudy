@@ -35,28 +35,30 @@ export class ReaderpageComponent implements OnInit {
     if(this.cardnumber===""){
       this.cardnumberblankResponse="Card Number cannot be Blank";
     }
-    const observable=this.userService.buybook(this.reader);
-    observable.subscribe((responseBody)=>{
-      
-      this.readerblankResponse=responseBody;
-    },
-    (error:any)=>{
-      console.log("R"+JSON.stringify(error.error));
-      if(typeof error.error.text==='string'){
-        this.readerFormFlag=false;
-        this.bookPurchaseSuccessMessage=error.error.text;
+    else{
+      const observable=this.userService.buybook(this.reader);
+      observable.subscribe((responseBody)=>{
         
-      }
-      else if(typeof error.error==="string" && error.error.includes("Valid Email")){
-        this.readerblankResponse.readeremail=error.error;
-      }
-      else{
-        this.reader.readername="";
-        this.reader.readeremail="";
-        this.cardnumber="";
-      this.bookPurchaseFailureMessage=error.error;
-      }
-    });
+        this.readerblankResponse=responseBody;
+      },
+      (error:any)=>{
+        console.log("R"+JSON.stringify(error.error));
+        if(typeof error.error.text==='string'){
+          this.readerFormFlag=false;
+          this.bookPurchaseSuccessMessage=error.error.text;
+          
+        }
+        else if(typeof error.error==="string" && error.error.includes("Valid Email")){
+          this.readerblankResponse.readeremail=error.error;
+        }
+        else{
+          this.reader.readername="";
+          this.reader.readeremail="";
+          this.cardnumber="";
+        this.bookPurchaseFailureMessage=error.error;
+        }
+      });
+    }
   }
   cancelpurchase(){
     this.userService.digitalBooksContainerFlag=true;

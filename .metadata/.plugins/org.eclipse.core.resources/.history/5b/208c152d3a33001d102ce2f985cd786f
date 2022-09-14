@@ -1,0 +1,6 @@
+package com.bookservice.repository;
+
+@Repository
+public interface PBookRepository extends JpaRepository<PBooks, Long> {
+	
+}

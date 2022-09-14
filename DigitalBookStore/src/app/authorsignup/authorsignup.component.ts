@@ -38,6 +38,21 @@ export class AuthorsignupComponent implements OnInit {
     this.router.navigate(["/"]);
   }
   saveAuthor(){
+    this.signUpblankResponse.authorname="";
+    this.signUpblankResponse.authorpassword="";
+    this.signUpblankResponse.authoremail="";
+    this.signUpAuthorNameExists="";
+    this.signUpAuthorEmailExists="";
+    if(this.author.authorname===""){
+      this.signUpblankResponse.authorname="Author Name Cannot be blank";
+    }
+    if(this.author.authoremail===""){
+      this.signUpblankResponse.authoremail="Author Email Cannot be blank";
+    }
+    if(this.author.password===""){
+      this.signUpblankResponse.authorpassword="Password Cannot be blank";
+    }
+    else{
     const observable= this.userService.saveAuthor(this.author);
     observable.subscribe((responseBody:any)=>{
     this.signUpblankResponse.authorname=responseBody.authorname;
@@ -52,6 +67,7 @@ export class AuthorsignupComponent implements OnInit {
       
       console.log("X"+error.error);
       if(typeof error.error==='string'){
+        
         if(error.error.includes("Name")){
           this.signUpAuthorNameExists=error.error;
         }
@@ -70,6 +86,7 @@ export class AuthorsignupComponent implements OnInit {
         this.successMessage=error.error.text;
       }
     });
+  }
   }
   ngOnInit(): void {
     if(sessionStorage.getItem("authorId")!==null){

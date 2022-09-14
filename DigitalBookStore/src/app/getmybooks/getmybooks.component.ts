@@ -7,12 +7,8 @@ import { UserService } from '../user.service';
   styleUrls: ['./getmybooks.component.css']
 })
 export class GetmybooksComponent implements OnInit {
-  searchbookdata={
-    category:"",author:"",price:"",publisher:""
-  }
   reader={
-    
-    readeremail:"a@b.c",
+    readeremail:"",
     paymentId:""
   }
   readerBooks:any;
@@ -35,24 +31,7 @@ export class GetmybooksComponent implements OnInit {
   getmyBooksContainerFlag:boolean=true;
   bookcontentFlag:boolean=false;
   constructor(public userService:UserService) { }
-  searchBooks(){
-    this.bookUnpurchaseSuccesMessage="";
-    if(this.searchbookdata.author==="" && this.searchbookdata.category==="" &&
-      this.searchbookdata.price==="" &&  this.searchbookdata.publisher===""){
-      alert("Search Fields Cannnot be Blank");
-    }
-    else{
-      const observable= this.userService.searchBooks(this.searchbookdata);
-      observable.subscribe((error:any)=>{
-        if(typeof error.error==='string'){
-          this.nobookFoundMessage=error.error;
-        }
-        else{
-        this.Books=JSON.parse(JSON.stringify(error.error));
-        }
-      });
-    }
-  }
+  
   returnBook(book:any){
     this.bookUnpurchaseSuccesMessage="";
     if(confirm("Are you sure , You want to return book")){
@@ -72,6 +51,10 @@ export class GetmybooksComponent implements OnInit {
     this.getmyBooksContainerFlag=false;
     this.readcontentbook=book;
     this.bookcontentFlag=true;
+  }
+  goBack(){
+    this.getmyBooksContainerFlag=true;
+    this.bookcontentFlag=false;
   }
   getmybooks(){
     this.readerBooks=null;

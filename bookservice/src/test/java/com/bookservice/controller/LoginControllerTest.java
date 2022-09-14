@@ -40,12 +40,13 @@ class LoginControllerTest {
 	}
 	
 	public static Optional<Author> SampleAuthor() {
+		Base64.Encoder encoder= Base64.getEncoder();
 		Optional<Author> author = Optional.ofNullable(new Author());
 		author.get().setId(Long.valueOf(1));
 		author.get().setAuthorname("abc");
 		author.get().setAuthoremail("abc@gmail.com");
 		author.get().setLoginstatus(false);
-		author.get().setPassword("abc");
+		author.get().setPassword(encoder.encodeToString("abc".getBytes()));
 		return author;
 	}
 	LoginRequest loginRequest= SampleLoginRequest();

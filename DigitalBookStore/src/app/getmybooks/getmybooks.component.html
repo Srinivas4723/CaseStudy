@@ -11,7 +11,7 @@
         <input class="form-control" type="text"  [(ngModel)]="reader.paymentId" placeholder="Enter PaymentID (Optional)">
         </div>
         <div class="col-sm-3">
-            <button class="form-contol btn btn-secondary" (click)="getmybooks()">Get My Boooks</button>
+            <button class="form-contol btn btn-secondary" (click)="getmybooks()">Get My Books</button>
         </div>
     </div>    
   </div>
@@ -33,7 +33,9 @@
 </div>
 
 <div *ngIf="bookcontentFlag" id="contentofbook">
-  
+  <div class="align-right" >
+    <button class="btn btn-link" (click)="goBack()"><-- Go Back</button>
+  </div>
   <div class="bookcontent"><br/>  
     <img src="assets/book{{readcontentbook.id}}.jpg">
       <h2>{{readcontentbook.title}}</h2>

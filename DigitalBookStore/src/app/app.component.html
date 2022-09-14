@@ -16,7 +16,6 @@
 </div>  
 
 <br/><br/><br/>
-<p class="success-messages">{{signoutSuccessMessage}}</p>
 <div *ngIf="userService.slideShowFlag" class="w3-content w3-display-container">
   <div *ngIf="slidingImageFlags[0]" class="w3-display-container mySlides">
     <img src="assets/sliding1.jpg" width="100%" height="300">
@@ -43,7 +42,7 @@
       <option *ngFor="let category of bookcategory" [ngValue]="category">{{category}}</option>
     </datalist>
     <input type="text"  [(ngModel)]="searchbookdata.author" placeholder="Enter Author">
-    <input type="text"  [(ngModel)]="searchbookdata.price" placeholder="Enter Price">
+    <input type="number"  [(ngModel)]="searchbookdata.price" placeholder="Enter Price">
     <input type="text"   [(ngModel)]="searchbookdata.publisher" placeholder="Enter Publisher">
     <button class="btn btn-secondary" (click)="searchBooks()">Search Filters</button>
     </div>

@@ -25,29 +25,40 @@ export class AuthorsigninComponent implements OnInit {
     this.router.navigate(["/"]);
   }
   authorSignIn(){
-    const observable= this.userService.authorSignin(this.loginRequest);
-    observable.subscribe((responseBody:any)=>{
-      console.log("RB"+responseBody);
-      this.signInBlankResponse.authorname=responseBody.authorname;
-      this.signInBlankResponse.password=responseBody.password;
-    },
-    (error:any)=>{
-      console.log("eR"+JSON.stringify(error.error));
-      if(typeof error.error==='string'){
-        this.signInIvalidResponse=error.error;
-        this.loginRequest.authorname="";
-        this.loginRequest.password="";
-      }
-      else{
-        console.log(error.error.text);
-       sessionStorage.setItem("authorName",this.loginRequest.authorname);
-        sessionStorage.setItem('authorId',error.error.text.replace("Author Login Success",""));
-        console.log(sessionStorage.getItem('authorId'));
-        this.userService.authorsignupNavFlag=false;
-        this.userService.createbooknavFlag=true;
-        this.router.navigate(['/authorhome']);
-      }
-    });
+    this.signInBlankResponse.authorname="";
+    this.signInBlankResponse.password="";
+    this.signInIvalidResponse="";
+    if(this.loginRequest.authorname===""){
+      this.signInBlankResponse.authorname="Author Name Cannot be blank";
+    }
+    if(this.loginRequest.password===""){
+    this.signInBlankResponse.password="Password Cannot be blank";
+    }
+    else{
+      const observable= this.userService.authorSignin(this.loginRequest);
+      observable.subscribe((responseBody:any)=>{
+        console.log("RB"+responseBody);
+        this.signInBlankResponse.authorname=responseBody.authorname;
+        this.signInBlankResponse.password=responseBody.password;
+      },
+      (error:any)=>{
+        console.log("eR"+JSON.stringify(error.error));
+        if(typeof error.error==='string'){
+          this.signInIvalidResponse=error.error;
+          this.loginRequest.authorname="";
+          this.loginRequest.password="";
+        }
+        else{
+          console.log(error.error.text);
+        sessionStorage.setItem("authorName",this.loginRequest.authorname);
+          sessionStorage.setItem('authorId',error.error.text.replace("Author Login Success",""));
+          console.log(sessionStorage.getItem('authorId'));
+          this.userService.authorsignupNavFlag=false;
+          this.userService.createbooknavFlag=true;
+          this.router.navigate(['/authorhome']);
+        }
+      });
+    }
   }
   ngOnInit(): void {
     if(sessionStorage.getItem("authorId")===null){

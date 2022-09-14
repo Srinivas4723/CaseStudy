@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthorsigninComponent } from './authorsignin/authorsignin.component';
+
 export enum Category{
   COMICS,HISTORY,FANTASY,HORROR
 };
@@ -26,15 +27,16 @@ export class UserService {
   updateBookPageFlag:boolean=false;
   hastoeditbook={
     id:Number,
-    authorid:String,
-    title:String,
+    authorid:'',
+    title:"",
     category:Category,
-    author:String,
-    price:Number,
-    publisher:String,
-    publisheddate:Date,
-    chapters:Number,
+    author:"",
+    price:"",
+    publisher:"",
+    publisheddate:"",
+    chapters:"",
     active:Boolean,
+    content:""
   };
   authorBooksContainerFlag: boolean=false;
   constructor(public http:HttpClient) { }

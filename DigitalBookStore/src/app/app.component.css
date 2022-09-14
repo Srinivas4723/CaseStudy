@@ -100,11 +100,11 @@
 }
 .w3-display-left{
   position:absolute;
-  top:50%;left:0%;
+  top:40%;left:0%;
 }
 .w3-display-right{
   position:absolute;
-  top:50%;right:0%;
+  top:40%;right:0%;
 }
 .w3-button{
   border:none;

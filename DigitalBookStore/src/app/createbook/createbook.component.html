@@ -2,7 +2,7 @@
     <div class="form-container">
          <div  class="form">
             <div *ngIf="userService.createbooksuccessContainerFlag" id="createbooksuccessMessageContainer">
-               <p class="success-messages"> Book Created SuccessFull.....!!!!<br/></p>
+               <p class="success-messages"> {{bookCreateSuccessMessage}}.....!!!!<br/></p>
                 <a (click)='ngOnInit()' routerLink="/createbook">Click here</a> to create new books
             </div>
             <div *ngIf="userService.createBookContainerFlag" >
@@ -39,6 +39,11 @@
                 <label><strong>Book Price</strong></label>
                 <input [(ngModel)]="book.price" class="form-control" type="number"  placeholder="Enter Book Price">
                 <p class="error-messages">{{createbookblankResponse.price}}</p>
+            </div>
+            <div class="form-group ">
+                <label><strong>Book Content</strong></label>
+                <input [(ngModel)]="book.content" class="form-control" type="text"  placeholder="Enter Book Content">
+                <p class="error-messages">{{createbookblankResponse.content}}</p>
             </div>
             <div class="form-group">
                 <button class="button btn btn-success" (click)="createBook()">Create Book</button>

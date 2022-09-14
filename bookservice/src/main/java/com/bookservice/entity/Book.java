@@ -43,5 +43,7 @@ public class Book {
 	private LocalDate publisheddate;
 	@Min(value = 1, message = "chapters cannot be less than 1")
 	private int chapters;
+	@NotBlank(message = "Book Content cannot be blank")
+	private String content;
 	private boolean active;
 }

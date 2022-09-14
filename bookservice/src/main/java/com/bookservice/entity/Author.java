@@ -9,9 +9,7 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import com.bookservice.controller.BaseController;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 @Data
 @Entity
@@ -19,7 +17,7 @@ import lombok.EqualsAndHashCode;
 uniqueConstraints = { 
 	@UniqueConstraint(columnNames = "id")
 })
-public class Author extends BaseController {
+public class Author {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -29,7 +27,7 @@ public class Author extends BaseController {
 	@NotBlank(message = "Author Email cannot be blank")
 	private String authoremail;
 	@NotBlank(message = "Password cannot be blank")
-	@Size(min=8,max=40)
+	@Size(min=8,max=120)
 	private String password;
 	private boolean loginstatus;
 }

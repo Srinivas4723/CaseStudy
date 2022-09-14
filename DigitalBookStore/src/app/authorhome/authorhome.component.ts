@@ -37,7 +37,10 @@ export class AuthorhomeComponent implements OnInit {
     this.readcontentbook=book;
     this.bookcontentFlag=true;
   }
-  
+  goBack(){
+    this.userService.authorBooksContainerFlag=true;
+    this.bookcontentFlag=false;
+  }
   editbook(book:any){
     this.userService.hastoeditbook=book;
     console.log(JSON.stringify(book));

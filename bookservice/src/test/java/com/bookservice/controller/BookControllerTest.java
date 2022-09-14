@@ -132,7 +132,7 @@ class BookControllerTest {
 		author.setLoginstatus(true);
 		when(authorRepository.findById(author.getId())).thenReturn(Optional.ofNullable(author));
 		when(bookRepository.existsById(book.getId())).thenReturn(true);
-		assertEquals(bookController.updateBook(book, author.getId(), book.getId()),ResponseEntity.ok("Book Updated Successfully"));
+		assertEquals(bookController.updateBook(book, author.getId(), book.getId()),ResponseEntity.ok("Book Update Successfull"));
 	}
 	/**
 	 * Update Book Fail By Not LoggedIn
@@ -161,5 +161,9 @@ class BookControllerTest {
 	void testUpdateBookFailByInvalidBook() {
 		when(bookRepository.existsById(book.getId())).thenReturn(false);
 		assertEquals(bookController.updateBook(book, author.getId(), book.getId()),new ResponseEntity<String>("No book found to Update",HttpStatus.UNAUTHORIZED));
+	}
+	@Test
+	void CreateBookFailByException() {
+		
 	}
 }

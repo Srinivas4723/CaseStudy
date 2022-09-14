@@ -12,17 +12,19 @@ import { UserService, Category } from '../user.service';
 
 export class CreatebookComponent implements OnInit {
   createbookFailureMessage: string="";
+  bookCreateSuccessMessage: any;
   constructor(public userService:UserService,public router:Router) { }  
   obj=Object.values(Category).filter(value => typeof value==="string");
   book={
     title:"",
-    category:Category,
+    category:"",
     author:""+sessionStorage.getItem("authorName"),
-    price:Number,
+    price:"",
     publisher:"",
-    publisheddate:DatePipe,
-    chapters:Number,
+    publisheddate:"",
+    chapters:"",
     active:Boolean,
+    content:""
   }
   createbookblankResponse={
     title:'',
@@ -33,49 +35,80 @@ export class CreatebookComponent implements OnInit {
     publisheddate:'',
     chapters:'',
     active:'',
+    content:''
   }
   cancelcreatebook(){
     this.router.navigate(["/authorhome"]);
   }
   createBook(){
-    const observable = this.userService.createBook(this.book);
-    observable.subscribe((responseBody:any)=>{
-      this.createbookblankResponse.title=responseBody.title;
-      this.createbookblankResponse.category=responseBody.category;
-      this.createbookblankResponse.author=responseBody.author;
-      this.createbookblankResponse.publisher=responseBody.publisher;
-      this.createbookblankResponse.publisheddate=responseBody.publisheddate;
-      this.createbookblankResponse.chapters=responseBody.chapters;
-      this.createbookblankResponse.active=responseBody.active;
-      this.createbookblankResponse.price=responseBody.price;
-      console.log(JSON.stringify(responseBody));
-    },
-    (error:any)=>{
-      console.log("E"+error.error.status+JSON.stringify(error.error));
-      if(typeof error.error!=='string' && error.error.status!==500 ){
-        this.userService.createBookContainerFlag=false;
-        this.userService.createbooksuccessContainerFlag=true;
-        this.book={title:"",
-        category:Category,
-        author:""+sessionStorage.getItem("authorName"),
-        price:Number,
-        publisher:"",
-        publisheddate:DatePipe,
-        chapters:Number,
-        active:Boolean,}
+    console.log(this.book.chapters+"E");
+    this.createbookblankResponse.title="";
+    this.createbookblankResponse.category="";
+    this.createbookblankResponse.publisher="";
+    this.createbookblankResponse.publisheddate="";
+    this.createbookblankResponse.price="";
+    this.createbookblankResponse.chapters="";
+    this.createbookblankResponse.content="";
+    if(this.book.title===""){
+      this.createbookblankResponse.title="Book titlecannot be blank";
+    }
+    if(this.book.category==="" || this.book.chapters===null){
+          this.createbookblankResponse.category="Book categorycannot be blank";
+    }
+    if(this.book.publisher===""){
+          this.createbookblankResponse.publisher="Book publishercannot be blank";
+    }
+    if(this.book.publisheddate===""){
+          this.createbookblankResponse.publisheddate="Book publisheddatecannot be blank";
+    }
+    if(this.book.price==="" || this.book.price===null){
+          this.createbookblankResponse.price="Book pricecannot be blank";
+    }
+    if(this.book.chapters==="" || this.book.chapters===null){
+          this.createbookblankResponse.chapters="Book chapterscannot be blank";
+    }
+    if(this.book.content===""){
+          this.createbookblankResponse.content="Book contentcannot be blank";
+    }
+    else{
+        const observable = this.userService.createBook(this.book);
+      observable.subscribe((responseBody:any)=>{ },
+      (error:any)=>{
+        console.log("E"+error.error.status+JSON.stringify(error));
+        if(error.status===406){
+          this.createbookblankResponse.category="Category Cannot be Blank";
+        }
+        if(typeof error.error!=='string' && error.error.status!==500 ){
+          this.userService.createBookContainerFlag=false;
+          this.bookCreateSuccessMessage=error.error.text;
+          this.userService.createbooksuccessContainerFlag=true;
+          this.book={
+            title:"",
+            category:"",
+            author:""+sessionStorage.getItem("authorName"),
+            price:"",
+            publisher:"",
+            publisheddate:"",
+            chapters:"",
+            active:Boolean,
+            content:""
+        }
       }
       else{
-        this.book={title:"",
-        category:Category,
-        author:""+sessionStorage.getItem("authorName"),
-        price:Number,
-        publisher:"",
-        publisheddate:DatePipe,
-        chapters:Number,
-        active:Boolean,};
-        this.createbookFailureMessage="OOPS !!! Something Went Wrong";
+        this.book={
+          title:"",
+          category:"",
+          author:""+sessionStorage.getItem("authorName"),
+          price:"",
+          publisher:"",
+          publisheddate:"",
+          chapters:"",
+          active:Boolean,
+          content:""};
+          this.createbookFailureMessage="OOPS !!! Something Went Wrong";
       }
     });
+    }
   }
   ngOnInit(): void {
     this.userService.digitalBooksContainerFlag=false;

@@ -25,6 +25,5 @@ public class Reader {
 	private String readername;
 	@NotBlank(message = "readeremail cannot be blank#######")
 	private String readeremail;
-	 private String purchasedbooks;
-	 private String paymentid;
+	
 }

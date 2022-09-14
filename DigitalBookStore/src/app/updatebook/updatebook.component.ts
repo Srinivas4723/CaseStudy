@@ -15,13 +15,14 @@ export class UpdatebookComponent implements OnInit {
     id:'',
     authorid:"",
     title:'',
-    category:Category,
+    category:"",
     author:'',
     price:'',
     publisher:'',
     publisheddate:null,
     chapters:'',
     active:'',
+    content:''
   };
   nobookFoundMessage: any;
   updatebookblankResponse={
@@ -32,7 +33,8 @@ export class UpdatebookComponent implements OnInit {
     publisher:'',
     publisheddate:'',
     chapters:'',
-    active:''
+    active:'',
+    content:''
   };
   bookupdateSuccessMessage: any="";
   constructor(public router:Router,public userService:UserService) { }
@@ -41,18 +43,47 @@ export class UpdatebookComponent implements OnInit {
     this.router.navigate(["/authorhome"]);
   }
   updateBook(){
+    this.updatebookblankResponse.title="";
+    this.updatebookblankResponse.category="";
+    this.updatebookblankResponse.publisher="";
+    this.updatebookblankResponse.publisheddate="";
+    this.updatebookblankResponse.price="";
+    this.updatebookblankResponse.chapters="";
+    this.updatebookblankResponse.content="";
+    if(this.book.title===""){
+      this.updatebookblankResponse.title="Book title cannot be blank";
+    }
+    if(this.book.chapters===null){
+          this.updatebookblankResponse.category="Book category cannot be blank";
+    }
+    if(this.book.publisher===""){
+          this.updatebookblankResponse.publisher="Book publisher cannot be blank";
+    }
+    if(this.book.publisheddate===""){
+          this.updatebookblankResponse.publisheddate="Book publisheddatecannot be blank";
+    }
+    if(this.book.price==="" || this.book.price===null){
+          this.updatebookblankResponse.price="Book pricecannot be blank";
+    }
+    if(this.book.chapters==="" || this.book.chapters===null){
+          this.updatebookblankResponse.chapters="Book chapterscannot be blank";
+    }
+    if(this.book.content===""){
+          this.updatebookblankResponse.content="Book contentcannot be blank";
+    }
+    else{
     this.userService.editbooksuccessContainerFlag=false;
     const observable= this.userService.updateBook(this.book);
     observable.subscribe((responseBody:any)=>{
       console.log("R"+JSON.stringify(responseBody));
-        this.updatebookblankResponse.title=responseBody.title;
-        this.updatebookblankResponse.category=responseBody.category;
-        this.updatebookblankResponse.author=responseBody.author;
-        this.updatebookblankResponse.publisher=responseBody.publisher;
-        this.updatebookblankResponse.publisheddate=responseBody.publisheddate;
-        this.updatebookblankResponse.chapters=responseBody.chapters;
-        this.updatebookblankResponse.active=responseBody.active;
-        this.updatebookblankResponse.price=responseBody.price;
+        // this.updatebookblankResponse.title=responseBody.title;
+        // this.updatebookblankResponse.category=responseBody.category;
+        // this.updatebookblankResponse.author=responseBody.author;
+        // this.updatebookblankResponse.publisher=responseBody.publisher;
+        // this.updatebookblankResponse.publisheddate=responseBody.publisheddate;
+        // this.updatebookblankResponse.chapters=responseBody.chapters;
+        // this.updatebookblankResponse.active=responseBody.active;
+        // this.updatebookblankResponse.price=responseBody.price;
       },
       (error:any)=>{
         console.log("E"+JSON.stringify(error.error));
@@ -63,6 +94,7 @@ export class UpdatebookComponent implements OnInit {
         this.bookupdateSuccessMessage=error.error.text;
       }
     });
+  }
   }
   ngOnInit(): void {
     this.userService.editbooksuccessContainerFlag=false;

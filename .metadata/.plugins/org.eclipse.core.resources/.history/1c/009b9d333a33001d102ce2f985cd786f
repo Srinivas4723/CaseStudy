@@ -1,0 +1,8 @@
+package com.bookservice.repository;
+
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface PurchasedBooksRepository extends JpaRepository<PurchasedBooks, Long> {
+	
+}

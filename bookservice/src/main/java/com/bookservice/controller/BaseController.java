@@ -35,7 +35,7 @@ public class BaseController {
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	ResponseEntity<String> requestParamNotFound(HttpMessageNotReadableException ex) {
-		return ResponseEntity.badRequest().body("Error : Request Body is missing ");
+		return new ResponseEntity<String>("Error : Request Body is missing ",HttpStatus.NOT_ACCEPTABLE);
 	}
 		
 }

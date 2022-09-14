@@ -1,0 +1,21 @@
+package com.bookservice.controller;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+
+class BaseControllerTest {
+	@InjectMocks BaseController baseController;
+	@Test
+	void testHandleException() {
+		
+	}
+
+	@Test
+	void testRequestParamNotFound() {
+		HttpMessageNotReadableException ex= new HttpMessageNotReadableException("Error : Request Body is missing ");
+		assertEqual(baseController)
+	}
+
+}
