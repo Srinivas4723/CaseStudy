@@ -27,7 +27,7 @@ public class Author {
 	@NotBlank(message = "Author Email cannot be blank")
 	private String authoremail;
 	@NotBlank(message = "Password cannot be blank")
-	@Size(min=8,max=120)
+	@Size(min=8,max=120,message="Invalid Password, minimum size is 8")
 	private String password;
 	private boolean loginstatus;
 }

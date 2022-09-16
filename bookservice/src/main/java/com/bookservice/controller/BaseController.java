@@ -2,6 +2,8 @@ package com.bookservice.controller;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -37,5 +39,10 @@ public class BaseController {
 	ResponseEntity<String> requestParamNotFound(HttpMessageNotReadableException ex) {
 		return new ResponseEntity<String>("Error : Request Body is missing ",HttpStatus.NOT_ACCEPTABLE);
 	}
+	@ExceptionHandler(DataIntegrityViolationException.class)
+	ResponseEntity<String> sqlException(DataIntegrityViolationException ex) {
 		
+		return new ResponseEntity<String>("Error : Request Body is missing "+ex.getRootCause().toString(),HttpStatus.NOT_ACCEPTABLE);
+	}
+	
 }

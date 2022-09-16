@@ -14,8 +14,6 @@ import lombok.Data;
 @Table(	name = "readers", 
 uniqueConstraints = { 
 	@UniqueConstraint(columnNames = "id"),
-	@UniqueConstraint(columnNames = "readername"),
-	@UniqueConstraint(columnNames = "readeremail")
 })
 public class Reader {
 	@Id
@@ -25,5 +23,7 @@ public class Reader {
 	private String readername;
 	@NotBlank(message = "readeremail cannot be blank#######")
 	private String readeremail;
+	private Long bookid;
+	private String paymentid;
 	
 }

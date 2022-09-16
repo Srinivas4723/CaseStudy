@@ -1,26 +1,16 @@
 package com.bookservice.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.core.MethodParameter;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BeanPropertyBindingResult;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import com.bookservice.entity.Author;
-import com.bookservice.entity.Category;
-import com.bookservice.entity.Book;
-import com.bookservice.entity.Reader;
 import com.bookservice.repository.AuthorRepository;
 import com.bookservice.request.LoginRequest;
 
@@ -30,8 +20,7 @@ class LoginControllerTest {
 	@InjectMocks LoginController loginController;
 	@InjectMocks BaseController baseController;
 	@Mock AuthorRepository authorRepository;
-	@Mock BindingResult bindingResult;
-	
+	@Mock PasswordEncoder passwordEncoder;
 	public static LoginRequest SampleLoginRequest() {
 		LoginRequest loginrequest = new LoginRequest();
 		loginrequest.setAuthorname("abc");
@@ -40,13 +29,12 @@ class LoginControllerTest {
 	}
 	
 	public static Optional<Author> SampleAuthor() {
-		Base64.Encoder encoder= Base64.getEncoder();
 		Optional<Author> author = Optional.ofNullable(new Author());
 		author.get().setId(Long.valueOf(1));
 		author.get().setAuthorname("abc");
 		author.get().setAuthoremail("abc@gmail.com");
 		author.get().setLoginstatus(false);
-		author.get().setPassword(encoder.encodeToString("abc".getBytes()));
+		author.get().setPassword("abc");
 		return author;
 	}
 	LoginRequest loginRequest= SampleLoginRequest();
@@ -56,6 +44,7 @@ class LoginControllerTest {
 	 */
 	@Test
 	void testAuthenticateAuthorSignInSuccess() {
+		when(passwordEncoder.matches(loginRequest.getPassword(), author.get().getPassword())).thenReturn(true);
 		when(authorRepository.findByAuthorname(loginRequest.getAuthorname())).thenReturn(author);
 		assertEquals(loginController.authenticateAuthor(loginRequest),ResponseEntity.ok("Author Login Success"+author.get().getId()));
 	}
@@ -69,14 +58,6 @@ class LoginControllerTest {
 		assertEquals(loginController.authenticateAuthor(loginRequest),ResponseEntity.badRequest().body("Error: Invalid Credentials"));
 	}
 	/**
-	 * SignIn Fail By author not Exists
-	 */
-	@Test
-	void testAuthenticateAuthorFailByAuthorNameNotExists() {
-		when(authorRepository.findByAuthorname(loginRequest.getAuthorname())).thenReturn(Optional.empty());
-		assertEquals(loginController.authenticateAuthor(loginRequest),ResponseEntity.badRequest().body("Error: Invalid Credentials"));
-	}
-	/**
 	 * SignIn Fail By Wrong Password
 	 */
 	@Test
@@ -86,10 +67,8 @@ class LoginControllerTest {
 		assertEquals(loginController.authenticateAuthor(loginRequest),ResponseEntity.badRequest().body("Error: Invalid Credentials"));
 	}
 	
-	//----------------------Sign out ---------------------------------------------//
-	
 	/**
-	 * Signout Success Case
+	 * Sign out Success Case
 	 */
 	@Test
 	void testSignoutAuthor() {
@@ -98,7 +77,7 @@ class LoginControllerTest {
 		assertEquals(loginController.signoutAuthor(author.get().getId()),ResponseEntity.ok("Author Signout Success"));
 	}
 	/**
-	 * Signout Fail By Not LoggedIn
+	 * Sign out Fail By Not LoggedIn
 	 */
 	@Test 
 	void testSignoutAuthorFailByNotLoggedIn(){
@@ -116,9 +95,6 @@ class LoginControllerTest {
 		assertEquals(loginController.signoutAuthor(author.get().getId()),ResponseEntity.badRequest().body("Error: Please signin first, to signout"));
 		
 	}
-	
-	//------------------------Signup-------------------------------------//
-	
 	/**
 	 * SignUp Success
 	 */
@@ -145,32 +121,4 @@ class LoginControllerTest {
 		when(authorRepository.existsByAuthoremail(author.get().getAuthoremail())).thenReturn(true);
 		assertEquals(loginController.signupAuthor(author.get()),ResponseEntity.badRequest().body("Author Email is already in use!"));
 	}
-	
-//	@Test
-//	void testHandleException() {
-//		
-//		
-//		MethodParameter mp= new MethodParameter(mp);
-//		ObjectError obj= OjbectError("x","x");
-//		bindingResult.addError(obj);
-//				
-//		when(authorRepository.findByAuthorname(loginRequest.getAuthorname())).thenThrow(new MethodArgumentNotValidException(mp,bindingResult));
-//		Map<String,String> map= new HashMap<String,String>();
-//		map.put("authorname", "must not be blank");
-//		
-//		assertEquals(loginController.authenticateAuthor(loginRequest),map);
-//	}
-//
-//	@Test
-//	void testRequestParamNotFoundHttpMessageNotReadableException() {
-//		assertEquals(ErrorController.)
-//	}
-//
-//	@Test
-//	void testRequestParamNotFoundMissingServletRequestParameterException() {
-//		fail("Not yet implemented");
-//	}
-
-	
-
 }

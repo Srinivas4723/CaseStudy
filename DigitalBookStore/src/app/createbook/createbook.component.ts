@@ -15,6 +15,7 @@ export class CreatebookComponent implements OnInit {
   bookCreateSuccessMessage: any;
   constructor(public userService:UserService,public router:Router) { }  
   obj=Object.values(Category).filter(value => typeof value==="string");
+  
   book={
     title:"",
     category:"",
@@ -41,7 +42,6 @@ export class CreatebookComponent implements OnInit {
     this.router.navigate(["/authorhome"]);
   }
   createBook(){
-    console.log(this.book.chapters+"E");
     this.createbookblankResponse.title="";
     this.createbookblankResponse.category="";
     this.createbookblankResponse.publisher="";
@@ -52,7 +52,7 @@ export class CreatebookComponent implements OnInit {
     if(this.book.title===""){
       this.createbookblankResponse.title="Book titlecannot be blank";
     }
-    if(this.book.category==="" || this.book.chapters===null){
+    if(this.book.category==="" || this.book.category===null){
           this.createbookblankResponse.category="Book categorycannot be blank";
     }
     if(this.book.publisher===""){
@@ -72,7 +72,9 @@ export class CreatebookComponent implements OnInit {
     }
     else{
         const observable = this.userService.createBook(this.book);
-      observable.subscribe((responseBody:any)=>{ },
+      observable.subscribe((responseBody:any)=>{
+        this.createbookblankResponse=responseBody;
+       },
       (error:any)=>{
         console.log("E"+error.error.status+JSON.stringify(error));
         if(error.status===406){

@@ -76,14 +76,7 @@ export class UpdatebookComponent implements OnInit {
     const observable= this.userService.updateBook(this.book);
     observable.subscribe((responseBody:any)=>{
       console.log("R"+JSON.stringify(responseBody));
-        // this.updatebookblankResponse.title=responseBody.title;
-        // this.updatebookblankResponse.category=responseBody.category;
-        // this.updatebookblankResponse.author=responseBody.author;
-        // this.updatebookblankResponse.publisher=responseBody.publisher;
-        // this.updatebookblankResponse.publisheddate=responseBody.publisheddate;
-        // this.updatebookblankResponse.chapters=responseBody.chapters;
-        // this.updatebookblankResponse.active=responseBody.active;
-        // this.updatebookblankResponse.price=responseBody.price;
+       this.updatebookblankResponse=responseBody;
       },
       (error:any)=>{
         console.log("E"+JSON.stringify(error.error));

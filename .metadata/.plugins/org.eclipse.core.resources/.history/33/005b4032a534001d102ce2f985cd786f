@@ -1,0 +1,18 @@
+package com.bookservice.repository;
+
+import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.bookservice.entity.Author;
+import com.bookservice.entity.Reader;
+
+@Repository
+public interface ReaderRepository extends JpaRepository<Reader, Long> {
+	Optional<Reader> findByreadername(String readername);
+	Optional<Reader> findByreaderemail(String readeremail);
+	Optional<Reader> findByReadernameAndReaderemail(String readername,String readeremail);
+	Boolean existsByreadername(String readername);
+	boolean existsByreaderemail(String readeremail);
+	Optional<Reader> findByReadernameOrReaderemail(String readername, String readeremail);
+}

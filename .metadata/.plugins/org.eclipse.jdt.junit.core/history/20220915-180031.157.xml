@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="java" project="bookservice" tests="52" started="52" failures="0" errors="2" ignored="0">
+  <testsuite name="com.bookservice.controller.LoginControllerTest" time="1.469" displayname="LoginControllerTest" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.LoginControllerTest]">
+    <testcase name="testAuthenticateAuthorSignInSuccess" classname="com.bookservice.controller.LoginControllerTest" time="1.427" displayname="testAuthenticateAuthorSignInSuccess()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.LoginControllerTest]/[method:testAuthenticateAuthorSignInSuccess()]"/>
+    <testcase name="testSignoutAuthorFailByNotLoggedIn" classname="com.bookservice.controller.LoginControllerTest" time="0.004" displayname="testSignoutAuthorFailByNotLoggedIn()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.LoginControllerTest]/[method:testSignoutAuthorFailByNotLoggedIn()]"/>
+    <testcase name="testSignoutAuthor" classname="com.bookservice.controller.LoginControllerTest" time="0.004" displayname="testSignoutAuthor()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.LoginControllerTest]/[method:testSignoutAuthor()]"/>
+    <testcase name="testSignupAuthorFailByAuthorEmailExists" classname="com.bookservice.controller.LoginControllerTest" time="0.005" displayname="testSignupAuthorFailByAuthorEmailExists()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.LoginControllerTest]/[method:testSignupAuthorFailByAuthorEmailExists()]"/>
+    <testcase name="testSignupAuthorFailByAuthorNameExists" classname="com.bookservice.controller.LoginControllerTest" time="0.003" displayname="testSignupAuthorFailByAuthorNameExists()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.LoginControllerTest]/[method:testSignupAuthorFailByAuthorNameExists()]"/>
+    <testcase name="testSignoutAuthorFailByAuthorNotExists" classname="com.bookservice.controller.LoginControllerTest" time="0.004" displayname="testSignoutAuthorFailByAuthorNotExists()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.LoginControllerTest]/[method:testSignoutAuthorFailByAuthorNotExists()]"/>
+    <testcase name="testSignupAuthorSuccess" classname="com.bookservice.controller.LoginControllerTest" time="0.004" displayname="testSignupAuthorSuccess()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.LoginControllerTest]/[method:testSignupAuthorSuccess()]"/>
+    <testcase name="testAuthenticateAuthorFailByInvalidPassword" classname="com.bookservice.controller.LoginControllerTest" time="0.003" displayname="testAuthenticateAuthorFailByInvalidPassword()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.LoginControllerTest]/[method:testAuthenticateAuthorFailByInvalidPassword()]"/>
+    <testcase name="testAuthenticateAuthorFailByWrongAuthorName" classname="com.bookservice.controller.LoginControllerTest" time="0.003" displayname="testAuthenticateAuthorFailByWrongAuthorName()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.LoginControllerTest]/[method:testAuthenticateAuthorFailByWrongAuthorName()]"/>
+    <testcase name="testAuthenticateAuthorFailByAuthorNameNotExists" classname="com.bookservice.controller.LoginControllerTest" time="0.012" displayname="testAuthenticateAuthorFailByAuthorNameNotExists()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.LoginControllerTest]/[method:testAuthenticateAuthorFailByAuthorNameNotExists()]"/>
+  </testsuite>
+  <testsuite name="com.bookservice.controller.BookControllerTest" time="0.114" displayname="BookControllerTest" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.BookControllerTest]">
+    <testcase name="testCreateBookFailByInvalidAuthor" classname="com.bookservice.controller.BookControllerTest" time="0.072" displayname="testCreateBookFailByInvalidAuthor()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.BookControllerTest]/[method:testCreateBookFailByInvalidAuthor()]"/>
+    <testcase name="CreateBookFailByException" classname="com.bookservice.controller.BookControllerTest" time="0.003" displayname="CreateBookFailByException()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.BookControllerTest]/[method:CreateBookFailByException()]"/>
+    <testcase name="testGetAllBooks" classname="com.bookservice.controller.BookControllerTest" time="0.002" displayname="testGetAllBooks()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.BookControllerTest]/[method:testGetAllBooks()]"/>
+    <testcase name="testGetBooksByAuthorId" classname="com.bookservice.controller.BookControllerTest" time="0.003" displayname="testGetBooksByAuthorId()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.BookControllerTest]/[method:testGetBooksByAuthorId()]"/>
+    <testcase name="testUpdateBookSuccess" classname="com.bookservice.controller.BookControllerTest" time="0.004" displayname="testUpdateBookSuccess()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.BookControllerTest]/[method:testUpdateBookSuccess()]"/>
+    <testcase name="testUpdateBookFailByNotLoggedIn" classname="com.bookservice.controller.BookControllerTest" time="0.006" displayname="testUpdateBookFailByNotLoggedIn()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.BookControllerTest]/[method:testUpdateBookFailByNotLoggedIn()]"/>
+    <testcase name="testUpdateBookFailByInvalidBook" classname="com.bookservice.controller.BookControllerTest" time="0.004" displayname="testUpdateBookFailByInvalidBook()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.BookControllerTest]/[method:testUpdateBookFailByInvalidBook()]"/>
+    <testcase name="testCreateBookSuccess" classname="com.bookservice.controller.BookControllerTest" time="0.003" displayname="testCreateBookSuccess()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.BookControllerTest]/[method:testCreateBookSuccess()]"/>
+    <testcase name="testSearchBookNonEmptyFields" classname="com.bookservice.controller.BookControllerTest" time="0.004" displayname="testSearchBookNonEmptyFields()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.BookControllerTest]/[method:testSearchBookNonEmptyFields()]"/>
+    <testcase name="testCreateBookFailByNotLoggedIn" classname="com.bookservice.controller.BookControllerTest" time="0.003" displayname="testCreateBookFailByNotLoggedIn()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.BookControllerTest]/[method:testCreateBookFailByNotLoggedIn()]"/>
+    <testcase name="testUpdateBookFailByInvalidAuthor" classname="com.bookservice.controller.BookControllerTest" time="0.003" displayname="testUpdateBookFailByInvalidAuthor()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.BookControllerTest]/[method:testUpdateBookFailByInvalidAuthor()]"/>
+    <testcase name="testSearchBookByEmptyFields" classname="com.bookservice.controller.BookControllerTest" time="0.007" displayname="testSearchBookByEmptyFields()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.BookControllerTest]/[method:testSearchBookByEmptyFields()]"/>
+  </testsuite>
+  <testsuite name="com.bookservice.controller.ReaderControllerTest" time="9.029" displayname="ReaderControllerTest" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.ReaderControllerTest]">
+    <testcase name="testBuyBooksFailByBookAlreadyPurchased" classname="com.bookservice.controller.ReaderControllerTest" time="0.094" displayname="testBuyBooksFailByBookAlreadyPurchased()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.ReaderControllerTest]/[method:testBuyBooksFailByBookAlreadyPurchased()]"/>
+    <testcase name="testGetBookByPaymentIdSuccess" classname="com.bookservice.controller.ReaderControllerTest" time="0.004" displayname="testGetBookByPaymentIdSuccess()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.ReaderControllerTest]/[method:testGetBookByPaymentIdSuccess()]"/>
+    <testcase name="testBuyBooksFailByExistingReaderOrEmail" classname="com.bookservice.controller.ReaderControllerTest" time="0.003" displayname="testBuyBooksFailByExistingReaderOrEmail()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.ReaderControllerTest]/[method:testBuyBooksFailByExistingReaderOrEmail()]"/>
+    <testcase name="testGetPurchasedBooks" classname="com.bookservice.controller.ReaderControllerTest" time="0.004" displayname="testGetPurchasedBooks()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.ReaderControllerTest]/[method:testGetPurchasedBooks()]"/>
+    <testcase name="testGetBookByPaymentIdFailByInvalidEmailOrPaymentId" classname="com.bookservice.controller.ReaderControllerTest" time="0.003" displayname="testGetBookByPaymentIdFailByInvalidEmailOrPaymentId()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.ReaderControllerTest]/[method:testGetBookByPaymentIdFailByInvalidEmailOrPaymentId()]"/>
+    <testcase name="testGetPurchasedBooksFailByInvalidMail" classname="com.bookservice.controller.ReaderControllerTest" time="0.003" displayname="testGetPurchasedBooksFailByInvalidMail()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.ReaderControllerTest]/[method:testGetPurchasedBooksFailByInvalidMail()]"/>
+    <testcase name="testGetBookContentSuccess" classname="com.bookservice.controller.ReaderControllerTest" time="0.003" displayname="testGetBookContentSuccess()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.ReaderControllerTest]/[method:testGetBookContentSuccess()]"/>
+    <testcase name="testGetPurchasedBooksForZeroBooks" classname="com.bookservice.controller.ReaderControllerTest" time="0.025" displayname="testGetPurchasedBooksForZeroBooks()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.ReaderControllerTest]/[method:testGetPurchasedBooksForZeroBooks()]">
+      <error>org.mockito.exceptions.misusing.UnnecessaryStubbingException: 
+Unnecessary stubbings detected.
+Clean &amp; maintainable test code requires zero unnecessary code.
+Following stubbings are unnecessary (click to navigate to relevant line of code):
+  1. -&gt; at com.bookservice.controller.ReaderControllerTest.testGetPurchasedBooksForZeroBooks(ReaderControllerTest.java:137)
+Please remove unnecessary stubbings or use 'lenient' strictness. More info: javadoc for UnnecessaryStubbingException class.&#13;
+	at org.mockito.junit.jupiter.MockitoExtension.afterEach(MockitoExtension.java:186)&#13;
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeAfterEachCallbacks$12(TestMethodTestDescriptor.java:257)&#13;
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeAllAfterMethodsOrCallbacks$13(TestMethodTestDescriptor.java:273)&#13;
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)&#13;
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeAllAfterMethodsOrCallbacks$14(TestMethodTestDescriptor.java:273)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)&#13;
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeAllAfterMethodsOrCallbacks(TestMethodTestDescriptor.java:272)&#13;
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeAfterEachCallbacks(TestMethodTestDescriptor.java:256)&#13;
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:141)&#13;
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:66)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151)&#13;
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)&#13;
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)&#13;
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)&#13;
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)&#13;
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)&#13;
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)&#13;
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)&#13;
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)&#13;
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)&#13;
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)&#13;
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)&#13;
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)&#13;
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)&#13;
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)&#13;
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:229)&#13;
+	at org.junit.platform.launcher.core.DefaultLauncher.lambda$execute$6(DefaultLauncher.java:197)&#13;
+	at org.junit.platform.launcher.core.DefaultLauncher.withInterceptedStreams(DefaultLauncher.java:211)&#13;
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:191)&#13;
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:137)&#13;
+	at org.eclipse.jdt.internal.junit5.runner.JUnit5TestReference.run(JUnit5TestReference.java:89)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:41)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:541)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:763)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:463)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:209)&#13;
+&#13;
+</error>
+    </testcase>
+    <testcase name="testGetRefundBookByBookIdFailByInvalidEmail" classname="com.bookservice.controller.ReaderControllerTest" time="0.004" displayname="testGetRefundBookByBookIdFailByInvalidEmail()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.ReaderControllerTest]/[method:testGetRefundBookByBookIdFailByInvalidEmail()]"/>
+    <testcase name="testGetRefundBookByBookId" classname="com.bookservice.controller.ReaderControllerTest" time="0.003" displayname="testGetRefundBookByBookId()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.ReaderControllerTest]/[method:testGetRefundBookByBookId()]">
+      <error>org.mockito.exceptions.misusing.UnnecessaryStubbingException: 
+Unnecessary stubbings detected.
+Clean &amp; maintainable test code requires zero unnecessary code.
+Following stubbings are unnecessary (click to navigate to relevant line of code):
+  1. -&gt; at com.bookservice.controller.ReaderControllerTest.testGetRefundBookByBookId(ReaderControllerTest.java:181)
+Please remove unnecessary stubbings or use 'lenient' strictness. More info: javadoc for UnnecessaryStubbingException class.&#13;
+	at org.mockito.junit.jupiter.MockitoExtension.afterEach(MockitoExtension.java:186)&#13;
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeAfterEachCallbacks$12(TestMethodTestDescriptor.java:257)&#13;
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeAllAfterMethodsOrCallbacks$13(TestMethodTestDescriptor.java:273)&#13;
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)&#13;
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeAllAfterMethodsOrCallbacks$14(TestMethodTestDescriptor.java:273)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)&#13;
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeAllAfterMethodsOrCallbacks(TestMethodTestDescriptor.java:272)&#13;
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeAfterEachCallbacks(TestMethodTestDescriptor.java:256)&#13;
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:141)&#13;
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:66)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151)&#13;
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)&#13;
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)&#13;
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)&#13;
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)&#13;
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)&#13;
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)&#13;
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)&#13;
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)&#13;
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)&#13;
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)&#13;
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)&#13;
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)&#13;
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)&#13;
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)&#13;
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:229)&#13;
+	at org.junit.platform.launcher.core.DefaultLauncher.lambda$execute$6(DefaultLauncher.java:197)&#13;
+	at org.junit.platform.launcher.core.DefaultLauncher.withInterceptedStreams(DefaultLauncher.java:211)&#13;
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:191)&#13;
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:137)&#13;
+	at org.eclipse.jdt.internal.junit5.runner.JUnit5TestReference.run(JUnit5TestReference.java:89)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:41)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:541)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:763)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:463)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:209)&#13;
+&#13;
+</error>
+    </testcase>
+    <testcase name="testBuyBooksSuccessByNewReader" classname="com.bookservice.controller.ReaderControllerTest" time="0.003" displayname="testBuyBooksSuccessByNewReader()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.ReaderControllerTest]/[method:testBuyBooksSuccessByNewReader()]"/>
+    <testcase name="testBuyBooksSuccessByExistingReader" classname="com.bookservice.controller.ReaderControllerTest" time="0.004" displayname="testBuyBooksSuccessByExistingReader()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.ReaderControllerTest]/[method:testBuyBooksSuccessByExistingReader()]"/>
+    <testcase name="testBuyBooksFailByInvalidBook" classname="com.bookservice.controller.ReaderControllerTest" time="8.874" displayname="testBuyBooksFailByInvalidBook()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.ReaderControllerTest]/[method:testBuyBooksFailByInvalidBook()]"/>
+  </testsuite>
+  <testsuite name="com.bookservice.BookserviceApplicationTests" time="0.025" displayname="BookserviceApplicationTests" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.BookserviceApplicationTests]">
+    <testcase name="contextLoads" classname="com.bookservice.BookserviceApplicationTests" time="0.025" displayname="contextLoads()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.BookserviceApplicationTests]/[method:contextLoads()]"/>
+  </testsuite>
+  <testsuite name="com.bookservice.entity.ReaderTest" time="0.006" displayname="ReaderTest" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.entity.ReaderTest]">
+    <testcase name="testToString" classname="com.bookservice.entity.ReaderTest" time="0.002" displayname="testToString()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.entity.ReaderTest]/[method:testToString()]"/>
+    <testcase name="testEqualsObject" classname="com.bookservice.entity.ReaderTest" time="0.003" displayname="testEqualsObject()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.entity.ReaderTest]/[method:testEqualsObject()]"/>
+    <testcase name="testHashCode" classname="com.bookservice.entity.ReaderTest" time="0.001" displayname="testHashCode()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.entity.ReaderTest]/[method:testHashCode()]"/>
+  </testsuite>
+  <testsuite name="com.bookservice.entity.BookTest" time="0.004" displayname="BookTest" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.entity.BookTest]">
+    <testcase name="testToString" classname="com.bookservice.entity.BookTest" time="0.001" displayname="testToString()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.entity.BookTest]/[method:testToString()]"/>
+    <testcase name="testEqualsObject" classname="com.bookservice.entity.BookTest" time="0.002" displayname="testEqualsObject()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.entity.BookTest]/[method:testEqualsObject()]"/>
+    <testcase name="testHashCode" classname="com.bookservice.entity.BookTest" time="0.001" displayname="testHashCode()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.entity.BookTest]/[method:testHashCode()]"/>
+  </testsuite>
+  <testsuite name="com.bookservice.entity.AuthorTest" time="0.105" displayname="AuthorTest" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.entity.AuthorTest]">
+    <testcase name="testToString" classname="com.bookservice.entity.AuthorTest" time="0.001" displayname="testToString()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.entity.AuthorTest]/[method:testToString()]"/>
+    <testcase name="testEqualsObject" classname="com.bookservice.entity.AuthorTest" time="0.001" displayname="testEqualsObject()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.entity.AuthorTest]/[method:testEqualsObject()]"/>
+    <testcase name="testHashCode" classname="com.bookservice.entity.AuthorTest" time="0.103" displayname="testHashCode()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.entity.AuthorTest]/[method:testHashCode()]"/>
+  </testsuite>
+  <testsuite name="com.hnt.BookServiceApplicationTests" time="0.009" displayname="BookServiceApplicationTests" uniqueid="[engine:junit-jupiter]/[class:com.hnt.BookServiceApplicationTests]">
+    <testcase name="contextLoads" classname="com.hnt.BookServiceApplicationTests" time="0.009" displayname="contextLoads()" uniqueid="[engine:junit-jupiter]/[class:com.hnt.BookServiceApplicationTests]/[method:contextLoads()]"/>
+  </testsuite>
+  <testsuite name="com.bookservice.request.BuyBookRequestTest" time="0.002" displayname="BuyBookRequestTest" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.request.BuyBookRequestTest]">
+    <testcase name="testToString" classname="com.bookservice.request.BuyBookRequestTest" time="0.0" displayname="testToString()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.request.BuyBookRequestTest]/[method:testToString()]"/>
+    <testcase name="testEqualsObject" classname="com.bookservice.request.BuyBookRequestTest" time="0.0" displayname="testEqualsObject()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.request.BuyBookRequestTest]/[method:testEqualsObject()]"/>
+    <testcase name="testHashCode" classname="com.bookservice.request.BuyBookRequestTest" time="0.002" displayname="testHashCode()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.request.BuyBookRequestTest]/[method:testHashCode()]"/>
+  </testsuite>
+  <testsuite name="com.bookservice.request.LoginRequestTest" time="0.001" displayname="LoginRequestTest" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.request.LoginRequestTest]">
+    <testcase name="testToString" classname="com.bookservice.request.LoginRequestTest" time="0.0" displayname="testToString()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.request.LoginRequestTest]/[method:testToString()]"/>
+    <testcase name="testEqualsObject" classname="com.bookservice.request.LoginRequestTest" time="0.001" displayname="testEqualsObject()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.request.LoginRequestTest]/[method:testEqualsObject()]"/>
+    <testcase name="testHashCode" classname="com.bookservice.request.LoginRequestTest" time="0.0" displayname="testHashCode()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.request.LoginRequestTest]/[method:testHashCode()]"/>
+  </testsuite>
+</testrun>

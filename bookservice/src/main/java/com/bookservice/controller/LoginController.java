@@ -1,10 +1,11 @@
 package com.bookservice.controller;
 
-import java.util.Base64;
 import java.util.Optional;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,12 +16,14 @@ import com.bookservice.entity.Author;
 import com.bookservice.repository.AuthorRepository;
 import com.bookservice.request.LoginRequest;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/digitalbooks/author")
 public class LoginController extends BaseController {
 	@Autowired AuthorRepository authorRepository;
-	Base64.Encoder encoder= Base64.getEncoder() ;
+	@Autowired
+	AuthenticationManager authenticationManager;
+	@Autowired  PasswordEncoder passwordEncoder;
 	/**
 	 * Authenticates Author and Author sign in
 	 * @param loginRequest
@@ -29,7 +32,7 @@ public class LoginController extends BaseController {
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateAuthor(@Valid @RequestBody LoginRequest loginRequest) {
 		Optional<Author> author= authorRepository.findByAuthorname(loginRequest.getAuthorname());
-		if(author.isPresent() && author.get().getPassword().equals(encoder.encodeToString(loginRequest.getPassword().getBytes()))) {
+		if(author.isPresent() && passwordEncoder.matches(loginRequest.getPassword(), author.get().getPassword())) {
 				author.get().setLoginstatus(true);
 				authorRepository.save(author.get());
 				return ResponseEntity.ok("Author Login Success"+author.get().getId());
@@ -51,6 +54,7 @@ public class LoginController extends BaseController {
 		}
 		return  ResponseEntity.badRequest().body("Error: Please signin first, to signout");
 	}
+	
 	/**
 	 * Creates an Account for Author
 	 * @param author
@@ -64,8 +68,7 @@ public class LoginController extends BaseController {
 		if (authorRepository.existsByAuthoremail(author.getAuthoremail())) {
 			return ResponseEntity.badRequest().body("Author Email is already in use!");
 		}	
-		
-		author.setPassword(encoder.encodeToString((author.getPassword().getBytes())));
+		author.setPassword(passwordEncoder.encode(author.getPassword()));
 		authorRepository.save(author);
 		return ResponseEntity.ok("Author registered successfully! \n Your Author ID : "+author.getId());
 	}

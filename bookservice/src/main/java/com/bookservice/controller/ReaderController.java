@@ -1,7 +1,5 @@
 package com.bookservice.controller;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -18,11 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.bookservice.entity.Book;
-import com.bookservice.entity.PurchasedBooks;
 import com.bookservice.entity.Reader;
 import com.bookservice.repository.BookRepository;
-import com.bookservice.repository.PurchasedBookRepository;
 import com.bookservice.repository.ReaderRepository;
 import com.bookservice.request.BuyBookRequest;
 
@@ -32,8 +27,22 @@ import com.bookservice.request.BuyBookRequest;
 public class ReaderController extends BaseController {
 	@Autowired ReaderRepository readerRepository;
 	@Autowired BookRepository bookRepository;
-	@Autowired PurchasedBookRepository purchasedBookRepository;
 	static Random random = new Random();
+	/**
+	 * Generates PID and purchases a book
+	 * @param buyBookRequest
+	 */
+	private  String purchaseBook(BuyBookRequest buyBookRequest) {
+		Reader reader = new Reader();
+		reader.setReadername(buyBookRequest.getReadername());
+		reader.setReaderemail(buyBookRequest.getReaderemail());
+		String paymentid="PID"+buyBookRequest.getBookid()+"2022"+random.nextInt(10000);
+		reader.setBookid(buyBookRequest.getBookid());
+		buyBookRequest.setPaymentid(paymentid);
+		reader.setPaymentid(paymentid);
+		readerRepository.save(reader);
+		return paymentid;
+	}
 	/**
 	 * Reader can buy a book 
 	 * @param buybookrequest
@@ -42,20 +51,12 @@ public class ReaderController extends BaseController {
 	@PostMapping("/books/buy")
 	ResponseEntity<String> buyBooks(@Valid @RequestBody BuyBookRequest buybookrequest){
 		if(bookRepository.existsById(buybookrequest.getBookid())){
-			Reader reader;
-			Optional<Reader> reader1= readerRepository.findByReadernameAndReaderemail(buybookrequest.getReadername(),buybookrequest.getReaderemail());
-			Optional<Reader> reader2= readerRepository.findByReadernameOrReaderemail(buybookrequest.getReadername(),buybookrequest.getReaderemail());
-			if(reader1.isPresent()) {
-				List<Long> pbooks=purchasedBookRepository.findAllByReaderemail(buybookrequest.getReaderemail()).stream().map(pbook -> pbook.getBookid()).collect(Collectors.toList());
-				
-				if(!pbooks.contains(buybookrequest.getBookid())) {
-					String paymentid="PID"+buybookrequest.getBookid()+"2022"+random.nextInt(10000);
-					buybookrequest.setPaymentid(paymentid);
-					PurchasedBooks purchasedbook= new PurchasedBooks();
-					purchasedbook.setBookid(buybookrequest.getBookid());
-					purchasedbook.setReaderemail(buybookrequest.getReaderemail());
-					purchasedbook.setPaymentid(paymentid);
-					purchasedBookRepository.save(purchasedbook);
+			List<Reader> reader1= readerRepository.findByReadernameAndReaderemail(buybookrequest.getReadername(),buybookrequest.getReaderemail());
+			List<Reader> reader2= readerRepository.findByReadernameOrReaderemail(buybookrequest.getReadername(),buybookrequest.getReaderemail());
+			if(!reader1.isEmpty()) {
+				List<Long> purchasedbookids=reader1.stream().map(Reader::getBookid).collect(Collectors.toList());
+				if(!purchasedbookids.contains(buybookrequest.getBookid())) {
+					String paymentid=purchaseBook(buybookrequest);
 					return ResponseEntity.ok("Book Purchase Successful \n Please note the Payment Id for your reference\nPayment Id : "+paymentid);
 				}
 				else {
@@ -63,17 +64,7 @@ public class ReaderController extends BaseController {
 				}
 			}
 			else if(reader2.isEmpty()) {
-				reader = new Reader();
-				reader.setReadername(buybookrequest.getReadername());
-				reader.setReaderemail(buybookrequest.getReaderemail());
-				String paymentid="PID"+buybookrequest.getBookid()+"2022"+random.nextInt(10000);
-				buybookrequest.setPaymentid(paymentid);
-				PurchasedBooks purchasedbook= new PurchasedBooks();
-				purchasedbook.setBookid(buybookrequest.getBookid());
-				purchasedbook.setReaderemail(buybookrequest.getReaderemail());
-				purchasedbook.setPaymentid(paymentid);
-				purchasedBookRepository.save(purchasedbook);
-				readerRepository.save(reader);
+				String paymentid=purchaseBook(buybookrequest);
 				return ResponseEntity.ok("Book Purchase Successful \n Please note the Payment Id for your reference\nPayment Id : "+paymentid);
 			}
 			else {
@@ -89,17 +80,11 @@ public class ReaderController extends BaseController {
 	 */
 	@GetMapping("/readers/{emailid}/books")
 	ResponseEntity<?> getPurchasedBooks(@PathVariable("emailid") String emailid){
-		Optional<Reader> reader =readerRepository.findByreaderemail(emailid);
-		if (reader.isPresent()) {
-			List<Long> purchasedbookids = purchasedBookRepository.findAllByReaderemail(emailid).stream().map(pbook -> pbook.getBookid()).collect(Collectors.toList());
-			if(!purchasedbookids.isEmpty()) {
-				return ResponseEntity.ok(bookRepository.findAllById(purchasedbookids));
-			}
-			else {
-				return ResponseEntity.badRequest().body("No Books Purchased");
-			}
+		List<Long> purchasedbookids = readerRepository.findAllByReaderemail(emailid).stream().map(Reader::getBookid).collect(Collectors.toList());
+		if(!purchasedbookids.isEmpty()) {
+			return ResponseEntity.ok(bookRepository.findAllById(purchasedbookids));
 		}
-		return ResponseEntity.badRequest().body("No books Purchased with this email");
+		return ResponseEntity.badRequest().body("Invalid Email Id / No Books Purchased");
 	}
 	/**
 	 * Reader Can Read books by Email Id and Book Id
@@ -109,33 +94,25 @@ public class ReaderController extends BaseController {
 	 */
 	@GetMapping("/readers/{emailid}/books/{bookid}")
 	ResponseEntity<?> getBookContent(@PathVariable("emailid") String emailid,@PathVariable("bookid") Long bookid){
-		Optional<Reader> reader =readerRepository.findByreaderemail(emailid);
+		Optional<Reader> reader =readerRepository.findByReaderemailAndBookid(emailid, bookid);
 		if (reader.isPresent()) {
-			List<Long> purchasedbookids = purchasedBookRepository.findAllByReaderemail(emailid).stream().map(PurchasedBooks::getBookid).collect(Collectors.toList());
-			if(purchasedbookids.contains(bookid)) {
-				return ResponseEntity.ok(bookRepository.findById(bookid));
-			}
-			return new ResponseEntity<>("Unauthorised to read book / Invalid Book",HttpStatus.NOT_FOUND);
+			return  ResponseEntity.ok(bookRepository.findById(reader.get().getBookid()));
 		}
-		return ResponseEntity.badRequest().body("Email Doesn't Exist");
+		return ResponseEntity.badRequest().body("Invalid Email / Book");
 	}
 	/**
-	 * Reader can read a book by payment Id
+	 * Reader can read a book by Email and payment Id
 	 * @param emailid
 	 * @param pid
 	 * @return
 	 */
 	@PostMapping("/readers/{emailid}/books")
 	ResponseEntity<?> getBookByPaymentId(@PathVariable("emailid") String emailid,@RequestParam(required=true) String paymentid){
-		Optional<Reader> reader =readerRepository.findByreaderemail(emailid);
+		Optional<Reader> reader =readerRepository.findByReaderemailAndPaymentid(emailid, paymentid);
 		if (reader.isPresent()) {
-			Optional<PurchasedBooks> purchasedBooks= purchasedBookRepository.findByPaymentid(paymentid);
-			if(purchasedBooks.isPresent()) {
-				return  ResponseEntity.ok(bookRepository.findById(purchasedBooks.get().getBookid()));
-			}
-			return new ResponseEntity<>("Invalid Payment ID",HttpStatus.NOT_FOUND);
+			return  ResponseEntity.ok(bookRepository.findById(reader.get().getBookid()));
 		}
-		return ResponseEntity.badRequest().body("Email Doesn't Exist");
+		return ResponseEntity.badRequest().body("Invalid Email / Payment ID");
 	}
 	/**
 	 * Reader can return / ask for a refund
@@ -145,15 +122,13 @@ public class ReaderController extends BaseController {
 	 */
 	@PostMapping("/readers/{emailid}/books/{bookid}/refund")
 	ResponseEntity<?> getRefundBookByBookId(@PathVariable("emailid") String emailid,@PathVariable("bookid") Long bookid){
-		Optional<Reader> reader =readerRepository.findByreaderemail(emailid);
+		Optional<Reader> reader =readerRepository.findByReaderemailAndBookid(emailid,bookid);
 		if (reader.isPresent()) {
-			Optional<PurchasedBooks> purchasedBook=purchasedBookRepository.findByReaderemailAndBookid(emailid,bookid);
-			if(purchasedBook.isPresent()) {
-				purchasedBookRepository.delete(purchasedBook.get());
-				return new ResponseEntity<>("Book Unpurchased, refund will be credited shortly",HttpStatus.OK);
-			}
-			return new ResponseEntity<>("Book Not purchased  to return",HttpStatus.NOT_FOUND);
+			readerRepository.delete(reader.get());
+			return ResponseEntity.ok("Book Unpurchased, refund will be credited shortly");
 		}
-		return ResponseEntity.badRequest().body("Email Doesn't Exist");
+		else {			
+			return new ResponseEntity<>("Invalid Email Id / Book",HttpStatus.NOT_FOUND);
+		}
 	}
 }

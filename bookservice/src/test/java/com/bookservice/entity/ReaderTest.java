@@ -10,6 +10,8 @@ class ReaderTest {
 		reader.setId(Long.valueOf(1));
 		reader.setReadername("abc");
 		reader.setReaderemail("abc@gmail.com");
+		reader.setBookid(Long.valueOf(1));
+		reader.setPaymentid("PID1234");
 		return reader;
 	}
 	private Reader SampleReader2() {
@@ -17,19 +19,14 @@ class ReaderTest {
 		reader.setId(Long.valueOf(2));
 		reader.setReadername("abc1");
 		reader.setReaderemail("abc1@gmail.com");
-		return reader;
-	}
-	private Reader SampleReader3() {
-		Reader reader = new Reader();
-		reader.setId(Long.valueOf(1));
-		reader.setReadername("abc");
-		reader.setReaderemail("abc1@gmail.com");
+		reader.setBookid(Long.valueOf(2));
+		reader.setPaymentid("PID12345");
 		return reader;
 	}
 	Reader reader1 =SampleReader1();
 	Reader reader2= SampleReader1();
 	Reader reader3= SampleReader2();
-	Reader reader4= SampleReader3();
+	
 	@Test
 	void testHashCode() {
 		assertEquals(new Reader().hashCode(),new Reader().hashCode());
@@ -42,7 +39,6 @@ class ReaderTest {
 		assertTrue(new Reader().equals(new Reader()));
 		assertFalse(reader1.equals(reader3));
 		assertTrue(reader1.equals(reader2));
-		assertFalse(reader1.equals(reader4));
 		assertFalse(reader2.equals(null));
 	}
 

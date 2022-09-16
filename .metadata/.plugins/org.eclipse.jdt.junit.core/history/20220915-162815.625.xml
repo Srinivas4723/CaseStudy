@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="Rerun testGetBookContentSuccess()" project="bookservice" tests="1" started="1" failures="0" errors="0" ignored="0">
+  <testsuite name="com.bookservice.controller.ReaderControllerTest" time="1.037" displayname="ReaderControllerTest" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.ReaderControllerTest]">
+    <testcase name="testGetBookContentSuccess" classname="com.bookservice.controller.ReaderControllerTest" time="1.037" displayname="testGetBookContentSuccess()" uniqueid="[engine:junit-jupiter]/[class:com.bookservice.controller.ReaderControllerTest]/[method:testGetBookContentSuccess()]"/>
+  </testsuite>
+</testrun>
