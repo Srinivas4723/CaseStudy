@@ -50,6 +50,11 @@ export class UpdatebookComponent implements OnInit {
     this.updatebookblankResponse.price="";
     this.updatebookblankResponse.chapters="";
     this.updatebookblankResponse.content="";
+    this.book.title=this.book.title.trim();
+    this.book.publisher=this.book.publisher.trim();
+    this.book.content=this.book.content.trim();
+    this.book.author=this.book.author.trim();
+
     if(this.book.title===""){
       this.updatebookblankResponse.title="Book title cannot be blank";
     }
@@ -90,12 +95,17 @@ export class UpdatebookComponent implements OnInit {
   }
   }
   ngOnInit(): void {
+    if(sessionStorage.getItem("authorId")===null){
+      this.router.navigate(["/"]);
+    }
+    else{
     this.userService.editbooksuccessContainerFlag=false;
     const observable=this.userService.getbooksByAuthorID();
     observable.subscribe((responseBody:any)=>{
       console.log(JSON.stringify(responseBody));
       this.Books=JSON.parse(JSON.stringify(responseBody));
     });
+  }
   }
 }
 

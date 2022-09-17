@@ -43,16 +43,23 @@ export class AuthorsignupComponent implements OnInit {
     this.signUpblankResponse.authoremail="";
     this.signUpAuthorNameExists="";
     this.signUpAuthorEmailExists="";
-    if(this.author.authorname===""){
+    let errorcount=0;
+    if(this.author.authorname==="" || this.author.authorname.trim()===""){
+      errorcount+=1;
+      this.author.authorname="";
       this.signUpblankResponse.authorname="Author Name Cannot be blank";
     }
-    if(this.author.authoremail===""){
+    if(this.author.authoremail==="" || this.author.authoremail.trim()===""){
+      errorcount+=1;
+      this.author.authoremail='';
       this.signUpblankResponse.authoremail="Author Email Cannot be blank";
     }
-    if(this.author.password===""){
+    if(this.author.password==="" || this.author.password.trim()===""){
+      errorcount+=1;
+      this.author.password="";
       this.signUpblankResponse.authorpassword="Password Cannot be blank";
     }
-    else{
+    if(errorcount===0){
     const observable= this.userService.saveAuthor(this.author);
     observable.subscribe((responseBody:any)=>{
     this.signUpblankResponse.authorname=responseBody.authorname;

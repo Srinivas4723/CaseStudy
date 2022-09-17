@@ -8,11 +8,11 @@
 		<version>2.7.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.hnt</groupId>
-	<artifactId>order-service</artifactId>
+	<groupId>com.bookservice</groupId>
+	<artifactId>book-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>order-service</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Case Study Digital Book Store</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
@@ -50,15 +50,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-
-
-
-
-
-
-
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>

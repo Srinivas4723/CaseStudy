@@ -110,9 +110,10 @@ public class BookController extends BaseController {
 	 * @param bookid
 	 * @return
 	 */
-	@PutMapping("/author/{authorid}/books/{bookid}")
+	@PutMapping("/author/{authorid}/books")
 	ResponseEntity<?> updateBook(@Valid @RequestBody Book book, @PathVariable("authorid") Long authorid,
-			@PathVariable("bookid") Long bookid) {
+			@RequestParam Long bookid){
+			//@PathVariable("bookid") Long bookid) {
 		Optional<Author> author = authorRepository.findById(authorid);
 		if (bookRepository.existsById(bookid)) {
 			if (author.isPresent()) {

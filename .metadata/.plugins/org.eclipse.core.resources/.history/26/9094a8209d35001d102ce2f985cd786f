@@ -1,0 +1,6 @@
+server.port=8083
+spring.datasource.url=jjdbc:mysql://database-1.cwqgvr7uxril.us-west-2.rds.amazonaws.com:3306/bookstoredb
+spring.datasource.username=admin
+spring.datasource.password=Qazwsxedc
+spring.jpa.hibernate.ddl-auto=create
+spring.application.name=book-service

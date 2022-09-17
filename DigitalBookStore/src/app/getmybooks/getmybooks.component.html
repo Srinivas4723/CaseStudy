@@ -20,7 +20,7 @@
         <p class="error-messages">{{nobookFoundMessage}}</p>
         <div *ngFor="let book of readerBooks">
           <div class="column" >
-            <img src="assets/book{{book.id}}.jpg" alt="book image" width="220" height="220">
+            <img src="assets/book{{book.id}}.jpg" alt="book image" >
             <div style="text-align: center;font-size: small;">
               <button class="booklink btn btn-link" (click)="readBook(book)">{{book.title}}</button><br/>
               <span style="color:#163f68;">By  {{book.author}}</span><br/>

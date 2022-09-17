@@ -49,6 +49,10 @@ export class CreatebookComponent implements OnInit {
     this.createbookblankResponse.price="";
     this.createbookblankResponse.chapters="";
     this.createbookblankResponse.content="";
+    this.book.title=this.book.title.trim();
+    this.book.publisher=this.book.publisher.trim();
+    this.book.content=this.book.content.trim();
+    this.book.author=this.book.author.trim();
     if(this.book.title===""){
       this.createbookblankResponse.title="Book titlecannot be blank";
     }
@@ -113,10 +117,15 @@ export class CreatebookComponent implements OnInit {
     }
   }
   ngOnInit(): void {
+    if(sessionStorage.getItem("authorId")===null){
+      this.router.navigate(["/"]);
+    }
+    else{
     this.userService.digitalBooksContainerFlag=false;
     this.userService.slideShowFlag=false;
     this.userService.createBookContainerFlag=true;
     this.userService.createbooksuccessContainerFlag=false;
+    }
   }
 }
 

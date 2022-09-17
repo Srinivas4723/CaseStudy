@@ -5,15 +5,16 @@ import { AuthorsigninComponent } from './authorsignin/authorsignin.component';
 export enum Category{
   COMICS,HISTORY,FANTASY,HORROR
 };
-const URL ="http://localhost:8083/digitalbooks/"
+const isprod=true;
+let URL ="http://localhost:8083/digitalbooks/";
+if(isprod){
+  URL="https://s0bbvlws31.execute-api.us-west-2.amazonaws.com/prod/";
+}
 @Injectable({//decorator
   providedIn: 'root'
 })
 
 export class UserService {
-  
-//flags
-
   book:any;
   slideShowFlag:boolean=true;
   createbooknavFlag:boolean=false;
@@ -44,7 +45,7 @@ export class UserService {
     return this.http.post(URL+"author/"+authorid+"/signout",null);
   }
   returnBook(book:any, readeremail:any) {
-    return this.http.post(URL+"readers/"+readeremail+"/books/"+book.id+"/refund",null);
+    return this.http.post(URL+"readers/"+readeremail+"/books/refund?bookid="+book.id,null);
   }
   readBookByPaymentID(reader:any) {
     return this.http.post(URL+"readers/"+reader.readeremail+"/books?paymentid="+reader.paymentId,null);
@@ -56,13 +57,16 @@ export class UserService {
    return this.http.post(URL+"books/buy",reader);
   }
   updateBook(book:any){
-     return this.http.put(URL+"author/"+book.authorid+"/books/"+book.id,book);
+     return this.http.put(URL+"author/"+book.authorid+"/books?bookid="+book.id,book);
   }
   getAllBooks() {
     return this.http.get(URL+"allbooks");
   }
   searchBooks(params:any) {
-    let path:any="books/search?";
+    let path="books/search/?";
+    if(!isprod){
+      path="books/search?";
+    }
     if(params.author!=""){
       path+="author="+params.author+"&";
     }

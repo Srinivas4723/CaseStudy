@@ -120,8 +120,8 @@ public class ReaderController extends BaseController {
 	 * @param bookid
 	 * @return
 	 */
-	@PostMapping("/readers/{emailid}/books/{bookid}/refund")
-	ResponseEntity<?> getRefundBookByBookId(@PathVariable("emailid") String emailid,@PathVariable("bookid") Long bookid){
+	@PostMapping("/readers/{emailid}/books/refund")
+	ResponseEntity<?> getRefundBookByBookId(@PathVariable("emailid") String emailid,@RequestParam Long bookid){
 		Optional<Reader> reader =readerRepository.findByReaderemailAndBookid(emailid,bookid);
 		if (reader.isPresent()) {
 			readerRepository.delete(reader.get());

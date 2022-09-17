@@ -28,13 +28,19 @@ export class AuthorsigninComponent implements OnInit {
     this.signInBlankResponse.authorname="";
     this.signInBlankResponse.password="";
     this.signInIvalidResponse="";
-    if(this.loginRequest.authorname===""){
+    this.loginRequest.authorname=this.loginRequest.authorname.trim();
+    let errorcount=0;
+    if(this.loginRequest.authorname==="" || this.loginRequest.authorname.trim()===""){
+      errorcount+=1;      
+      this.loginRequest.authorname="";
       this.signInBlankResponse.authorname="Author Name Cannot be blank";
     }
-    if(this.loginRequest.password===""){
+    if(this.loginRequest.password==="" || this.loginRequest.password.trim()===""){
+      errorcount+=1;
+      this.loginRequest.password="";
     this.signInBlankResponse.password="Password Cannot be blank";
     }
-    else{
+    if(errorcount===0){
       const observable= this.userService.authorSignin(this.loginRequest);
       observable.subscribe((responseBody:any)=>{
         console.log("RB"+responseBody);

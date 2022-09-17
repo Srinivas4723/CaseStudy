@@ -32,10 +32,23 @@ export class ReaderpageComponent implements OnInit {
     this.readerblankResponse.readeremail="";
     this.bookPurchaseFailureMessage="";
     this.bookPurchaseSuccessMessage="";
-    if(this.cardnumber===""){
+    let errorcount=0;
+    if(this.cardnumber==="" ){
+      this.cardnumber="";
+      errorcount+=1;
       this.cardnumberblankResponse="Card Number cannot be Blank";
     }
-    else{
+    if(this.reader.readername==="" || this.reader.readername===null || this.reader.readername.trim()===""){
+      this.reader.readername="";
+      errorcount+=1;
+      this.readerblankResponse.readername="Reader Name Cannot be Blank";
+    }
+    if(this.reader.readeremail==="" || this.reader.readeremail.trim()===""){
+      this.reader.readeremail="";
+      errorcount+=1;
+      this.readerblankResponse.readeremail="Reader Email Cannot be Blank";
+    }
+    if(errorcount===0){
       const observable=this.userService.buybook(this.reader);
       observable.subscribe((responseBody)=>{
         

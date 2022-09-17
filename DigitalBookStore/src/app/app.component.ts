@@ -24,6 +24,8 @@ export class AppComponent {
     
     console.log(this.searchbookdata.category);
     this.nobookFoundMessage="";
+    this.searchbookdata.author=this.searchbookdata.author.trim();
+    this.searchbookdata.publisher=this.searchbookdata.publisher.trim();
     if(this.searchbookdata.author==="" && this.searchbookdata.category==="" &&
         this.searchbookdata.price==="" || this.searchbookdata.price===null &&  this.searchbookdata.publisher===""){
       alert("Search Fields Cannnot be Blank");
