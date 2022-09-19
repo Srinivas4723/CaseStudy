@@ -21,8 +21,7 @@ import com.bookservice.request.LoginRequest;
 @RequestMapping("/digitalbooks/author")
 public class LoginController extends BaseController {
 	@Autowired AuthorRepository authorRepository;
-	@Autowired
-	AuthenticationManager authenticationManager;
+	@Autowired AuthenticationManager authenticationManager;
 	@Autowired  PasswordEncoder passwordEncoder;
 	/**
 	 * Authenticates Author and Author sign in

@@ -22,6 +22,7 @@ public class Author {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@NotBlank(message = "Author Name cannot be blank")
+	@Size(min=3,message="Author Name cannot be less than 3 characters")
 	private String authorname;
 	@Email(message="Please Enter a Valid Email")
 	@NotBlank(message = "Author Email cannot be blank")

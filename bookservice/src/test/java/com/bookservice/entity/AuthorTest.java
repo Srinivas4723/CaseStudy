@@ -42,7 +42,7 @@ class AuthorTest {
 		assertTrue(new Author().equals(new Author()));
 		assertFalse(author1.equals(author3));
 		assertTrue(author1.equals(author2));
-		
+		assertFalse(author2.equals(null));
 	}
 
 	

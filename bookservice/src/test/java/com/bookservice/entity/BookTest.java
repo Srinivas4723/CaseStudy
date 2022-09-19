@@ -54,7 +54,7 @@ class BookTest {
 		assertTrue(new Book().equals(new Book()));
 		assertFalse(book1.equals(book3));
 		assertTrue(book1.equals(book2));
-		
+		assertFalse(book2.equals(null));
 	}
 
 	@Test

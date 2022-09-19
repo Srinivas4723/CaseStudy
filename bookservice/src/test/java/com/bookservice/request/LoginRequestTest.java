@@ -34,6 +34,7 @@ class LoginRequestTest {
 		assertTrue(new LoginRequest().equals(new LoginRequest()));
 		assertFalse(loginRequest1.equals(loginRequest3));
 		assertTrue(loginRequest1.equals(loginRequest2));
+		assertFalse(loginRequest1.equals(null));
 	}
 
 	@Test

@@ -36,6 +36,7 @@ class BuyBookRequestTest {
 		assertTrue(new BuyBookRequest().equals(new BuyBookRequest()));
 		assertFalse(buyBookRequest1.equals(buyBookRequest3));
 		assertTrue(buyBookRequest1.equals(buyBookRequest2));
+		assertFalse(buyBookRequest2.equals(null));
 	}
 
 	@Test

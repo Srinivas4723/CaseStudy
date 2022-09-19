@@ -37,12 +37,12 @@ public class BaseController {
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	ResponseEntity<String> requestParamNotFound(HttpMessageNotReadableException ex) {
-		return new ResponseEntity<String>("Error : Request Body is missing ",HttpStatus.NOT_ACCEPTABLE);
+		return new ResponseEntity<>("Error : Request Body is missing ",HttpStatus.NOT_ACCEPTABLE);
 	}
-	@ExceptionHandler(DataIntegrityViolationException.class)
-	ResponseEntity<String> sqlException(DataIntegrityViolationException ex) {
-		
-		return new ResponseEntity<String>("Error : Request Body is missing "+ex.getRootCause().toString(),HttpStatus.NOT_ACCEPTABLE);
+	@ExceptionHandler(IllegalArgumentException.class)
+	ResponseEntity<String> requestParamNotFound(IllegalArgumentException ex) {
+		return new ResponseEntity<>("Invalid Search Item ",HttpStatus.NOT_ACCEPTABLE);
 	}
 	
+
 }

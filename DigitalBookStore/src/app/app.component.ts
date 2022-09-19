@@ -21,8 +21,7 @@ export class AppComponent {
   title: any;
   constructor(public userService:UserService,public router:Router){}
   searchBooks(){
-    
-    console.log(this.searchbookdata.category);
+  
     this.nobookFoundMessage="";
     this.searchbookdata.author=this.searchbookdata.author.trim();
     this.searchbookdata.publisher=this.searchbookdata.publisher.trim();
@@ -43,6 +42,7 @@ export class AppComponent {
       observable.subscribe((responseBody)=>{
         console.log(responseBody);
       },(error:any)=>{
+       
         if(typeof error.error==='string'){
           alert("No Books Found with Your Filter....!!!!!");
           this.nobookFoundMessage=error.error;
